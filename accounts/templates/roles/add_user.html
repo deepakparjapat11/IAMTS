@@ -1,0 +1,166 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+{% if messages %}
+    {% for message in messages %}
+        {% if message is not None %}
+            <div id="success-alert" class="messagelist alert {% if message.tags %} alert-{{ message.tags }} {% endif %}">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a>
+              {{ message }}
+            </div>
+        {% endif %}
+    {% endfor %}
+{% endif %}
+
+
+    <div class="main-content">
+        <div class="topbar">
+            <div class="topleft-sec">
+                <h1>Hi <span class="user-text">{{request.user.first_name}} {{request.user.last_name}},</span> Welcome Back!</h1>
+                <div class="sub-txt">Welcome to <span class="text-highlight">iamts</span> dashboard</div>
+            </div>
+            <!-- <div class="topright-sec">
+                <div class="switch-section">
+                    <span class="switch-txt">Switch To Dark Mode</span>
+                    <label class="switch">
+                      <input type="checkbox">
+                      <span class="slider round"></span>
+                    </label>
+                </div>
+                <button type="button" class="blue-btn">Export Data <i class="export-icon"></i></button>
+            </div> -->
+        </div>
+        <div class="topbar top-link-sec">
+            <div class="">
+                <ul class="menu-link bread-crumbs">
+                    <li><a href="{% url 'bus_dashboard' %}" title="Bus Management">Bus Management</a></li>
+                    <li><a href="{% url 'repair_listing' %}" title="Repair Request">Repair Request</a></li>
+                    <li><a href="javascript:void(0);" class="link-active" title="Edit Request">Edit Request</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="">
+            <div class="head-info head-section">
+                <div class="botom-border">
+                    <h2>Create User Role</h2>
+                    <!-- <p>Lorem Ipsum is simply dummy text of the printing</p> -->
+                </div>
+            </div>
+            <div class="block-mode pt-4">
+                <div class="form-sec">
+                    <form id="roles_form" method="POST" class="cus-form">
+                        {% csrf_token %}
+                        <div class="row row-botomspc no-phone-spc">
+                            <div class="col-lg-4 col-md-4 col-sm-6 col-12 mb-3 mb-xs-3 mb-sm-3 mb-md-0 mb-lg-0">
+                                <label>Department <span class="red-astersick">*</span></label>
+                                <div class="field-blk">
+                                    <i class="arrow-down"></i>
+                                    <select name="department" id="department">
+                                        {% if department %}
+                                            <option selected disabled hidden>Select Department</option>
+                                            {% for dep in department %}
+                                                <option value="{{ dep.id }}">{{ dep.department_name }}</option>
+                                            {% endfor %}
+                                        {% else %}
+                                            <option value="" selected disabled hidden>No options</option>
+                                        {% endif %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-6 col-12 mb-3 mb-xs-3 mb-sm-3 mb-md-0 mb-lg-0">
+                                <label>Designation <span class="red-astersick">*</span></label>
+                                <div class="field-blk">
+                                    <i class="arrow-down"></i>
+                                    <select name="designation" id="designation">
+                                            <option value="" selected>Select Designation</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row row-botomspc no-phone-spc">
+                             <div class="col-lg-12 col-md-12 mb-3 mb-xs-3 mb-sm-3 mb-md-0 mb-lg-0">
+                                <label>Permissions <span class="red-astersick">*</span></label>
+                                <div class="permission-blk">
+                                <ul class="permision-list">
+                                    <li>
+                                        <div class="user-options">
+                                            <label class="custum-container"><input type="checkbox" name="main_dashboard"><span class="checkmark"></span><span class="chk-txt">Main Dashboard</span></label>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="user-options">
+                                            <label class="custum-container"><input type="checkbox" name="bus_management"><span class="checkmark"></span><span class="chk-txt">Bus Management</span></label>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="user-options">
+                                            <label class="custum-container"><input type="checkbox" name="man_management"><span class="checkmark"></span><span class="chk-txt">Manpower Management</span></label>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="user-options">
+                                            <label class="custum-container"><input type="checkbox" name="work_management"><span class="checkmark"></span><span class="chk-txt">Work Order Management</span></label>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="user-options">
+                                            <label class="custum-container"><input type="checkbox" name="user_admin_management"><span class="checkmark"></span><span class="chk-txt">User Administration</span></label>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="user-options">
+                                            <label class="custum-container"><input type="checkbox" name="repair_request"><span class="checkmark"></span><span class="chk-txt">Repair Request</span></label>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="user-options">
+                                            <label class="custum-container"><input type="checkbox" name="service_request"><span class="checkmark"></span><span class="chk-txt">Service Request</span></label>
+                                        </div>
+                                    </li>
+                                </ul>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row row-botomspc">
+                            <div class="col-lg-12">
+                                <label>User Responsibilities <span class="red-astersick">*</span></label>
+                                <div class="field-blk">
+                                    <textarea  rows="4" placeholder="User Responsibilities" name="description"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="form-btn-sec">
+                <button class="blue-btn mr-3 grey-btn" type="button" onclick="">Cancel</button><button class="blue-btn" type="button" onclick="submit_form()">Add</button>
+            </div>
+        </div>
+    </div>
+<script>
+    $('#inputDate').datepicker({
+    format: 'yyyy-mm-dd'
+    });
+    $(function(){
+        $(document).on('change', "select#department", function(){
+            $.getJSON("/getDesignation/",{id: $(this).val()}, function(j){
+                 var options = '<option value="" selected disabled hidden>Select Designation</option>';
+                 if (j.length > 0){
+                     for (var i = 0; i < j.length; i++) {
+                         options += '<option value="' + j[i].id + '">' + j[i].designation_name + '</option>';
+                     }
+                     $("select#designation").html(options);
+                 }
+                 else{
+                    options += '<option >No Options</option>';
+                    $("select#designation").html(options);
+                 }
+             });
+         });
+     });
+</script>
+<script src='{% static "assets/js/roles_and_permission.js" %}?v={% now "Y-m-dH:i:s"%}'></script>
+
+{% endblock %}

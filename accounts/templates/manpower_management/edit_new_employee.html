@@ -1,0 +1,144 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+{% if messages %}
+    {% for message in messages %}
+        {% if message is not None %}
+            <div id="success-alert" class="messagelist alert {% if message.tags %} alert-{{ message.tags }} {% endif %}">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a>
+              {{ message }}
+            </div>
+        {% endif %}
+    {% endfor %}
+{% endif %}
+            <div class="main-content">
+                <div class="topbar">
+                    <div class="topleft-sec">
+                        <h1>Hi <span class="user-text">{{request.user.first_name}} {{request.user.last_name}},</span> Welcome Back!</h1>
+                        <div class="sub-txt">Welcome to <span class="text-highlight">iamts</span> dashboard</div>
+                    </div>
+                </div>
+                <div class="topbar top-link-sec">
+                    <div class="">
+                        <ul class="menu-link bread-crumbs">
+                            <li><a href="{% url 'manpower_dashboard' %}" title=">Manpower Management">Manpower Management</a></li>
+                            <li><a href="{% url 'list_roster' %}" title="Rosters">Rosters</a></li>
+                            <li><a href="javascript:void(0);" class="link-active" title="Edit Employee">Edit Employee</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="">
+                    <div class="head-info head-section">
+                        <div class="botom-border">
+                            <h2>Edit Employee</h2>
+                            
+                        </div>
+                    </div>
+                    <div class="block-mode pt-4">
+                        <div class="form-sec">
+                            <form id="add_employee_form" method="POST" class="cus-form" enctype="multipart/form-data" autocomplete="off" >
+                            {% csrf_token %}
+                            <div class="row row-botomspc">
+                                <div class="col-lg-4 col-md-4 col-sm-6 col-12 mb-3 mb-xs-3 mb-sm-3 mb-md-0 mb-lg-0">
+                                    <label>Employee First Name <span class="red-astersick">*</span></label>
+                                    <div class="field-blk"><input type="text" placeholder="Jhon" name="first_name"></div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-6 col-12 mb-3 mb-xs-3 mb-sm-3 mb-md-0 mb-lg-0">
+                                    <label>Employee Last Name <span class="red-astersick">*</span></label>
+                                    <div class="field-blk"><input type="text" placeholder="Doe" name="last_name"></div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 row-botomspc">
+                                    <label>Employee Email <span class="red-astersick">*</span></label>
+                                    <div class="field-blk"><input type="text" placeholder="Eg. hello@gmail.com" name="email" disabled></div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-6 col-12 mb-3 mb-xs-3 mb-sm-3 mb-md-0 mb-lg-0 row-botomspc">
+                                    <label>Employee Id <span class="red-astersick">*</span></label>
+                                    <div class="field-blk"><input type="text" placeholder="Eg. 223323" name="employee_id" disabled></div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-6 col-12 mb-3 mb-xs-3 mb-sm-3 mb-md-0 mb-lg-0">
+                                    <label>Employee Contact </label>
+                                    <div class="field-blk"><input type="text" placeholder="Eg. 00000-000-0000" name="contact"></div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 row-botomspc">
+                                    <label>Department <span class="red-astersick">*</span></label>
+                                    <div class="field-blk">
+                                        <i class="arrow-down"></i>
+                                        <select name="department" id="department">
+                                            {% if department %}
+                                                <option selected disabled hidden>select department</option>
+                                                {% for item in department %}
+                                                    <option value="{{ item.id }}">{{ item.department_name }}</option>
+                                                {% endfor %}
+                                            {% else %}
+                                                    <option>No options</option>
+                                            {% endif %}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-6 col-12 mb-3 mb-xs-3 mb-sm-3 mb-md-0 mb-lg-0 row-botomspc">
+                                    <label>Designation <span class="red-astersick">*</span></label>
+                                    <div class="field-blk">
+                                        <i class="arrow-down"></i>
+                                        <select name="designation" id="designation">
+                                            {% if designation %}
+                                                <option selected disabled hidden>select designation</option>
+                                                {% for item in designation %}
+                                                    <option value="{{ item.id }}">{{ item.designation_name }}</option>
+                                                {% endfor %}
+                                            {% else %}
+                                                <option value=" ">No options</option>
+                                            {% endif %}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-6 col-12 mb-3 mb-xs-3 mb-sm-3 mb-md-0 mb-lg-0 row-botomspc">
+                                    <label>Employee Image </label>
+                                    <div class="field-blk">
+                                        <div class="upload-outer">
+                                        <label class="label-select profile_picture">Accepted: jpg, jpeg, png</label>
+                                        <a href="javascript:void(0);" class="upload-btn"><i class="upload-icon"></i>Upload File</a>
+                                        <div class="cus-upload"><input class="" type="file" accept="image/*" id="profile_picture" name="profile_picture"></div>
+                                             <span id="profile_picture1" class="cust-errors"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 row-botomspc">
+                                    <label>Joining Date <span class="red-astersick">*</span></label>
+                                    <div class="field-blk cus-datepicker">
+                                        <i class="far fa-calendar calender-picker"></i> 
+                                         <input type="text" class="form-control" id="inputDate" placeholder="DD/MM/YY" name="joining_date">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-6 col-12 mb-3 mb-xs-3 mb-sm-3 mb-md-0 mb-lg-0">
+                                    <label>Driving Licence</label>
+                                    <div class="field-blk">
+                                        <div class="upload-outer">
+                                        <label class="label-select driving">Accepted: jpg, jpeg, png</label>
+                                        <a href="javascript:void(0);" class="upload-btn"><i class="upload-icon"></i>Upload File</a>
+                                        <div class="cus-upload"><input class="" type="file" accept="image/*" id="driving_licence" name="driving_licence"></div>
+                                        <span id="driving_licence1" class="cust-errors"></span></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </form>
+                        </div>
+                    </div>
+                    <div class="form-btn-sec">
+                        <button class="blue-btn mr-3 grey-btn" type="button" onclick="window.history.back()" title="Cancel">Cancel</button><button class="blue-btn" type="button" onclick="edit_form();" title="Save">Save</button>
+                    </div>
+                </div>
+            </div>
+            <script>
+$('#inputDate').datepicker({
+format: 'dd/mm/yyyy',
+"autoclose": true
+});
+               
+</script>
+<script src='{% static "assets/js/jquery-input-mask-phone-number.js" %}'></script>
+<script src='{% static "assets/js/manpower_management.js" %}?v={% now "Y-m-dH:i:s"%}'></script>
+
+
+{% endblock %}

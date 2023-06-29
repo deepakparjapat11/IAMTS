@@ -1,0 +1,329 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+			<!-- Toast message start -->
+
+			<div class="main-content bus-dashboard">
+				<div class="topbar">
+					<div class="topleft-sec">
+						<h1>Hi <span class="user-text">{{request.user.first_name}} {{request.user.last_name}},</span> Welcome Back!</h1>
+						<div class="sub-txt">Welcome to <span class="text-highlight">iamts</span> dashboard</div>
+					</div>
+					
+				</div>
+				<div class="topbar top-link-sec">
+					<div class="topleft-sec">
+						<ul class="menu-link">
+							<li><a href="{% url 'bus_dashboard' %}" title="Overview">Overview</a></li>
+							<li><a href="{% url 'view_buses' %}" title="View Buses">View Buses</a></li>
+							<li><a href="{% url 'repair_listing' %}" title="Repair Request">Repair Request</a></li>
+						</ul>
+					</div>
+					<div class="topright-sec">
+						
+						
+					</div>
+				</div>
+				<div class="cus-row">
+					<div class="cus-col">
+						<div class="blue-bg">
+							<div class="info-sec">
+								<div class="left-info">
+									<div class="blk-head">Total Buses</div>
+									<div class="blk-info">
+										<span class="stats">{{total_buses}}</span><span class="blue-txt detail"><i class="blue-graph"></i>{{thirty_days_buses}}%</span><span class="ltblack">(30 days)</span>
+									</div>
+								</div>
+								<div class="right-icon">
+									<i class="bus-icon"></i>
+								</div>
+							</div>
+							<div class="bluegraph-sec" style="height: 65px;"></div>
+							<div class="bluegraph-sec-drk" style="height: 65px;"></div>
+						</div>
+					</div>
+					<div class="cus-col">
+						<div class="orange-bg">
+							<div class="info-sec">
+								<div class="left-info">
+									<div class="blk-head">Under Maintenance</div>
+									<div class="blk-info">
+										<span class="stats">{{tot_repair_service}}</span><span class="orange-txt detail"><i class="orange-graph"></i>{{percent_repair_service}}%</span><span class="ltblack">(30 days)</span>
+									</div>
+								</div>
+								<div class="right-icon">
+									<i class="orange-bus"></i>
+								</div>
+							</div>
+							<div class="orangegraph-sec" style="height: 65px;"></div>
+							<div class="orangegraph-sec-drk" style="height: 65px;"></div>
+						</div>
+					</div>
+					<div class="cus-col">
+						<div class="green-bg">
+							<div class="info-sec">
+								<div class="left-info">
+									<div class="blk-head">Buses In Service</div>
+									<div class="blk-info">
+										<span class="stats">{{buses_in_service}}</span><span class="green-txt detail"><i class="green-graph"></i>{{in_service_percent}}%</span><span class="ltblack">(30 days)</span>
+									</div>
+								</div>
+								<div class="right-icon">
+									<i class="green-bus"></i>
+								</div>
+							</div>
+							<div class="greengraph-sec" style="height: 65px;"></div>
+							<div class="greengraph-sec-drk" style="height: 65px;"></div>
+						</div>
+					</div>
+					<div class="cus-col">
+						
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-12 col-xl-8 no-rt-spc">
+						<div class="block-mode bus-grid">
+							<div class="head-info">
+								<div class="left-blk">
+									<h2>All Buses</h2>
+								</div>
+								<div class="right-blk">
+									<div class="field-blk select-blk">
+										<i class="arrow-down"></i>
+										<select id="sorting" class="cus-select">
+
+										  <option value="1" selected>Oldest to Newest</option>
+										  <option value="2" >Newest to Oldest</option>
+		
+										</select>
+									</div>
+
+								</div>
+							</div>
+
+							<div class="side-spacing">
+								<div class="stats-scroll">
+								<div class="outer-stats">
+								<div class="left-blk">
+									<div class="grid-information text-left">
+									<div class="scroll-blk">
+											<div class="grid-row grid-info">
+												<div class="grid-box">
+													<span class="detail-btn green-badge">Total (IS)</span>
+												</div>
+												<div class="grid-box">
+													<span class="detail-btn red-badge">Total (OS)</span>
+												</div>
+                                            </div>
+											<div class="grid-row grid-info black-color">
+												<div class="grid-box">
+													<span class="detail-btn ltgreen-badge" id="tot_is_bus">0</span>
+												</div>
+												<div class="grid-box">
+													<span class="detail-btn redlt-badge" id="tot_oos_bus">0</span>
+												</div>
+
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="right-blk">
+									<div class="grid-information">
+									<div class="scroll-blk">
+											<div class="grid-row grid-info">
+												<div class="grid-box">
+													<span class="detail-btn green-badge">IS</span>
+												</div>
+												<div class="grid-box">
+													<span class="detail-btn green-badge yelow-txt">SS</span>
+												</div>
+												<div class="grid-box">
+													<span class="detail-btn red-badge">OOS</span>
+												</div>
+												<div class="grid-box">
+													<span class="detail-btn red-badge">OOS (WP)</span>
+												</div>
+											</div>
+											<div class="grid-row grid-info black-color">
+
+												<div class="grid-box">
+													<span class="detail-btn ltgreen-badge" id="is_bus">0</span>
+												</div>
+												<div class="grid-box">
+													<span class="detail-btn ltgreen-badge" id="ss_bus">0</span>
+												</div>
+												<div class="grid-box">
+													<span class="detail-btn redlt-badge"  id="os_bus">0</span>
+												</div>
+												<div class="grid-box">
+													<span class="detail-btn redlt-badge" id="wp_bus">0</span>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								</div>
+								</div>
+								<div class="text-right user-infosec">
+									<ul class="stats-bus">
+										<li><b>Date:</b> <span id="last_date"></span></li>
+										<li><b>Time:</b> <span id="last_time"></span></li>
+										<li><b>Last Modified by:</b> <span id="last_by"></span></li>
+									</ul>
+								</div>
+								<div class="vertical-overflow">
+								<div class="cus-height grid-width">
+
+								</div>
+								</div>
+								</div>
+							</div>
+						</div>
+					<div class="col-lg-12 col-xl-4 mt-xl-0 mt-lg-3 mt-md-3 mt-sm-3 mt-3" >
+						<div class="block-mode schedule-sec">
+
+							<div class="head-info">
+								<div>
+									<h2>Bus Calender</h2>
+
+								</div>
+								<ul class="information">
+									<li><span class="dark-bar"></span>Vehicle Licensing</li>
+									<li><span class="blue-bar"></span>Scheduled Service</li>
+								</ul>
+								<div  id='calendar' class="cus-calender"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row stats-sec">
+					<div class="col-lg-12 col-xl-8 no-rt-spc">
+							<div class="block-header green-header">
+								<div class="bg-img">
+									<img class="img-fliud" src="/static/assets/images/all-buses.png" width="141" height="118" alt="All Buses">
+								</div>
+								<div class="left-blk">
+									<h2>All Buses</h2>
+									
+								</div>
+								<div class="right-blk">
+									<div class="number-blk rt-border">
+										<h3>Active Buses</h3>
+										<span>{{ buses_in_service }}</span>
+									</div>
+									<div class="number-blk">
+										<h3>Repair Requests</h3>
+										<span>{{ tot_repair_reuest }}</span>
+									</div>
+								</div>
+							</div>
+						<div class="block-mode">
+							<div class="block-outer">
+									<div class="right-blk">
+										<ul class="cus-pagination">
+											<li style=""><a class="previous-icon" href="javascript:void(0);" title=""><i class="arrow left"></i></a></li>
+											<li class="next-icon-list"></li>
+											<li ><a class="next-icon" href="javascript:void(0);" title=""><i class="arrow"></i></a></li>
+										</ul>
+									</div>
+								</div>
+							<div class="space-control ad-table cus-height">
+								<table class="info-table">
+									<tr class="botom-border header-row listdata">
+										<td>Actions</td>
+										<td>Bus Id</td>
+										<td class="cell-width">Chassis</td>
+										<td class="cell-width">Schedule Repair</td>
+										<td class="text-center">Status</td>
+										<td>Schedule Service</td>
+									</tr>
+								</table>
+								<div class="listbus"></div>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-12 col-xl-4 mt-xl-0 mt-lg-3 mt-md-3 mt-sm-3 mt-3 chart-blk">
+						<div class="block-mode">
+							<div class="head-info">
+								<div>
+									<h2>Bus Analytics</h2>
+								</div> 
+								<div class="chart-info">
+								<div class="row">
+									<div class="col-lg-6 col-md-6 col-sm-6 col-6 rt-border mob-center">
+										<div class="number-blk">
+											<h3>This Month</h3>
+											<div class="graph-data greengraph-data" id="graph_data1">
+												<span class="green-graph-icon" id="graph_icon1"></span>
+												<i class="green-arow " id="arrow1"></i>
+												<span class="green-txt small-txt" id="text1">{{this_month_percent}}%</span>
+											</div>
+											<span id="current_month_data" data-value="{{this_month_data}}">{{this_month_data}}</span>
+										</div>
+									</div>
+									<div class="col-lg-6 col-md-6 col-sm-6 col-6 mob-center">
+										<div class="number-blk lft-cus-spc">
+											<h3>Last Month</h3>
+											<div class="graph-data" id="graph_data2">
+												<span class="orange-graph-icon" id="graph_icon2"></span>
+												<i class="orange-arow" id="arrow2"></i>
+												<span class="orange-txt small-txt" id="text2">{{sixty_days_percent}}%</span>
+											</div>
+											<span>{{last_sixty_days}}</span>
+										</div>
+									</div>
+								</div>
+								</div>
+								<div class="chart-sec row">
+									<div class="left-chartsec col-xl-5">
+										<div id="chart_container" style="height: 200px; width: 150px;">
+										hii
+									</div>
+									</div>
+									<div class="right-chartsec col-xl-7">
+										<div class="right-bars">
+											<div class="progress-blk">
+												<div class="progres-data">
+													<div class="lft-data">Buses-In Service</div>
+													<div class="right-data">{{in_service}}({{active_percent}}%)</div>
+												</div>
+												<div class="width-bar">
+													<div class="green-blk" style="width:{{active_percent}}%;"></div>
+												</div>
+											</div>
+											<div class="progress-blk">
+												<div class="progres-data">
+													<div class="lft-data">Buses-Out of Service</div>
+													<div class="right-data">{{tot_out_service}}({{out_percent}}%)</div>
+												</div>
+												<div class="width-bar">
+													<div class="blue-blk" style="width:{{out_percent}}%;"></div>
+												</div>
+											</div>
+											<div class="progress-blk">
+												<div class="progres-data">
+													<div class="lft-data">Buses-Short Service</div>
+													<div class="right-data">{{tot_schedule_service}}({{short_service_percent}}%)</div>
+												</div>
+												<div class="width-bar">
+													<div class="darkblue-blk" style="width:{{short_service_percent}}%;"></div>
+												</div>
+											</div>
+										</div>
+									</div>
+									</div>
+									
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+<script src='{% static "assets/js/highcharts.js" %}?v={% now "Y-m-dH:i:s"%}'></script>
+<script src='{% static "assets/js/fullcalendar.4.4.2.main.min.js" %}'></script>
+<script src='{% static "assets/js/fullcalendar-day-grid-4.4.2.main.min.js" %}'></script>
+<script src='{% static "assets/js/tooltip.min.js" %}'></script>
+<script src='{% static "assets/js/main.js" %}?v={% now "Y-m-dH:i:s"%}'></script>
+
+{% endblock %}

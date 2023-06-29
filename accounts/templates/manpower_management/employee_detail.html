@@ -1,0 +1,138 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+
+            <div class="main-content">
+                <div class="topbar">
+                    <div class="topleft-sec">
+                        <h1>Hi <span class="user-text">{{request.user.first_name}} {{request.user.last_name}},</span> Welcome Back!</h1>
+                        <div class="sub-txt">Welcome to <span class="text-highlight">iamts</span> dashboard</div>
+                    </div>
+                </div>
+                <div class="topbar top-link-sec">
+                    <div class="">
+                        <ul class="menu-link bread-crumbs">
+                            <li><a href="{% url 'manpower_dashboard' %}" title=">Manpower Management">Manpower Management</a></li>
+                            <li><a href="{% url 'list_roster' %}" title="Rosters"> Rosters</a></li>
+                            <li><a href="javascript:void(0);" class="link-active" title="Employee Details">Employee Details</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="">
+                    <div class="head-info head-section">
+                        <div class="botom-border">
+                            <h2>Employee Details</h2>
+                        </div>
+                    </div>
+                    <div class="block-mode pt-4">
+                        <div class="blocks">
+                        	<div class="row mb-lg-3 mb-md-0 mb-sm-0 mb-0 cus-spacing">
+                                <div class="col-lg-3 mb-md-3 col-sm-12 col-md-3 col-sm-6 col-12 side-space fixed-ht">
+                                    <img id="profile" src="/static/assets/images/default-Image.jpg" width="371" height="249" alt="User Image">
+                                </div>
+                                <div class="col-lg-9 col-md-9 col-sm-12 col-12 side-space">
+                                    <div class="row custum-padding">
+                                        <div class="col-lg-4 col-md-6 col-sm-6 col-12 side-space mb-3">
+                                            <div class="grey-blk">
+                                                <h3 class="grey-heading">Emp. First Name</h3>
+                                                <div class="bold-detail" id="first_name">Nathan</div>
+                                            </div>
+                                         </div>
+                                        <div class="col-lg-4 col-md-6 col-sm-6 col-12 side-space mb-3">
+                                            <div class="grey-blk">
+                                                <h3 class="grey-heading">Emp. last Name</h3>
+                                                <div class="bold-detail" id="last_name">Nathan</div>
+                                            </div>
+                                         </div>
+                                         <div class="col-lg-4 col-md-6 col-sm-6 col-12 side-space mb-3">
+                                            <div class="grey-blk">
+                                                <h3 class="grey-heading">Emp. Id</h3>
+                                                <div class="bold-detail" id="employee_id">254K</div>
+                                            </div>
+                                         </div>
+                                         <div class="col-lg-4 col-md-6 col-sm-6 col-12 side-space mb-3">
+                                            <div class="grey-blk cus-txt-outer">
+                                                <h3 class="grey-heading">Email</h3>
+                                                <div class="bold-detail cus-text-blk" id="email">abc@gmail.com</div>
+                                            </div>
+                                         </div>
+                                         <div class="col-lg-4 col-md-6 col-sm-6 col-12 side-space">
+                                            <div class="grey-blk">
+                                                <h3 class="grey-heading">Contact</h3>
+                                                <div class="bold-detail" id="contact">254-56896-258</div>
+                                            </div>
+                                         </div>
+                                         
+
+                                    </div>
+                                </div>
+                            </div>
+                        	<div class="row mb-lg-3  mb-md-0 mb-sm-0 mb-0 cus-spacing">
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-12 side-space">
+                                    <div class="grey-blk">
+                                        <h3 class="grey-heading">Designation</h3>
+                                        <div class="bold-detail" id="designation">Lp Lorem</div>
+                                    </div>
+                                 </div>
+                        		<div class="col-lg-6 col-md-6 col-sm-6 col-12 side-space">
+                                    <div class="grey-blk">
+                                        <h3 class="grey-heading">Department</h3>
+                                        <div class="bold-detail" id="department">Mechanic</div>
+                                    </div>
+                                 </div>
+                        		
+                        	</div>
+                            <div class="row mb-lg-3  mb-md-0 mb-sm-0 mb-0 cus-spacing">
+                                <div class="col-lg-3 col-md-6 col-sm-6 col-12 side-space">
+                                    <div class="grey-blk">
+                                        <h3 class="grey-heading">Joining Date</h3>
+                                        <div class="bold-detail" id="joining_date">21-Oct-2020</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-6 col-sm-6 col-12 side-space">
+                                    <div class="grey-blk">
+                                        <h3 class="grey-heading">Status</h3>
+                                        <div class="bold-detail" id="status">Pending</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                         <div class="emp-docs">
+                    <div class="head-info head-section">
+                        <div class="botom-border">
+                            <h2>Employee Documents</h2>
+                        </div>
+                    </div>
+                    <div class="block-mode pt-4">
+                        <div class="blocks">
+                            <div class="row mb-lg-3 mb-md-0 mb-sm-0 mb-0 cus-spacing">
+                                <div class="col-lg-3 col-md-6 col-sm-6 col-12 side-space">
+                                    <div class="grey-blk doc-blk">
+                                        <div class="row">
+                                            <div class="col-lg-6 col-md-6 col-sm-6 col-6 driving_licence">
+
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-sm-6 col-6 align-items-center d-flex pl-1 phone-view">
+                                                <div class="bold-detail">Driving Licence</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-btn-sec">
+                        <a class="blue-btn mr-3 grey-btn" id="edit_button">Edit Employee</a><button class="blue-btn" type="button" onclick="location.href= '/add/employee'">Add New Employee</button>
+                    </div>
+                </div>
+                </div>
+           
+            </div>
+
+   <script src='{% static "assets/js/manpower_management.js" %}?v={% now "Y-m-dH:i:s"%}'></script>
+
+{% endblock %}

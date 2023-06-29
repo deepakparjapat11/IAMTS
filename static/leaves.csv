@@ -1,0 +1,6 @@
+EmployeeId,From,To,LeaveType,Description,Status
+3443,28-01-2021,29-01-2021,sick,For urgent work,pending
+
+Note: 1. Please follow the date format : DD-MM-YYYY.
+2. Status maintain in system are "pending" "approved" "rejected" and default status is "pending".
+3. Before upload remove the "Note" from file.

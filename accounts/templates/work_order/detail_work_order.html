@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+{% if messages %}
+    {% for message in messages %}
+        {% if message is not None %}
+            <div id="success-alert" class="messagelist alert {% if message.tags %} alert-{{ message.tags }} {% endif %}">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a>
+              {{ message }}
+            </div>
+        {% endif %}
+    {% endfor %}
+{% endif %}
+
+
+    <div class="main-content">
+        <div class="topbar">
+            <div class="topleft-sec">
+                <h1>Hi <span class="user-text">{{request.user.first_name}} {{request.user.last_name}},</span> Welcome Back!</h1>
+                <div class="sub-txt">Welcome to <span class="text-highlight">iamts</span> dashboard</div>
+            </div>
+            
+        </div>
+        <div class="topbar top-link-sec">
+            <div class="">
+                <ul class="menu-link bread-crumbs">
+                    <li><a href="{% url 'Work_order' %}" title="Work Order Management">Work Order Management</a></li>
+                    <li><a href="{% url 'list_order' %}" title="Work Orders">Work Orders</a></li>
+                    <li><a href="javascript:void(0);" class="link-active" title="Work Order Details">Work Order Details</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="">
+            <div class="head-info head-section">
+                <div class="botom-border">
+                    <h2>Work Order Details</h2>
+                    
+                </div>
+            </div>
+            <div class="block-mode pt-4">
+               <div class="row pb-lg-3">
+                   <div class="col-lg-12 col-md-12 col-sm-12">
+                       <div class="row mb-lg-3 mb-md-0 mb-sm-0 mb-0">
+                           <div class="col-lg-3 col-sm-6 col-12 mb-lg-0 mb-md-3 mb-sm-3 mb-3 pr-lg-2 pr-md-2 pr-sm-2 pr-lg-0 ">
+                               <div class="grey-blk">
+                                    <h3 class="grey-heading">Work Order Number</h3>
+                                    <div class="bold-detail">{{work_order.work_order_no}}</div>
+                                </div>
+                           </div>
+                           <div class="col-lg-3 col-sm-6 col-12 mb-lg-0 mb-md-3 mb-sm-3 mb-3 pr-lg-2 pr-md-2 pr-sm-2 pr-lg-0">
+                               <div class="grey-blk">
+                                    <h3 class="grey-heading">Bus ID</h3>
+                                    {% if work_order.req_type == "1" %}
+                                        <div class="bold-detail" >{{work_order.repair_req.bus.bus_id}}</div>
+                                    {% endif %}
+                                    {% if work_order.req_type == "2" %}
+                                        <div class="bold-detail" >{{work_order.service_req.bus.bus_id}}</div>
+                                    {% endif %}
+                                </div>
+                           </div>
+                           <div class="col-lg-3 col-sm-6 col-12 mb-lg-0 mb-md-3 mb-sm-3 mb-3 pr-lg-2 pr-md-2 pr-sm-2 pr-lg-0">
+                               <div class="grey-blk">
+                                    <h3 class="grey-heading">Requested by</h3>
+                                    <div class="bold-detail">{{work_order.req_by.first_name}} {{work_order.req_by.last_name}}</div>
+                                </div>
+                           </div>
+                           <div class="col-lg-3 col-sm-6 col-12 mb-lg-0 mb-md-3 mb-sm-3 mb-3 pr-lg-2 pr-md-2 pr-sm-2 pr-lg-0">
+                               <div class="grey-blk">
+                                    <h3 class="grey-heading">Date Assigned</h3>
+                                    <div class="bold-detail">{{work_order.assigned_date|date:"d/m/Y"}}</div>
+                                </div>
+                           </div>
+                       </div>
+                       <div class="row mb-lg-3 mb-md-0 mb-sm-0 mb-0">
+                           <div class="col-lg-3 col-sm-6 col-12 mb-lg-0 mb-md-3 mb-sm-3 mb-3 pr-lg-2 pr-md-2 pr-sm-2 pr-lg-0">
+                               <div class="grey-blk">
+                                    <h3 class="grey-heading">Employee Assigned</h3>
+                                    <div class="bold-detail">{{work_order.employee_assigned.first_name}} {{work_order.employee_assigned.last_name}}</div>
+                                </div>
+                           </div>
+                           <div class="col-lg-6 col-sm-6 col-12 mb-lg-0 mb-md-3 mb-sm-3 mb-3 pr-lg-2 pr-md-2 pr-sm-2 pr-lg-0">
+                               <div class="grey-blk">
+                                    <h3 class="grey-heading">Designation</h3>
+                                    <div class="bold-detail" >{{work_order.employee_assigned.designation.designation_name}}</div>
+                                </div>
+                           </div>
+                           <div class="col-lg-3 col-sm-6 col-12 mb-lg-0 mb-md-3 mb-sm-3 mb-3 pr-lg-2 pr-md-2 pr-sm-2 pr-lg-0">
+                               <div class="grey-blk">
+                                    <h3 class="grey-heading">Procedure</h3>
+                                    <div class="bold-detail">{{work_order.procedure}}</div>
+                                </div>
+                           </div>
+                       </div>
+                      
+
+                   </div>
+                   <div class="col-lg-12 mb-sm-3 mb-xs-3 mb-3">
+                       <div class="grey-blk paragraph">
+                            <h3 class="grey-heading">Supervisor's description of problem</h3>
+                            <div class="bold-detail" id="description">{{work_order.supervisor_description}}</div>
+                        </div>
+                        
+                   </div>
+                   
+                   	<div class="col-lg-12">
+                   		<div class="grey-blk paragraph">
+
+                            <h3 class="grey-heading">Mechanics Comments</h3>
+                            {% if work_order.mechanics_description %}
+                                <div class="bold-detail" >{{work_order.mechanics_description}}</div>
+                            {% else %}
+                                <div class="bold-detail" >NA</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                   
+               </div>
+            </div>
+
+            <div class="form-btn-sec">
+                <a href="/order/{{work_order.id}}" class="blue-btn mr-3 grey-btn" id="edit_button">Edit</a><button class="blue-btn" type="button" onclick="location.href= '/add/order'">Add Work Order</button>
+            </div>
+        </div>
+    </div>
+
+<script src='{% static "assets/js/work_order.js" %}?v={% now "Y-m-dH:i:s"%}'></script>
+
+{% endblock %}

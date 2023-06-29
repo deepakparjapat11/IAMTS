@@ -1,0 +1,223 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+{% if messages %}
+    {% for message in messages %}
+        {% if message is not None %}
+            <div id="success-alert" class="messagelist alert {% if message.tags %} alert-{{ message.tags }} {% endif %}">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a>
+              {{ message }}
+            </div>
+        {% endif %}
+    {% endfor %}
+{% endif %}
+
+            <div class="main-content add-roster">
+                <!-- The Modal -->
+                <div class="modal fade pr-0" id="myModal">
+                <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content cus-modal">
+
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                      <h1 class="modal-title">New Roster Added</h1>
+                      <button type="button" class="close" onclick="location.href= '/list/roster'">&times;</button>
+                    </div>
+                    <div class="modal-detail">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-6 pr-1">
+                                <div class="grey-blk text-center">
+                                    <h2 class="grey-heading">Roster Number</h2>
+                                    <div class="bold-detail" id="emp_id"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-6 pl-1">
+                                <div class="grey-blk text-center">
+                                    <h2 class="grey-heading">No. of Members</h2>
+                                    <div class="bold-detail" id="joning"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <button class="blue-btn modal-btn" onclick="location.href= '/list/roster'">OK</button>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+                </div>
+                <!-- The Modal end -->
+                <div class="topbar">
+                    <div class="topleft-sec">
+                        <h1>Hi <span class="user-text">{{request.user.first_name}} {{request.user.last_name}},</span> Welcome Back!</h1>
+                        <div class="sub-txt">Welcome to <span class="text-highlight">iamts</span> dashboard</div>
+                    </div>
+                </div>
+                <div class="topbar top-link-sec">
+                    <div class="">
+                        <ul class="menu-link bread-crumbs">
+                            <li><a href="{% url 'manpower_dashboard' %}" title="Manpower Management">Manpower Management</a></li>
+                            <li><a href="{% url 'list_roster' %}" title="Rosters">Rosters</a></li>
+							<li><a href="javascript:void(0);" class="link-active" title="Add Roster">Add Roster</a></li>
+						</ul>
+                    </div>
+                </div>
+                <div class="">
+                    <div class="head-info head-section">
+                        <div class="botom-border">
+                            <h2>Add New Roster</h2>
+                            
+                        </div>
+                    </div>
+                    <div class="block-mode pt-4">
+                        <div class="form-sec">
+                            <form id="roster_form" method="POST" class="cus-form" enctype="multipart/form-data" autocomplete="off" >
+                            {% csrf_token %}
+                            <div class="row row-botomspc mob-less-spc">
+                                <div class="col-lg-4 col-md-4 col-sm-6 col-12 mb-3 mb-xs-3 mb-sm-3 mb-md-0 mb-lg-0">
+                                    <label>Roster Name <span class="red-astersick">*</span></label>
+                                    <div class="field-blk"><input type="text" placeholder="Roster Name" id="name" name="name"></div>
+                                </div>
+
+                                <div class="col-lg-4 col-md-4 col-sm-6 col-12 mb-3 mb-xs-3 mb-sm-3 mb-md-0 mb-lg-0 mob-less-spc">
+                                    <div class="left-field">
+                                        <label>From Date<span class="red-astersick">*</span></label>
+                                        <div class="field-blk cus-datepicker">
+                                           <i class="far fa-calendar calender-picker"></i>
+                                            <input type="text" class="form-control" id="from_date" placeholder="DD/MM/YY" name="from_date">
+                                        </div>
+                                    </div>
+                                    <div class="right-field">
+                                        <label>To Date<span class="red-astersick">*</span></label>
+                                        
+                                        <div class="field-blk cus-datepicker">
+                                            <i class="far fa-calendar calender-picker"></i> 
+                                            <input type="text" class="form-control" id="to_date" placeholder="DD/MM/YY" name="to_date">
+                                            <label id="error2" class="danger-msg"></label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 mob-wdth">
+                                    <div class="left-field">
+                                        <label>From Time <span class="red-astersick">*</span></label>
+                                        <div class="field-blk time-picker">
+                                           <input id="from_time" placeholder="HH:MM" name="from_time">
+
+                                        </div>
+                                    </div>
+                                    <div class="right-field">
+                                        <label>To Time<span class="red-astersick">*</span></label>
+                                        <div class="field-blk time-picker">
+                                            <input id="to_time" placeholder="HH:MM" name="to_time">
+                                            <label id="error1" class="danger-msg"></label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row row-botomspc">
+                                <div class="col-lg-4 col-md-4 col-sm-6 col-12 mb-3 mb-xs-3 mb-sm-3 mb-md-0 mb-lg-0">
+                                    <label>Status <span class="red-astersick">*</span></label>
+                                    <div class="field-blk">
+                                        <i class="arrow-down"></i>
+                                        <select name="status" id="status">
+                                          <option value="" selected disabled hidden>Choose Status</option>
+                                          {% for status_choice in status_choices %}
+                                          <option value="{{ status_choice.0 }}">{{ status_choice.1 }}</option>
+                                          {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-6 col-12 mb-3 mb-xs-3 mb-sm-3 mb-md-0 mb-lg-0">
+                                    <label>Work Days</label>
+                                    <div class="field-blk">
+                                        <div class="days-grid d-flex align-items-center">
+                                            <span id="mon" name="mon" class="days-blk" onclick="toggle_workday('mon')">Mon</span>
+                                            <span id="tue" name="tue" class="days-blk" onclick="toggle_workday('tue')">Tue</span>
+                                            <span id="wed" name="wed" class="days-blk" onclick="toggle_workday('wed')">Wed</span>
+                                            <span id="thu" name="thu" class="days-blk" onclick="toggle_workday('thu')">Thu</span>
+                                            <span id="fri" name="fri" class="days-blk" onclick="toggle_workday('fri')">Fri</span>
+                                            <span id="sat" name="sat" class="days-blk" onclick="toggle_workday('sat')">Sat</span>
+                                            <span id="sun" name="sun" class="days-blk" onclick="toggle_workday('sun')">Sun</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <label>Choose Department <span class="red-astersick">*</span></label>
+                                     <div class="field-blk">
+                                        <i class="arrow-down"></i>
+                                        <select id="category" name="department">
+                                          <option value="" selected disabled hidden>Choose Department</option>
+                                          {% for category_choice in category_choices %}
+                                          <option value="{{ category_choice.id }}">{{ category_choice.department_name }}</option>
+                                          {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row row-botomspc mob-less-spc">
+
+                                  <div class="col-lg-4 col-md-4 col-sm-6 col-12 mb-3 mb-xs-3 mb-sm-3 mb-md-0 mb-lg-0">
+                                    <label>Roster No. <span class="red-astersick">*</span></label>
+                                    <div class="field-blk"><input type="text" placeholder="Roster No." id="roster_number" name="roster_no"></div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <label>Add Members</label>
+                                    <div class="field-blk multiple-sel">
+                                        <select multiple data-style="bg-white rounded-pill px-4 py-3 shadow-sm " title="Select Members" class="selectpicker w-100" id="member_search_input" name="members">
+
+                                            <option disabled>No Members Found</option>
+
+                                        </select>
+                                    </div>
+
+                                    <div class="lowht-scroll">
+                                         <div id="member_search_dropdown">
+                                         </div>
+                                        <div class="no-data"> No member found.</div>
+                                     </div>
+                                </div>
+                                <div class="multiple-blk">
+                                    <div class="blk-container" id="member_list">
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        </div>
+                    </div>
+                    <div class="form-btn-sec">
+                        <button class="blue-btn mr-3 grey-btn" title="Cancel" type="button" onclick="window.history.back()">Cancel</button><button class="blue-btn" type="button"  title="Add Roster" onclick="create_roster();">Add Roster</button>
+                    </div>
+                </div>
+            </div>
+<script>
+    $('#from_date').datepicker({
+    format: 'dd/mm/yyyy',
+    "autoclose": true
+    });
+    $('#to_date').datepicker({
+    format: 'dd/mm/yyyy',
+    "autoclose": true
+    });
+</script>
+
+<script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
+
+<script>
+        $('#from_time').timepicker({
+            uiLibrary: 'bootstrap4'
+        });
+        $('#to_time').timepicker({
+            uiLibrary: 'bootstrap4'
+        });
+    </script>
+
+<script src='{% static "assets/js/additional-methods.js" %}'></script>
+
+
+<script src='{% static "assets/js/roster_management.js" %}?v={% now "Y-m-dH:i:s"%}'></script>
+
+
+{% endblock %}

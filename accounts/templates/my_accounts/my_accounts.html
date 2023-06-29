@@ -1,0 +1,225 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+
+            <div class="main-content">
+                <div class="modal fade pr-0" id="imageModal">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content cus-modal profile-modal">
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                          <h1 class="modal-title">Upload Profile Picture</h1>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+                            <form id="image_form" method="POST" class="cus-form"  autocomplete="off">
+                                {% csrf_token %}
+                                <div class="modal-detail">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="field-blk">
+                                                <label>Profile Picture <span class="red-astersick">*</span></label>
+                                            <div class="field-blk">
+                                                <div class="upload-outer">
+                                                <label class="label-select profile_picture" id="msg-upload">Accepted: jpg, jpeg, png</label>
+                                                <a href="javascript:void(0);" class="upload-btn"><i class="upload-icon"></i>Upload File</a>
+                                                <div class="cus-upload"><input class="" type="file" id="profile_picture" name="profile_picture"></div>
+                                                     <span id="profile_picture1" class="cust-errors"></span>
+                                                </div>
+                                            </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="text-center">
+                                        <button type="button" class="blue-btn modal-btn unique" onclick="submit_image()">Submit</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                  <!-- The Modal end -->
+                <div class="modal fade pr-0" id="editModal">
+                    <div class="modal-dialog modal-dialog-centered">
+                      <div class="modal-content cus-modal">
+
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                          <h1 class="modal-title">Edit Profile</h1>
+                          <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+                        <form id="add_employee_form" method="POST" class="cus-form"  autocomplete="off">
+                            {% csrf_token %}
+                            <div class="modal-detail">
+                                <div class="row row-botomspc">
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-12 mb-3 mb-sm-3 mb-md-2 mb-lg-2 pr-lg-0 pr-md-0 pr-lg-0 pr-sm-0 pr-3">
+                                        <label>First Name <span class="red-astersick">*</span></label>
+                                        <div class="field-blk"><input type="text" placeholder="Jhon" name="first_name" value="{{request.user.first_name}}"></div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-12 mb-3  mb-sm-3 mb-md-2 mb-lg-2">
+                                        <label>Last Name <span class="red-astersick">*</span></label>
+                                        <div class="field-blk"><input type="text" placeholder="Doe" name="last_name" value="{{request.user.last_name}}"></div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6 mb-3 mb-sm-3 mb-md-2 mb-lg-2 pr-lg-0 pr-md-0 pr-lg-0 pr-sm-0 pr-3">
+                                        <label>Email <span class="red-astersick">*</span></label>
+                                        <div class="field-blk"><input type="text" placeholder="Eg. hello@gmail.com" name="email" value="{{request.user.email}}" disabled></div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-12 mb-3 mb-sm-3 mb-md-2 mb-lg-2">
+                                        <label>Employee ID <span class="red-astersick">*</span></label>
+                                        <div class="field-blk"><input type="text" placeholder="Eg. 223323" name="employee_id" disabled value="{{request.user.employee_id}}"></div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-12 mb-3 mb-sm-3 mb-md-0 mb-lg-0 pr-lg-0 pr-md-0 pr-lg-0 pr-sm-0 pr-3">
+                                        <label>Contact Number</label>
+                                        <div class="field-blk"><input type="text" placeholder="Eg. 00000-000-0000" name="contact" value="{{request.user.contact}}"></div>
+                                    </div>
+                                </div>
+                                <div class="text-center">
+                                    <button type="button" class="blue-btn modal-btn unique mt-0" onclick="submit_edit()">Submit</button>
+                                </div>
+                            </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- The Modal end -->
+                <div class="topbar">
+                    <div class="topleft-sec">
+                        <h1>Hi <span class="user-text">{{request.user.first_name}} {{request.user.last_name}},</span> Welcome Back!</h1>
+                        <div class="sub-txt">Welcome to <span class="text-highlight">iamts</span> dashboard</div>
+                    </div>
+                    <!-- <div class="topright-sec">
+                        <div class="switch-section">
+                            <span class="switch-txt">Switch To Dark Mode</span>
+                            <label class="switch">
+                              <input type="checkbox">
+                              <span class="slider round"></span>
+                            </label>
+                        </div>
+                        <button type="button" class="blue-btn">Export Data <i class="export-icon"></i></button>
+                    </div> -->
+                </div>
+                <div class="topbar top-link-sec">
+                    <div class="">
+                        <ul class="menu-link bread-crumbs">
+                            <li><a href="javascript:void(0);" title="Settings"> Settings</a></li>
+                            <li><a href="javascript:void(0);" class="link-active" title="Profile Settings">Profile Settings</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="">
+                    <div class="head-info head-section">
+                        <div class="botom-border">
+                            <h2>My Account <!-- &#38; Dashboard Settings --></h2>
+                            <!-- <p>Lorem Ipsum is simply dummy text of the printing</p> -->
+                            <!-- <div class="block-outer block-mode">
+                            <div class="left-blk">
+                                <ul class="filter pt-0">
+                                    <li><a class="filter-item filter-active" id="active" href="javascript:void(0);" title="Day">My Account</a></li>
+                                     <li><a class="filter-item" href="{% url 'settings' %}" id="all" title="Week" >Dashboard Settings</a></li> 
+                                </ul>
+                            </div>
+<!--                            <div class="right-blk">-->
+<!--                                <button class="blue-btn" type="button" onclick="location.href= '/logout/'">Logout</button>-->
+<!--                            </div>-->
+                        <!-- </div> -->
+                        </div>
+                    </div>
+                    <div class="block-mode pt-4">
+                        <div class="blocks">
+                        	<div class="row mb-lg-2 mb-md-0 mb-sm-0 mb-0 cus-spacing">
+                                    <div class="col-lg-3 mb-md-3 col-sm-12 col-md-3 col-sm-6 col-12 side-space fixed-ht">
+                                        {% if request.user.profile_picture %}
+                                            <img id="profile" src="/media/{{request.user.profile_picture}}" width="371" height="249" alt="User Image">
+                                        {% else %}
+                                            <img  src="/static/assets/images/default-Image.jpg" width="371" height="249" alt="User Image">
+                                        {% endif %}
+                                    </div>
+                                <div class="col-lg-9 col-md-9 col-sm-12 col-12 side-space">
+                                    <div class="pc-hide">
+                                        <button class="blue-btn white-btn" data-toggle="modal" data-target="#imageModal" type="button" title="Upload Image">Upload Image</button>
+                                    </div>
+                                    <div class="row custum-padding">
+                                        <div class="col-lg-4 col-md-6 col-sm-6 col-12 side-space mb-3">
+                                            <div class="grey-blk">
+                                                <h3 class="grey-heading">Name</h3>
+                                                <div class="bold-detail">{{request.user.first_name}} {{request.user.last_name}}</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6 col-sm-6 col-12 side-space mb-3">
+                                            <div class="grey-blk">
+                                                <h3 class="grey-heading">Employee ID</h3>
+                                                <div class="bold-detail">{{request.user.employee_id}}</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6 col-sm-6 col-12 side-space mb-3">
+                                            <div class="grey-blk">
+                                                <h3 class="grey-heading">Email</h3>
+                                                <div class="bold-detail cus-text-blk">{{request.user.email}}</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6 col-sm-6 col-12 side-space mb-3">
+                                            <div class="grey-blk">
+                                                <h3 class="grey-heading">Phone Number</h3>
+                                                {% if request.user.contact %}
+                                                    <div class="bold-detail" >{{request.user.contact}}</div>
+                                                {% else %}
+                                                    <div class="bold-detail" >NA</div>
+                                                {% endif %}
+                                            </div>
+                                         </div>
+<!--                                         <div class="col-lg-4 col-md-6 col-sm-6 col-12 side-space">-->
+<!--                                            <div class="grey-blk">-->
+<!--                                                <h3 class="grey-heading">Department</h3>-->
+<!--                                                <div class="bold-detail" id="contact">Technician</div>-->
+<!--                                            </div>-->
+<!--                                         </div>-->
+<!--                                        <div class="col-lg-4 col-md-6 col-sm-6 col-12 side-space">-->
+<!--                                            <div class="grey-blk">-->
+<!--                                                <h3 class="grey-heading">Designation</h3>-->
+<!--                                                <div class="bold-detail" id="contact">Technician</div>-->
+<!--                                            </div>-->
+<!--                                         </div>-->
+                                        <div class="col-lg-4 col-md-6 col-sm-6 col-12 side-space">
+                                            <div class="grey-blk">
+                                                <h3 class="grey-heading">Joining Date</h3>
+                                                {% if request.user.joining_date %}
+                                                    <div class="bold-detail" >{{request.user.joining_date | date:"d/m/Y"}}</div>
+                                                {% else %}
+                                                    <div class="bold-detail" >NA</div>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+<!--                                         <div class="col-lg-4 col-md-6 col-sm-6 col-12 side-space chk-opt">-->
+<!--                                            <div class="grey-blk">-->
+<!--                                                <div class="user-options">-->
+<!--                                                    <label class="custum-container"><input type="checkbox"><span class="checkmark"></span><span class="chk-txt">Email Alert</span></label>-->
+<!--                                                </div>-->
+<!--                                                <div class="user-options">-->
+<!--                                                     <label class="custum-container"><input type="checkbox"><span class="checkmark"></span><span class="chk-txt">Hide Profile Page</span></label>-->
+<!--                                                </div>-->
+<!--                                            </div>-->
+<!--                                         </div>-->
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                <div class="image-upload">
+                                    <button class="blue-btn" type="button" data-toggle="modal" data-target="#imageModal"  title="Upload Image">Upload Image</button>
+                                </div>
+                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-btn-sec">
+                        <button class="blue-btn wide-btn" type="button" data-toggle="modal" data-target="#editModal">Edit</button>
+                    </div>
+                </div>
+                </div>
+           
+            </div>
+<script src='{% static "assets/js/jquery-input-mask-phone-number.js" %}'></script>
+<script src='{% static "assets/js/my_account.js" %}?v={% now "Y-m-dH:i:s"%}'></script>
+
+{% endblock %}

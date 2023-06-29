@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+			<div class="main-content permission cus-searchbox">
+				<div class="topbar">
+					<div class="topleft-sec">
+						<h1>Hi <span class="user-text">{{request.user.first_name}} {{request.user.last_name}},</span> Welcome Back!</h1>
+						<div class="sub-txt">Welcome to <span class="text-highlight">iamts</span> dashboard</div>
+					</div>
+					<div class="topright-sec">
+					</div>
+				</div>
+				<div class="topbar top-link-sec">
+					<div class="topleft-sec">
+						<ul class="menu-link bread-crumbs">
+							<li><a href="javascript:void(0);" title="User Administration">User Administration</a></li>
+							<li><a href="javascript:void(0);" class="link-active" title="Users">Users</a></li>
+						</ul>
+					</div>
+					<div class="topright-sec">
+					</div>
+				</div>
+				<div class="block-mode space-lg bus-list pb-0">
+					<div class="head-info">
+						<div class="left-blk">
+							<h2>Roles and Permissions</h2>
+							<div class="field-blk select-blk">
+                                <i class="arrow-down"></i>
+                                <select id="department" name="department" class="cus-select">
+                                  <option value="" selected >All Department</option>
+                                  {% for category_choice in departments %}
+                                  	<option value="{{ category_choice.id }}">{{ category_choice.department_name }}</option>
+                                  {% endfor %}
+                                </select>
+                            </div>
+						</div>
+						<div class="right-blk type-view">
+							<div class="search-box">
+							</div>
+							<ul class="rightmenu-link">
+							</ul>
+						</div>
+						
+					</div>
+					<div class="">
+						<div class="permision-outer">
+							<table class="permissions-table full-width" id="roles-body">
+							  <tr class="header-row">
+							    <th rowspan="2" class="fxd-cell-wdth border-rt">Designation Roles</th>
+							    <th colspan="10" class="text-center border-botom">Permissions</th>
+							  </tr>
+							  <tr>
+							    <td class="text-center">Main Dashboard</td>
+							    <td class="text-center">Bus Management</td>
+							    <td class="text-center">Repair Request</td>
+							    <td class="text-center">Manpower Management</td>
+							    <td class="text-center">Work Order Management</td>
+							    <td class="text-center">Service Request</td>
+							    <td class="text-center">User Administration</td>
+							    <td class="text-center">Bus Edit Privileges</td>
+							    <td class="text-center">WO Show Privileges</td>
+							    <td class="text-center">RR Email Privileges</td>
+							  </tr>
+
+							</table>
+							<div id="no-data"></div>
+							</div>
+						</div>
+				</div>
+			</div>
+<script src='{% static "assets/js/roles_and_permission.js" %}?v={% now "Y-m-dH:i:s"%}'></script>
+{% endblock %}

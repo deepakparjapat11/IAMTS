@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+			<div class="main-content permission cus-searchbox">
+				<div class="topbar">
+					<div class="topleft-sec">
+						<h1>Hi <span class="user-text">{{request.user.first_name}} {{request.user.last_name}},</span> Welcome Back!</h1>
+						<div class="sub-txt">Welcome to <span class="text-highlight">iamts</span> dashboard</div>
+					</div>
+					<div class="topright-sec">
+						<!-- <div class="switch-section">
+							<span class="switch-txt">Switch To Dark Mode</span>
+							<label class="switch">
+							  <input type="checkbox">
+							  <span class="slider round"></span>
+							</label>
+						</div> -->
+						<button type="button" class="blue-btn" onclick="export_data()">Export Data <i class="export-icon"></i></button>
+					</div>
+				</div>
+				<div class="topbar top-link-sec">
+					<div class="topleft-sec">
+						<ul class="menu-link bread-crumbs">
+							<li><a href="{% url 'manpower_dashboard' %}" title="Manpower Management">Manpower Dashboard</a></li>
+							<li><a href="javascript:void(0);" class="link-active" title="Leaves">Leaves</a></li>
+						</ul>
+					</div>
+					<div class="topright-sec">
+						<!-- <ul class="rightmenu-link">
+							<li><a href="javascript:void(0);" title="Save Report"><i class="report-icon"></i>Save Report</a></li>
+							<li><a href="/api/v1/export/leaves" title="Export pdf"><i class="pdf-icon"></i>Export pdf</a></li>
+							<li><a href="/api/v1/export/leaves?email" title="Send to Email"><i class="mail-icon"></i>Send to Email</a></li>
+						</ul> -->
+						
+					</div>
+				</div>
+				<div class="block-mode space-lg bus-list pb-0">
+					<div class="head-info">
+						<div class="left-blk">
+							<h2>Roles and Permissions</h2>
+							<!-- <p>Lorem Ipsum is simply dummy text of the printing</p> -->
+						</div>
+						<div class="right-blk type-view">
+							<div class="search-box">
+								<input type="text" placeholder="Search"><button class="lt-blue-btn" type="button" title="Search User">Search</button>
+							</div>
+						</div>
+						
+					</div>
+					
+						<div class="">
+						<div class="permision-outer">
+							<table class="permissions-table full-width">
+							  <tr class="header-row">
+							    <th rowspan="2" class="fxd-cell-wdth border-rt">Permissions</th>
+							    <th colspan="8" class="text-center border-botom">Roles</th>
+							  </tr>
+							  <tr>
+							    <td class="text-center">Administrator</td>
+							    <td class="text-center">Maintainance</td>
+							    <td class="text-center">Dispatcher</td>
+							    <td class="text-center">Technician</td>
+							    <td class="text-center">Bodyman</td>
+							    <td class="text-center">Operator</td>
+							    <td class="text-center">Fuel Attendant</td>
+							    <td class="text-center">Cleaner</td>
+							  </tr>
+							  <tr class="top-border">
+							  	<td class="border-rt">Bus Management</td>
+							    <td class="check-blk text-center"><label class="custum-container"><input type="checkbox"><span class="checkmark"></span></label></td>
+							    <td class="check-blk text-center"><label class="custum-container"><input type="checkbox"><span class="checkmark"></span></label></td>
+							    <td class="check-blk text-center"><label class="custum-container"><input type="checkbox"><span class="checkmark"></span></label></td>
+							    <td class="check-blk text-center"><label class="custum-container"><input type="checkbox"><span class="checkmark"></span></label></td>
+							   	<td class="check-blk text-center"><label class="custum-container"><input type="checkbox"><span class="checkmark"></span></label></td>
+							    <td class="check-blk text-center"><label class="custum-container"><input type="checkbox"><span class="checkmark"></span></label></td>
+							    <td class="check-blk text-center"><label class="custum-container"><input type="checkbox"><span class="checkmark"></span></label></td>
+							    <td class="check-blk text-center"><label class="custum-container"><input type="checkbox"><span class="checkmark"></span></label></td>
+							  </tr>
+							  <tr class="top-border">
+							  	<td class="border-rt">Roster Management</td>
+							    <td class="check-blk text-center"><label class="custum-container"><input type="checkbox"><span class="checkmark"></span></label></td>
+							    <td class="check-blk text-center"><label class="custum-container"><input type="checkbox"><span class="checkmark"></span></label></td>
+							    <td class="check-blk text-center"><label class="custum-container"><input type="checkbox"><span class="checkmark"></span></label></td>
+							    <td class="check-blk text-center"><label class="custum-container"><input type="checkbox"><span class="checkmark"></span></label></td>
+							   	<td class="check-blk text-center"><label class="custum-container"><input type="checkbox"><span class="checkmark"></span></label></td>
+							    <td class="check-blk text-center"><label class="custum-container"><input type="checkbox"><span class="checkmark"></span></label></td>
+							    <td class="check-blk text-center"><label class="custum-container"><input type="checkbox"><span class="checkmark"></span></label></td>
+							    <td class="check-blk text-center"><label class="custum-container"><input type="checkbox"><span class="checkmark"></span></label></td>
+							  </tr>
+							</table>
+							</div>
+						</div>
+					
+
+
+				</div>
+			</div>
+<script src='{% static "assets/js/leave_management.js" %}?v={% now "Y-m-dH:i:s"%}'></script>
+{% endblock %}

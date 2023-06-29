@@ -1,0 +1,264 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+{% if messages %}
+    {% for message in messages %}
+        {% if message is not None %}
+            <div id="success-alert" class="messagelist alert {% if message.tags %} alert-{{ message.tags }} {% endif %}">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a>
+              {{ message }}
+            </div>
+        {% endif %}
+    {% endfor %}
+{% endif %}
+
+
+    <div class="main-content">
+
+          <div class="modal fade pr-0" id="myModal">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content cus-modal">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                  <h1 class="modal-title">Please select next service date for this bus.</h1>
+                </div>
+                <form id="cancel_form" method="POST" class="cus-form"  autocomplete="off">
+                    {% csrf_token %}
+                    <div class="modal-detail">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="field-blk">
+                                    <label>Schedule Service <span class="red-astersick">*</span></label>
+                                <div class="field-blk cus-datepicker">
+                                   <i class="far fa-calendar calender-picker"></i>
+                                    <input type="text" class="form-control" id="schedule_service" placeholder="mm/dd/yyyy" name="schedule_service">
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <button type="button" class="blue-btn modal-btn unique" onclick="submit_order()">Submit</button>
+                        </div>
+                    </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          <!-- The Modal end -->
+        <div class="topbar">
+            <div class="topleft-sec">
+                <h1>Hi <span class="user-text">{{request.user.first_name}} {{request.user.last_name}},</span> Welcome Back!</h1>
+                <div class="sub-txt">Welcome to <span class="text-highlight">iamts</span> dashboard</div>
+            </div>
+            
+        </div>
+        <div class="topbar top-link-sec">
+            <div class="">
+                <ul class="menu-link bread-crumbs">
+                    <li><a href="{% url 'Work_order' %}" title="Bus Management">Work Order Management</a></li>
+                    <li><a href="{% url 'list_order' %}" title="Work Orders">Work Orders</a></li>
+                    <li><a href="javascript:void(0);" class="link-active" title="Edit Work Order">Edit Work Order</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="">
+            <div class="head-info head-section">
+                <div class="botom-border">
+                    <h2>Edit Work Order</h2>
+                    
+                </div>
+            </div>
+            <div class="block-mode pt-4">
+                <div class="form-sec">
+                    <form id="work_order_form" method="PUT" class="cus-form">
+                        {% csrf_token %}
+                        <div class="row row-botomspc mob-less-spc">
+                            <div class="col-lg-4 col-md-4 col-sm-6 col-12 mb-3 mb-xs-3 mb-sm-3 mb-md-0 mb-lg-0">
+                                <label>Work Order Number <span class="red-astersick">*</span></label>
+                                <div class="field-blk"><input type="text" placeholder="Eg.45789" id="work_order_no" name="work_order_no" disabled></div>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-6 col-12 mb-3 mb-xs-3 mb-sm-3 mb-md-0 mb-lg-0">
+                                <label>Request Type<span class="red-astersick">*</span></label>
+                                <div class="field-blk">
+
+                                    <select name="req_type" id="req_type" disabled>
+                                    <option selected disabled hidden>Select Request</option>
+                                    <option value="1">Repair Request</option>
+                                    <option value="2">Service Request</option>
+                                </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-6 col-12 mb-3 mb-xs-3 mb-sm-3 mb-md-0 mb-lg-0">
+                                <label>Request No.<span class="red-astersick">*</span></label>
+                                <div class="field-blk">
+                                    <input type="text" id="req_no" name="req_no" disabled>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row row-botomspc mob-less-spc">
+                            
+                            <div class="col-lg-4 col-md-4 col-sm-6 col-12 mb-3 mb-xs-3 mb-sm-3 mb-md-0 mb-lg-0">
+                                <label>Bus Id <span class="red-astersick">*</span></label>
+                                <div class="field-blk"><input type="text" placeholder="Eg. 2515AD" name="bus_id" disabled></div>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-6 col-12 mb-3 mb-xs-3 mb-sm-3 mb-md-0 mb-lg-0">
+                                <label>Bus Status </label>
+                                <div class="field-blk">
+                                    <i class="arrow-down"></i>
+                                    <select name="bus_status" id="bus_status">
+                                        <option selected disabled hidden>Select Buses</option>
+                                        <option value="1">In Service</option>
+                                        <option value="2">Out Of Service</option>
+                                        <option value="3">Short Service</option>
+                                        <option value="4">Awaiting parts</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-6 col-12 mb-3 mb-xs-3 mb-sm-3 mb-md-0 mb-lg-0">
+                                <label>Procedure </label>
+                                <div class="field-blk">
+                                    <i class="arrow-down"></i>
+                                    <select name="procedure" id="procedure">
+                                        <option selected disabled hidden>Select Procedure</option>
+                                        <option value="Breakdown repair">Breakdown repair</option>
+                                        <option value="Maintenance-General">Maintenance-General</option>
+                                        <option value="T.C.D. Testing">T.C.D. Testing</option>
+                                        <option value="PMA- Oil Change">PMA- Oil Change</option>
+                                        <option value="PMB – Intermediate Service">PMB – Intermediate Service</option>
+                                        <option value="PMC – Full Service">PMC – Full Service</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row row-botomspc mob-less-spc">
+                            <div class="col-lg-4 col-md-4 col-sm-6 col-12 mb-3 mb-xs-3 mb-sm-3 mb-md-0 mb-lg-0">
+                            <label>Bus System <span class="red-astersick">*</span></label>
+                                <div class="field-blk">
+                                    <i class="arrow-down"></i>
+                                    <select name="bus_system">
+                                        <option selected disabled hidden>Select System</option>
+                                        <option value="Engine">Engine</option>
+                                        <option value="Transmission">Transmission</option>
+                                        <option value="Electrical">Electrical</option>
+                                        <option value="Brakes">Brakes</option>
+                                        <option value="Tires">Tires</option>
+                                        <option value="Seats">Seats</option>
+                                        <option value="Suspension">Suspension</option>
+                                        <option value="Accident/Not reported">Accident/Not reported</option>
+                                        <option value="Accident/Reported">Accident/Reported</option>
+                                        <option value="Body Work">Body Work</option>
+                                        <option value="Air Condition">Air Condition</option>
+                                        <option value="Radio">Radio</option>
+                                        <option value="P.M">P.M</option>
+                                        <option value="No keys">No keys</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-6 col-12 mb-3 mb-xs-3 mb-sm-3 mb-md-0 mb-lg-0">
+                                <label>Date Assigned <span class="red-astersick">*</span></label>
+                                <div class="field-blk cus-datepicker">
+                                   <i class="far fa-calendar calender-picker"></i>
+                                    <input type="text" class="form-control" id="date" placeholder="DD/MM/YYYY" name="date" disabled>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-6 col-12 mb-3 mb-xs-3 mb-sm-3 mb-md-0 mb-lg-0">
+                                <label>Employee Assigned To <span class="red-astersick">*</span></label>
+                                <div class="field-blk">
+                                    <i class="arrow-down"></i>
+                                    <select name="employee_assigned" id="employee_assigned">
+                                        <option selected disabled hidden>Select Employee</option>
+                                        {% if user %}
+                                            {% for emp in user %}
+                                                <option value="{{emp.id}}">{{emp.first_name}} {{emp.last_name}}</option>
+                                            {% endfor %}
+                                        {% else %}
+                                            <option value="" selected disabled hidden>No options</option>
+                                        {% endif %}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row row-botomspc mob-less-spc" id="hide_feat">
+                            <div class="col-lg-4 col-md-4 col-sm-6 col-12 mb-3 mb-xs-3 mb-sm-3 mb-md-0 mb-lg-0">
+                                <label>Designation <span class="red-astersick">*</span></label>
+                                <div class="field-blk"><input type="text" placeholder="" id="designation" name="designation" disabled></div>
+                            </div>
+                             <div class="col-lg-4 col-md-4 col-sm-6 col-12 mb-3 mb-xs-3 mb-sm-3 mb-md-0 mb-lg-0">
+                                <label>Hourly Rate <span class="red-astersick">*</span></label>
+                                <div class="field-blk"><input type="number" placeholder="" id="hourly_rate" name="hourly_rate"></div>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-6 col-12 mb-3 mb-xs-3 mb-sm-3 mb-md-0 mb-lg-0">
+                                <label>Work Order Status <span class="red-astersick">*</span></label>
+                                <div class="field-blk">
+                                    <i class="arrow-down"></i>
+                                    <select name="order_status" id="order_status">
+                                        <option selected disabled hidden>Select Request</option>
+                                        <option value="1" id="open">Open</option>
+                                        <option value="2" id="progress">In Progress</option>
+                                        <option value="4" id="hold">Hold/Awaiting parts</option>
+                                        <option value="3" id="close">Close</option>
+                                    </select>
+
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <div class="row row-botomspc">
+                            <div class="col-lg-12">
+                                <label>Supervisor's description of problem <span class="red-astersick">*</span></label>
+                                <div class="field-blk">
+                                    <textarea  rows="4" placeholder="Description" name="supervisor_description"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row row-botomspc">
+                            <div class="col-lg-12">
+                                <label>Mechanics Comments </label>
+                                <div class="field-blk">
+                                    <textarea  rows="4" placeholder="Description" name="mechanics_description"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row row-botomspc">
+                                <div class="col-lg-4 col-md-4 col-sm-6 col-12 mb-3 mb-xs-3 mb-sm-3 mb-md-0 mb-lg-0">
+                                    <label>Labor Hours Worked <span class="red-astersick">*</span></label>
+                                    <div class="field-blk"><input type="number" placeholder="" id="labor_hours" name="labor_hours" ></div>
+                                </div>
+
+                            <div class="col-lg-4 col-md-4 col-sm-6 col-12">
+                                <label>Date Completed </label>
+                                <div class="field-blk cus-datepicker">
+                                   <i class="far fa-calendar calender-picker"></i>
+                                    <input type="text" class="form-control" id="completion_date" placeholder="DD/MM/YYYY" name="completion_date">
+                                </div>
+                            </div>
+
+                        </div>
+
+                </form>
+                </div>
+            </div>
+            <div class="form-btn-sec">
+                <button class="blue-btn mr-3 grey-btn" type="button" onclick="window.history.back()" title="Cancel">Cancel</button><button class="blue-btn" type="button" onclick="check_work_order();" title="Update">Update</button>
+            </div>
+        </div>
+    </div>
+<script>
+    $('#date').datepicker({
+    format: 'dd/mm/yyyy',
+    "autoclose": true
+    });
+    $('#completion_date').datepicker({
+    format: 'dd/mm/yyyy',
+    "autoclose": true
+    });
+    $('#schedule_service').datepicker({
+    format: 'dd/mm/yyyy',
+    "autoclose": true
+    });
+</script>
+<script src='{% static "assets/js/work_order.js" %}?v={% now "Y-m-dH:i:s"%}'></script>
+
+{% endblock %}

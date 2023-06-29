@@ -1,0 +1,74 @@
+{% load static %}
+{% block content %}
+
+<div style="text-align: center;margin-bottom: 15px;"><img src="{{protocol}}://{{domain}}/static/assets/images/logo-pdf.png" width="330" height="140" alt="Iamts-Logo"></div>
+ <div style="display: inline-block;">Buses -</div> <div style="display: inline-block;"> {{ today }} </div>
+<table style="text-align: left;width: 100%;">
+
+    <tr>
+        <th style="width:35px;text-align: left;width: 70px;border: 1px solid #000;vertical-align: middle;margin-bottom: 0;padding: 4px 2px 0;">
+            S.No.
+        </th>
+        <th style="text-align: left;width: 70px;border: 1px solid #000;vertical-align: middle;margin-bottom: 0;padding: 4px 2px 0;">
+            ID
+        </th>
+        <th style="text-align: left;width: 70px;border: 1px solid #000;vertical-align: middle;margin-bottom: 0;padding: 4px 2px 0;">
+            Out of Service Date
+        </th>
+        <th style="width:120px;text-align: left;border: 1px solid #000;vertical-align: middle;margin-bottom: 0;padding: 4px 5px 0;">
+            Back in Service Date
+        </th>
+        <th style="width:100px;text-align: left;width: 120px;border: 1px solid #000;vertical-align: middle;margin-bottom: 0;padding: 4px 2px 0;">
+            Bus System
+        </th>
+        <th style="text-align: left;width: 70px;border: 1px solid #000;vertical-align: middle;margin-bottom: 0;padding: 4px 2px 0;">
+            Operations Description of Problem
+        </th>
+        <th style="width:80px;text-align: left;border: 1px solid #000;vertical-align: middle;margin-bottom: 0;padding: 4px 2px 0;">
+            Repair/Service Request No.
+        </th>
+        <th style="width:100px;text-align: left;border: 1px solid #000;vertical-align: middle;margin-bottom: 0;padding: 4px 2px 0;">
+            Work Order No.
+        </th>
+        <th style="text-align: left;width: 70px;border: 1px solid #000;vertical-align: middle;margin-bottom: 0;padding: 4px 2px 0;">
+           Status
+        </th>
+    </tr>
+    
+    {% for bus in data %}
+    <tr style="-pdf-word-wrap: CJK;">
+        <td style="width:35px;border: 1px solid #000;vertical-align: middle;padding: 4px 2px 0;">
+            {{bus.count}}
+        </td>
+        <td style="border: 1px solid #000;vertical-align: middle;padding: 4px 2px 0;">
+            {{bus.bus_id}}
+        </td>
+        <td style="border: 1px solid #000;vertical-align: middle;padding: 4px 2px 0;">
+            {{bus.out_of_service}}
+        </td>
+        <td style="width:120px;border: 1px solid #000;vertical-align: middle;padding: 4px 2px 0;">
+            {{bus.back_in_service}}
+        </td>
+
+        <td style="width:100px;border: 1px solid #000;vertical-align: middle;padding: 4px 2px 0;">
+            {{bus.bus_system}}
+        </td>
+        <td style="border: 1px solid #000;vertical-align: middle;padding: 4px 2px 0;">
+            {{bus.description}}
+        </td>
+        <td style="width:80px;border: 1px solid #000;vertical-align: middle;padding: 4px 2px 0;">
+            {{bus.request_no}}
+        </td>
+        </td>
+        <td style="border: 1px solid #000;vertical-align: middle;padding: 4px 2px 0;">
+            {{bus.order_no}}
+        </td>
+        <td style="border: 1px solid #000;vertical-align: middle;padding: 4px 2px 0;">
+            {{bus.status}}
+        </td>
+
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}

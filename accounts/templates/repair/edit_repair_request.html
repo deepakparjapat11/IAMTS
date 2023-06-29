@@ -1,0 +1,153 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+{% if messages %}
+    {% for message in messages %}
+        {% if message is not None %}
+            <div id="success-alert" class="messagelist alert {% if message.tags %} alert-{{ message.tags }} {% endif %}">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a>
+              {{ message }}
+            </div>
+        {% endif %}
+    {% endfor %}
+{% endif %}
+
+
+    <div class="main-content">
+        <div class="topbar">
+            <div class="topleft-sec">
+                <h1>Hi <span class="user-text">{{request.user.first_name}} {{request.user.last_name}},</span> Welcome Back!</h1>
+                <div class="sub-txt">Welcome to <span class="text-highlight">iamts</span> dashboard</div>
+            </div>
+        </div>
+        <div class="topbar top-link-sec">
+            <div class="">
+                <ul class="menu-link bread-crumbs">
+                    <li><a href="{% url 'bus_dashboard' %}" title="Bus Management">Bus Management</a></li>
+                    <li><a href="{% url 'repair_listing' %}" title="Repair Requests">Repair Requests</a></li>
+                    <li><a href="javascript:void(0);" class="link-active" title="Edit Request">Edit Request</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="">
+            <div class="head-info head-section">
+                <div class="botom-border">
+                    <h2>Edit Request</h2>
+                </div>
+            </div>
+            <div class="block-mode pt-4">
+                <div class="form-sec">
+                    <form id="repair_request_form" method="PUT" class="cus-form">
+                    {% csrf_token %}
+                    <div class="row row-botomspc">
+                        <div class="col-lg-4 col-md-4 col-sm-6 col-12 mb-3 mb-xs-3 mb-sm-3 mb-md-0 mb-lg-0">
+                            <label>Request No. <span class="red-astersick">*</span></label>
+                            <div class="field-blk">
+                                <input name="request_id" disabled>
+
+
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-6 col-12 mb-3 mb-xs-3 mb-sm-3 mb-md-0 mb-lg-0">
+                            <label>Raised Date </label>
+                            <div class="field-blk">
+                                <input type="date" name="created_at" disabled>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4">
+                            <label>Resolution Date <span class="red-astersick">*</span></label>
+                            <div class="field-blk cus-datepicker">
+                                <i class="far fa-calendar calender-picker"></i> 
+                                <input type="text" class="form-control" id="inputDate" placeholder="DD/MM/YY" name="resolution_date">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row row-botomspc no-phone-spc">
+                         <div class="col-lg-4 col-md-4 col-sm-6 col-12 mb-3 mb-xs-3 mb-sm-3 mb-md-0 mb-lg-0">
+                            <label>Bus Id <span class="red-astersick">*</span></label>
+                            <div class="field-blk">
+                                <select name="bus" disabled>
+                                    {% if buses %}
+                                        <option selected disabled hidden>select buses</option>
+                                        {% for item in buses %}
+                                            <option value="{{ item.id }}">{{ item.bus_id }}</option>
+                                        {% endfor %}
+                                    {% else %}
+                                        <option value="" selected disabled hidden>No options</option>
+                                    {% endif %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-6 col-12 mb-3 mb-xs-3 mb-sm-3 mb-md-0 mb-lg-0">
+                            <label>Bus Status <span class="red-astersick">*</span></label>
+                            <div class="field-blk">
+                                <i class="arrow-down"></i>
+                                <select name="bus_status">
+                                    <option selected disabled hidden>select buses</option>
+                                    <option value="1">In Service</option>
+                                    <option value="2">Out Of Service</option>
+                                    <option value="3">Short Service</option>
+                                    <option value="4">Awaiting parts</option>
+                                </select>
+                            </div>
+                        </div> 
+
+
+                        <div class="col-lg-4 col-md-4 mb-3 mb-xs-3 mb-sm-3 mb-md-0 mb-lg-0">
+                            <label>Request Assigned By <span class="red-astersick">*</span></label>
+                            <div class="field-blk">
+                                <input type="text" id="req_by" name="req_by" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row row-botomspc no-phone-spc">
+                        <div class="col-lg-4 col-md-4 col-sm-6 col-12 mb-3 mb-xs-3 mb-sm-3 mb-md-0 mb-lg-0">
+                            <label>Bus System <span class="red-astersick">*</span></label>
+                            <div class="field-blk">
+                                <i class="arrow-down"></i>
+                                <select name="bus_system">
+                                    <option value="" selected disabled hidden>Select System</option>
+                                    <option value="Engine">Engine</option>
+                                    <option value="Transmission">Transmission</option>
+                                    <option value="Electrical">Electrical</option>
+                                    <option value="Brakes">Brakes</option>
+                                    <option value="Tires">Tires</option>
+                                    <option value="Seats">Seats</option>
+                                    <option value="Suspension">Suspension</option>
+                                    <option value="Accident/Not reported">Accident/Not reported</option>
+                                    <option value="Accident/Reported">Accident/Reported</option>
+                                    <option value="Body Work">Body Work</option>
+                                    <option value="Air Condition">Air Condition</option>
+                                    <option value="Radio">Radio</option>
+                                    <option value="P.M">P.M</option>
+                                    <option value="No keys">No keys</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row row-botomspc">
+                        <div class="col-lg-12">
+                            <label>Description <span class="red-astersick">*</span></label>
+                            <div class="field-blk">
+                                <textarea  rows="4" placeholder="Enter Your Text Here" name="description"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                </div>
+            </div>
+            <div class="form-btn-sec">
+                <button class="blue-btn mr-3 grey-btn" type="button" onclick="window.history.back()" title="Cancel Request">Cancel</button><button class="blue-btn" type="button" onclick="edit_form();" title="Save Request">Save</button>
+            </div>
+        </div>
+    </div>
+<script>
+    $('#inputDate').datepicker({
+    format: 'dd/mm/yyyy',
+    "autoclose": true
+    });
+</script>
+<script src='{% static "assets/js/repair_request.js" %}?v={% now "Y-m-dH:i:s"%}'></script>
+
+{% endblock %}

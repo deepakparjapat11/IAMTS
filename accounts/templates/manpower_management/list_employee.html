@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="main-content employee-listing">
+				<div class="topbar">
+					<div class="topleft-sec">
+						<h1>Hi <span class="user-text">{{request.user.first_name}} {{request.user.last_name}},</span> Welcome Back!</h1>
+						<div class="sub-txt">Welcome to <span class="text-highlight">iamts</span> dashboard</div>
+					</div>
+					<div class="topright-sec">
+						
+						<button type="button" class="blue-btn" onclick="export_data()" title="Export Data">Export Data <i class="export-icon"></i></button>
+					</div>
+				</div>
+				<div class="topbar top-link-sec">
+					<div class="topleft-sec">
+						<ul class="menu-link bread-crumbs">
+							<li><a href="{% url 'list_roster' %}" title="Manpower Management">Manpower Management</a></li>
+							<li><a href="javascript:void(0);" class="link-active" title="Rosters">Rosters</a></li>
+						</ul>
+					</div>
+					<div class="topright-sec">
+						
+					</div>
+				</div>
+				<div class="block-mode space-lg bus-list">
+					<div class="head-info">
+						<div class="left-blk">
+							<h2>Rosters</h2>
+								<div class="field-blk full-search"><input class="search-filter" type="text" placeholder="Emp. Id, Email, Name" id="member_search_input" onkeyup="employee_search(this)"></div>
+							
+						</div>
+						<div class="right-blk type-view">
+							<ul class="rightmenu-link">
+								
+								<li><button type="button" onclick="location.href='{% url 'add_employee' %}'" class="blue-btn" title="Add New Employee">Add New Employee <i class="fas fa-plus"></i></button></li>
+							</ul>
+						</div>
+					</div>
+					<div class="listview">
+						<div class="block-outer">
+							<div class="left-blk">
+								<ul class="filter">
+									<li><a class="filter-item" href="/list/roster" id="all" title="All Rosters">All Rosters</a></li>
+									<li><a class="filter-item filter-active" id="active" href="javascript:void(0);" title="All Employees">All Employees</a></li>
+								</ul>
+							</div>
+							<div class="right-blk">
+								<ul class="cus-pagination">
+									<li style=""><a class="previous-icon" href="javascript:void(0);" title=""><i class="arrow left"></i></a></li>
+
+									<li class="next-icon-list"></li>
+									<li ><a class="next-icon" href="javascript:void(0);" title=""><i class="arrow"></i></a></li>
+								</ul>
+							</div>
+						</div>
+						<div class="table-spcing">
+							<table class="info-table list-table emp-main-table">
+								<tr class="botom-border header-row">
+									<td>Emp. Name</td>
+									<td>Emp. Id</td>
+									<td>Email</td>
+									<td>Contact Detail</td>
+									<td>Joining Date</td>
+									<td>Department</td>
+									<td>Designation</td>
+									<td>Documents</td>
+									<td>Actions</td>
+								</tr>
+							</table>
+							<div class="no-data"></div>
+						</div>
+					</div>
+					<div class="gridview">
+						<div class="table-spcing">
+							<table class="detail-table">
+							</table>
+						</div>
+					</div>
+
+				</div>
+			</div>
+<script src='{% static "assets/js/manpower_management.js" %}?v={% now "Y-m-dH:i:s"%}'></script>
+
+{% endblock %}

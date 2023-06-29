@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+</head>
+  <body style="margin: 0; padding: 0;">
+{% load static %}
+{% autoescape off %}
+        <div style="font-size:14px;max-width:600px; margin: 0 auto; background: #fcfcfc;font-family: arial;">
+            <div style="background:#163756;padding: 25px 20px 20px;text-align: center;">
+                <img src="{{protocol}}://{{domain}}/static/assets/images/header-logo.png" alt="IAMTS" width="126" height="42">
+            </div>
+           <div style="padding: 20px;background:#f4f4f4;">
+                <h1 style="font-size:20px; margin-bottom: 20px;"> {{ it_is|title }}</h1>
+				 <p style="font-size:15px;"> Hi, </p>
+                <p style="font-size:15px;"> Please find attached your requested file.</p>
+				 <br>
+                <br>
+                <div>Warm Regards,</div>
+                <div>Team <b>IAMTS</b></div>         
+            </div>
+            <div style="font-size: 15px;color:#fff;background:#163756;padding: 30px 20px;text-align: center;">&#169; 2021 IAMTS. All Rights Reserved</div>
+        </div>
+    </div>
+{% endautoescape %}
+</body>
+</html>

@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+			<div class="main-content list-order">
+				<div class="topbar">
+					<div class="topleft-sec">
+						<h1>Hi <span class="user-text">{{request.user.first_name}} {{request.user.last_name}},</span> Welcome Back!</h1>
+						<div class="sub-txt">Welcome to <span class="text-highlight">iamts</span> dashboard</div>
+					</div>
+					<div class="topright-sec">
+						<button type="button" class="blue-btn" onclick="export_data()" title="Export Data">Export Data <i class="export-icon"></i></button>
+					</div>
+				</div>
+				<div class="topbar top-link-sec">
+					<div class="topleft-sec">
+						<ul class="menu-link bread-crumbs">
+							<li><a href="{% url 'Work_order' %}" title="Work Order Management">Work Order Management</a></li>
+                    		<li><a href="javascript:void(0);" title="Work Orders">Work Orders</a></li>
+						</ul>
+					</div>
+					<div class="topright-sec">
+						
+					</div>
+				</div>
+				<div class="block-mode space-lg bus-list">
+					<div class="head-info">
+						<div class="left-blk">
+							<h2>Work Order</h2>
+							<div class="field-blk select-blk">
+                                <i class="arrow-down"></i>
+                                <select id="sort-request" name="department" class="cus-select">
+                                  <option value="0" selected >All Request</option>
+                                  <option value="1"  >Repair Request</option>
+                                  <option value="2"  >Service Request</option>
+                                </select>
+                            </div>
+
+							
+						</div>
+						<div class="right-blk type-view">
+							<ul class="rightmenu-link">
+								<li><button type="button" onclick="location.href='{% url 'add_order' %}'" class="blue-btn" title="Add Work Order">Add Work Order <i class="fas fa-plus"></i></button></li>
+							</ul>
+						</div>
+						
+					</div>
+					<div class="listview">
+						<div class="block-outer">
+							<div class="left-blk">
+								<ul class="filter">
+									<li><a class="filter-item filter-active" id="active" href="javascript:void(0);" title="Active Orders" >Active Orders</a></li>
+									<li><a class="filter-item" href="javascript:void(0);" id="closed" title="Closed Orders" >Closed Orders</a></li>
+									<li><a class="filter-item" href="javascript:void(0);" id="all" title="All Orders" >All Orders</a></li>
+								</ul>
+							</div>
+							<div class="right-blk">
+								<ul class="cus-pagination">
+									<li style=""><a class="previous-icon" href="javascript:void(0);" title=""><i class="arrow left"></i></a></li>
+									<li class="next-icon-list"></li>
+									<li ><a class="next-icon" href="javascript:void(0);" title=""><i class="arrow"></i></a></li>
+								</ul>
+
+							</div>
+						</div>
+						<div class="table-spcing">
+						<div class="listing-blk">
+							<table id="work_order_table" class="info-table list-table">
+								<tr class="botom-border header-row">
+									<td>Work Order No.</td>
+									<td>Req. Type</td>
+									<td>Req. Number</td>
+									<td>Bus ID</td>
+									<td>Bus Status</td>
+									<td>Created By</td>
+									<td>Date</td>
+									<td>Status</td>
+									<td>Actions</td>
+								</tr>
+							</table>
+							</div>
+                            <div class="empty"></div>
+						</div>
+					</div>
+
+
+				</div>
+			</div>
+<script src='{% static "assets/js/work_order.js" %}?v={% now "Y-m-dH:i:s"%}'></script>
+{% endblock %}

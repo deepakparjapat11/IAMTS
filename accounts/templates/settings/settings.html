@@ -1,0 +1,137 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+{% if messages %}
+    {% for message in messages %}
+        {% if message is not None %}
+            <div id="success-alert" class="messagelist alert {% if message.tags %} alert-{{ message.tags }} {% endif %}">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a>
+              {{ message }}
+            </div>
+        {% endif %}
+    {% endfor %}
+{% endif %}
+
+            <div class="main-content">
+                <div class="topbar">
+                    <div class="topleft-sec">
+                        <h1>Hi {{request.user.first_name}} {{request.user.last_name}}, Welcome Back!</h1>
+                        <div class="sub-txt">Welcome to <span class="text-highlight">iamts</span> dashboard</div>
+                    </div>
+                    
+                </div>
+                <div class="topbar top-link-sec">
+                    <div class="">
+                        <ul class="menu-link bread-crumbs">
+                            <li><a href="javascript:void(0);" title="Settings">Settings</a></li>
+                            <li><a href="javascript:void(0);" class="link-active" title="Dashboard Settings">Dashboard Settings</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="">
+                    <div class="head-info head-section">
+                        <div class="botom-border">
+                            <h2>My Account &#38; Dashboard Settings</h2>
+                            
+                            <div class="block-outer block-mode">
+                            <div class="left-blk">
+                                <ul class="filter pt-0">
+                                    <li><a class="filter-item " id="active" href="{% url 'my_accounts' %}" title="My Account">My Account</a></li>
+                                    
+                                </ul>
+                            </div>
+                            
+                        </div>
+                        </div>
+                    </div>
+
+                    <div class="block-mode pt-4">
+                        <div class="blocks">
+                            <h3 class="settings-hd">Dashboard view customization options</h3>
+
+                            {% if request.user.designation.main_dashboard %}
+                            <div class="row mb-lg-3 mb-md-0 mb-sm-0 mb-0 cus-spacing">
+                                <div class="col-lg-3 col-md-6 col-sm-6 col-12 side-space">
+                                    <div class="grey-blk ht-fixed">
+                                        <div class="d-flex align-items-center h-100 justify-content-between">
+                                            <div class="bold-detail">All Bus Table</div>
+                                            <div class="controls-blk">
+                                                <div class="switch-section">
+                                                    <label class="switch">
+                                                      <input type="checkbox" id="bus-table">
+                                                      <span class="slider round"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-6 col-sm-6 col-12 side-space">
+                                    <div class="grey-blk ht-fixed">
+                                        <div class="d-flex align-items-center h-100 justify-content-between">
+                                            <div class="bold-detail">Bus Calender</div>
+                                            <div class="controls-blk">
+                                                <div class="switch-section">
+                                                    <label class="switch">
+                                                      <input type="checkbox" id="bus-calendar">
+                                                      <span class="slider round"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-6 col-sm-6 col-12 side-space">
+                                    <div class="grey-blk ht-fixed">
+                                        <div class="d-flex align-items-center h-100 justify-content-between">
+                                            <div class="bold-detail">Work Order Table</div>
+                                            <div class="controls-blk">
+                                                <div class="switch-section">
+                                                    <label class="switch">
+                                                      <input type="checkbox" id="work-order">
+                                                      <span class="slider round"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-6 col-sm-6 col-12 side-space">
+                                    <div class="grey-blk ht-fixed">
+                                        <div class="d-flex align-items-center h-100 justify-content-between">
+                                            <div class="bold-detail">Bus Analytics</div>
+                                            <div class="controls-blk">
+                                                <div class="switch-section">
+                                                    <label class="switch">
+                                                      <input type="checkbox" id="bus-analytics">
+                                                      <span class="slider round"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% else %}
+                                <h3 class="center-txt">You do not have Dashboard customization Permissions.</h3>
+                            {% endif %}
+
+                            
+                            
+                           
+                        </div>
+                    </div>
+                    <div class="form-btn-sec">
+                    </div>
+                </div>
+            </div>
+<script>
+    $("#bus-table").prop('checked', {{request.user.all_buses|lower}});
+    $("#bus-calendar").prop('checked', {{request.user.bus_calendar|lower}});
+    $("#bus-analytics").prop('checked', {{request.user.bus_analytics|lower}});
+    $("#work-order").prop('checked', {{request.user.total_wo|lower}});
+
+</script>
+   <script src='{% static "assets/js/roles_and_permission.js" %}?v={% now "Y-m-dH:i:s"%}'></script>
+
+{% endblock %}

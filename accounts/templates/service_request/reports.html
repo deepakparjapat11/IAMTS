@@ -1,0 +1,134 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+			<!-- Toast message start -->
+
+			<div class="main-content bus-dashboard manpower-mgmt">
+				<div class="topbar">
+					<div class="topleft-sec">
+						<h1>Hi <span class="user-text">{{request.user.first_name}} {{request.user.last_name}},</span> Welcome Back!</h1>
+						<div class="sub-txt">Welcome to <span class="text-highlight">iamts</span> dashboard</div>
+					</div>
+					
+				</div>
+				<div class="topbar top-link-sec">
+					<div class="topleft-sec">
+						<ul class="menu-link">
+							<li><a href="javascript:void(0)"  class="link-active" title="Overview">Work Order Management</a></li>
+
+						</ul>
+					</div>
+					<div class="topright-sec">
+						
+					</div>
+				</div>
+				<div class="block-mode">
+					<div class="head-info">
+							<h2>All Buses Reports</h2>
+							
+					</div>
+					<div class="row">
+						<div class="col-lg-4">
+							<div class="graph-sec"><h3>Total Buses- 2450</h3></div>
+						</div>
+						<div class="col-lg-4">
+							<div class="graph-sec"><h3>Total Buses- 2450</h3></div>
+						</div>
+						<div class="col-lg-4">
+							<div class="graph-sec "><h3>Total Buses- 2450</h3></div>
+						</div>
+					</div>
+					<div class="block-mode">
+							<div class="block-outer">
+									<div class="left-blk">
+										
+									</div>
+									<div class="right-blk">
+										<ul class="cus-pagination">
+											<li style=""><a class="previous-icon" href="javascript:void(0);" title=""><i class="arrow left"></i></a></li>
+		
+											<li class="next-icon-list"></li>
+											<li ><a class="next-icon" href="javascript:void(0);" title=""><i class="arrow"></i></a></li>
+										</ul>
+									</div>
+								</div>
+							<div class="space-control ad-table cus-height ">
+
+							<table class="info-table">
+								<tr class="botom-border header-row listdata">
+									<td>Bus Id</td>
+									<td>Manufacturer</td>
+									<td>Chassis</td>
+									<td>Body Construction</td>
+									<td>Route</td>
+									<td>Status</td>
+									<td>Schedule Service</td>
+									<td>Actions</td>
+								</tr>
+							</table>
+								<div class="no-found"></div>
+							</div>
+						</div>
+				</div>
+				<div class="form-btn-sec">
+                    <button class="blue-btn mr-3 grey-btn" type="button" onclick="">Download Report</button><button class="blue-btn" type="button" onclick="">View Full Report</button>
+                </div>
+                <div class="block-mode mt-5">
+					<div class="head-info">
+							<h2>All Repair Request</h2>
+							
+					</div>
+					<div class="row">
+						<div class="col-lg-4">
+							<div class="graph-sec"><h3>Total Buses- 2450</h3></div>
+						</div>
+						<div class="col-lg-4">
+							<div class="graph-sec"><h3>Total Buses- 2450</h3></div>
+						</div>
+						<div class="col-lg-4">
+							<div class="graph-sec "><h3>Total Buses- 2450</h3></div>
+						</div>
+					</div>
+					<div class="block-mode">
+							<div class="block-outer">
+									<div class="left-blk">
+										
+									</div>
+									<div class="right-blk">
+										<ul class="cus-pagination">
+											<li style=""><a class="previous-icon" href="javascript:void(0);" title=""><i class="arrow left"></i></a></li>
+		
+											<li class="next-icon-list"></li>
+											<li ><a class="next-icon" href="javascript:void(0);" title=""><i class="arrow"></i></a></li>
+										</ul>
+									</div>
+								</div>
+							<div class="space-control ad-table cus-height ">
+
+							<table class="info-table">
+								<tr class="botom-border header-row listdata">
+									<td>Request Id</td>
+									<td>Created Date</td>
+									<td>Resolution Date</td>
+									<td>Bus Id</td>
+									<td>Description</td>
+									<td>Request Status</td>
+									<td>Bus Status</td>
+									<td>Actions</td>
+								</tr>
+							</table>
+								<div class="no-found"></div>
+							</div>
+						</div>
+				</div>
+				<div class="form-btn-sec">
+                    <button class="blue-btn mr-3 grey-btn" type="button" onclick="">Download Report</button><button class="blue-btn" type="button" onclick="">View Full Report</button>
+                </div>
+				</div>
+			</div>
+		</div>
+<script src='{% static "assets/js/highcharts.js" %}?v={% now "Y-m-dH:i:s"%}'></script>
+<script src='{% static "assets/js/manpower_management.js" %}?v={% now "Y-m-dH:i:s"%}'></script>
+
+{% endblock %}

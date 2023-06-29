@@ -1,0 +1,473 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+			<div class="main-content main-dashbord">
+				<div class="topbar">
+					<div class="topleft-sec">
+						<h1>Hi <span class="user-text">{{request.user.first_name}} {{request.user.last_name}},</span> Welcome Back!</h1>
+						<div class="sub-txt">Welcome to <span class="text-highlight">iamts</span> dashboard</div>
+					</div>
+					<!-- <div class="topright-sec">
+						<div class="switch-section">
+							<span class="switch-txt">Switch To Dark Mode</span>
+							<label class="switch">
+							  <input type="checkbox">
+							  <span class="slider round"></span>
+							</label>
+						</div>
+						<button type="button" class="blue-btn" title="Export Data">Export Data <i class="export-icon"></i></button>
+					</div> -->
+				</div>
+				<div class="topbar top-link-sec">
+<!--					<div class="topleft-sec">-->
+<!--						<ul class="menu-link">-->
+<!--&lt;!&ndash;							<li><a href="javascript:void(0);" title="Overview">Overview</a></li>&ndash;&gt;-->
+<!--&lt;!&ndash;							<li><a href="javascript:void(0);" title="Bus">Bus</a></li>&ndash;&gt;-->
+<!--&lt;!&ndash;							<li><a href="javascript:void(0);" title="Manpower">Manpower</a></li>&ndash;&gt;-->
+<!--&lt;!&ndash;							<li><a href="javascript:void(0);" title="Work Order">Work Order</a></li>&ndash;&gt;-->
+<!--						</ul>-->
+<!--					</div>-->
+					<div class="topright-sec">
+						<!-- <ul class="rightmenu-link">
+							<li><a href="javascript:void(0);" title="Save Report"><i class="report-icon"></i>Save Report</a></li>
+							<li><a href="javascript:void(0);" title="Export pdf"><i class="pdf-icon"></i>Export pdf</a></li>
+							<li><a href="javascript:void(0);" title="Send to Email"><i class="mail-icon"></i>Send to Email</a></li>
+						</ul> -->
+
+					</div>
+				</div>
+				<div class="cus-row">
+					<div class="cus-col">
+						<div class="blue-bg">
+							<div class="info-sec">
+								<div class="left-info">
+									<div class="blk-head">Total Buses</div>
+									<div class="blk-info">
+										<span class="stats">{{total_buses}}</span><span class="blue-txt detail"><i class="blue-graph"></i>{{thirty_days_buses}}%</span><span class="ltblack">(30 days)</span>
+									</div>
+								</div>
+								<div class="right-icon">
+									<i class="bus-icon"></i>
+								</div>
+							</div>
+							<div class="bluegraph-sec" style="height: 65px;"></div>
+							<div class="bluegraph-sec-drk" style="height: 65px;"></div>
+						</div>
+					</div>
+					<div class="cus-col">
+						<div class="violet-bg">
+							<div class="info-sec">
+								<div class="left-info">
+									<div class="blk-head">Total Work Orders</div>
+									<div class="blk-info">
+										<span class="stats">{{total_ord}}</span><span class="violet-txt detail"><i class="violet-graph"></i>{{ord_percent}}%</span><span class="ltblack">(30 days)</span>
+									</div>
+								</div>
+								<div class="right-icon">
+									<i class="orderbox"></i>
+								</div>
+							</div>
+							<div class="violetgraph-sec" style="height: 65px;"></div>
+							<div class="violetgraph-sec-drk" style="height: 65px;"></div>
+						</div>
+					</div>
+					<div class="cus-col">
+						<div class="orange-bg">
+							<div class="info-sec">
+								<div class="left-info">
+									<a href="/list/service"><div class="blk-head">Service Reminder</div>
+									<!-- <div clas="blk-info">
+										 <span class="stats">{{total_buses}}</span><span class="blue-txt detail"><i class="blue-graph"></i>{{thirty_days_buses}}%</span><span class="ltblack">(30 days)</span>
+									</div>-->
+									<div class="info-sec-sm">
+										<span>Vehicles Overdue:</span><span class="orange-txt"> {{ service_overdue }}</span>
+									</div>
+									<div class="info-sec-sm">
+										<span>Vehicles Due Soon:</span><span class="orange-txt"> {{service_due}}</span>
+									</div></a>
+								</div>
+								 <div class="right-icon">
+									<i class="service-icon"></i>
+								</div>
+<!--								<div class="right-icon">-->
+<!--									<i class="users-icon"></i>-->
+<!--								</div>-->
+							</div>
+							<div class="orangegraph-sec" style="height: 65px;"></div>
+							<div class="orangegraph-sec-drk" style="height: 65px;"></div>
+						</div>
+					</div>
+					<div class="cus-col">
+						<div class="green-bg">
+							<div class="info-sec">
+<!--								<div class="left-info">-->
+<!--									<div class="blk-head">Total Service Requests</div>-->
+<!--									<div class="blk-info">-->
+<!--										<span class="stats">{{total_service}}</span><span class="green-txt detail"><i class="green-graph"></i>{{percent_service}}%</span><span class="ltblack">(30 days)</span>-->
+<!--									</div>-->
+<!--								</div>-->
+								<div class="left-info">
+									<a href="/list/bus/"><div class="blk-head">Licensing Reminder</div>
+<!--									<div clas="blk-info">-->
+<!--										 <span class="stats">{{tot_repair_service}}</span><span class="orange-txt detail"><i class="orange-graph"></i>{{percent_repair_service}}%</span><span class="ltblack">(30 days)</span>-->
+<!--									</div>-->
+									<div class="info-sec-sm">
+<!--										<span>Vehicles Overdue:</span><span class="green-txt"> {{licence_overdue}}</span>-->
+									</div>
+									<div class="info-sec-sm">
+										<span>Vehicles Due Soon:</span><span class="green-txt"> {{ count_licence_due }}</span>
+									</div></a>
+								</div>
+<!--								<div class="right-icon">-->
+<!--									<i class="request-icon"></i>-->
+<!--								</div>-->
+								<div class="right-icon">
+									<i class="reminder"></i>
+								</div>
+							</div>
+							<div class="greengraph-sec" style="height: 65px;"></div>
+							<div class="greengraph-sec-drk" style="height: 65px;"></div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-12 col-xl-8 no-rt-spc">
+						{% if request.user.all_buses %}
+						<div class="block-mode bus-grid">
+							<div class="head-info">
+								<div class="left-blk">
+									<h2>All Buses</h2>
+									<!-- <p>Lorem Ipsum is simply dummy text of the printing</p> -->
+								</div>
+								<div class="right-blk">
+									<div class="field-blk select-blk">
+										<i class="arrow-down"></i>
+										<select id="sorting" class="cus-select">
+<!--										  <option value="" selected hidden>Sort By</option>-->
+										  <option value="1"  selected>Oldest to Newest</option>
+										  <option value="2" >Newest to Oldest</option>
+		<!--                                  <option value="" selected hidden >Sort By</option>-->
+										</select>
+									</div>
+
+								</div>
+							</div>
+
+							<div class="side-spacing">
+							<div class="stats-scroll">
+							<div class="outer-stats">
+								<div class="left-blk">
+									<div class="grid-information text-left">
+									<div class="scroll-blk">
+											<div class="grid-row grid-info">
+												<div class="grid-box">
+													<span class="detail-btn green-badge">Total (IS)</span>
+												</div>
+												<div class="grid-box">
+													<span class="detail-btn red-badge">Total (OS)</span>
+												</div>
+                                            </div>
+											<div class="grid-row grid-info black-color">
+												<div class="grid-box">
+													<span class="detail-btn ltgreen-badge" id="tot_is_bus">0</span>
+												</div>
+												<div class="grid-box">
+													<span class="detail-btn redlt-badge" id="tot_oos_bus">0</span>
+												</div>
+
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="right-blk">
+									<div class="grid-information">
+									<div class="scroll-blk">
+											<div class="grid-row grid-info">
+												<div class="grid-box">
+													<span class="detail-btn green-badge">IS</span>
+												</div>
+												<div class="grid-box">
+													<span class="detail-btn green-badge yelow-txt">SS</span>
+												</div>
+												<div class="grid-box">
+													<span class="detail-btn red-badge">OOS</span>
+												</div>
+												<div class="grid-box">
+													<span class="detail-btn red-badge">OOS (WP)</span>
+												</div>
+											</div>
+											<div class="grid-row grid-info black-color">
+
+												<div class="grid-box">
+													<span class="detail-btn ltgreen-badge" id="is_bus">0</span>
+												</div>
+												<div class="grid-box">
+													<span class="detail-btn ltgreen-badge" id="ss_bus">0</span>
+												</div>
+												<div class="grid-box">
+													<span class="detail-btn redlt-badge"  id="os_bus">0</span>
+												</div>
+												<div class="grid-box">
+													<span class="detail-btn redlt-badge" id="wp_bus">0</span>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								</div>
+								</div>
+								<div class="text-right user-infosec">
+									<ul class="stats-bus">
+										<li><b>Date:</b> <span id="last_date"></span></li>
+										<li><b>Time:</b> <span id="last_time"></span></li>
+										<li><b>Last Modified by:</b> <span id="last_by"></span></li>
+									</ul>
+								</div>
+								<div class="vertical-overflow">
+									<div class="cus-height grid-width">
+
+									</div>
+								</div>
+							</div>
+						</div>
+						{% endif %}
+					</div>
+					<div class="col-lg-12 col-xl-4 mt-xl-0 mt-lg-3 mt-md-3 mt-sm-3 mt-3" >
+						{% if request.user.bus_calendar %}
+						<div class="block-mode schedule-sec">
+<!--							<a href="javascript:void(0);" class="add-icon" title="Add Calender">+</a>-->
+
+							<div class="head-info">
+								<div>
+									<h2>Bus Calender</h2>
+
+								</div>
+								<ul class="information">
+									<li><span class="dark-bar"></span>Vehicle Licensing</li>
+									<li><span class="blue-bar"></span>Scheduled Service</li>
+								</ul>
+								<div  id='calendar' class="cus-calender"></div>
+							</div>
+
+						</div>
+						{% endif %}
+					</div>
+				</div>
+				<div class="row stats-sec">
+					{% if request.user.total_wo %}
+					<div class="col-lg-12 col-xl-8 no-rt-spc">
+							<div class="block-header">
+								<div class="bg-img">
+									<img class="img-fliud" src="/static/assets/images/all-buses.png" width="141" height="118" alt="Work-order">
+								</div>
+								<div class="left-blk">
+									<div class="number-blk">
+										<h2>Total (WO)</h2>
+										<span>{{total_ord}}</span>
+									</div>
+									<!-- <p>Lorem Ipsum is simply dummy text of the printing</p> -->
+								</div>
+								<div class="right-blk">
+									<div class="number-blk rt-border">
+										<h3>Total (RR)</h3>
+										<span>{{total_rr}}</span>
+									</div>
+									<div class="number-blk rt-border">
+										<h3>Unassigned (RR)</h3>
+										<span>{{open_service}}</span>
+									</div>
+									<div class="number-blk rt-border">
+										<h3>In Progress (RR)</h3>
+										<span>{{progress_service}}</span>
+									</div>
+									<div class="number-blk">
+										<h3>Resolved (RR)</h3>
+										<span>{{resolved_service}}</span>
+									</div>
+								</div>
+							</div>
+						<div class="block-mode">
+							<div class="block-outer">
+									<div class="left-blk">
+<!--										<ul class="filter">-->
+<!--											<li><a class="filter-item" href="javascript:void(0);" title="Day">Last 30 Days</a></li>-->
+<!--											<li><a class="filter-item" href="javascript:void(0);" title="Week">Apr 2020</a></li>-->
+<!--											<li><a class="filter-item" href="javascript:void(0);" title="Month">All Time</a></li>-->
+<!--												<li><a class="filter-link" href="javascript:void(0);" title="All Time">Print this overview</a></li>-->
+<!--										</ul>-->
+									</div>
+									<div class="right-blk">
+										<ul class="cus-pagination">
+											<li style=""><a class="previous-icon" href="javascript:void(0);" title=""><i class="arrow left"></i></a></li>
+		<!--									<li class="active"><a href="javascript:void(0);" title="">1</a></li>-->
+											<li class="next-icon-list"></li>
+											<li ><a class="next-icon" href="javascript:void(0);" title=""><i class="arrow"></i></a></li>
+										</ul>
+									</div>
+								</div>
+							<div class="space-control ad-table cus-height">
+<!--							<div class="text-center" style="padding-top: 150px;font-size: 16px;">In Progress..</div>-->
+							<table id="work_order_table" class="info-table">
+								<tr class="botom-border header-row">
+									<td>Work Order No.</td>
+									<td>Req. Type</td>
+									<td>Req. Number</td>
+									<td>Order By</td>
+									<td>Date</td>
+									<td>Status</td>
+									<td>Actions</td>
+								</tr>
+<!--								<tr>-->
+<!--									<td>06 April 2019</td>-->
+<!--									<td>1023568</td>-->
+<!--									<td>Dashboard Components</td>-->
+<!--									<td>Geek Fource</td>-->
+<!--									<td class="text-center"><span class="cus-badge red-badge">Delayed</span></td>-->
+<!--									<td>100</td>-->
+<!--									<td>$2,580</td>-->
+<!--								</tr>-->
+<!--								<tr>-->
+<!--									<td>06 April 2019</td>-->
+<!--									<td>1023568</td>-->
+<!--									<td>Dashboard Components</td>-->
+<!--									<td>Geek Fource</td>-->
+<!--									<td class="text-center"><span class="cus-badge yellow-badge">Pending Invoice</span></td>-->
+<!--									<td>100</td>-->
+<!--									<td>$2,580</td>-->
+<!--								</tr>-->
+<!--								<tr>-->
+<!--									<td>06 April 2019</td>-->
+<!--									<td>1023568</td>-->
+<!--									<td>Dashboard Components</td>-->
+<!--									<td>Geek Fource</td>-->
+<!--									<td class="text-center"><span class="cus-badge green-badge">Paid Today</span></td>-->
+<!--									<td>100</td>-->
+<!--									<td>$2,580</td>-->
+<!--								</tr>-->
+<!--								<tr>-->
+<!--									<td>06 April 2019</td>-->
+<!--									<td>1023568</td>-->
+<!--									<td>Dashboard Components</td>-->
+<!--									<td>Geek Fource</td>-->
+<!--									<td class="text-center"><span class="cus-badge ltgreen-badge">Due in 1 Week</span></td>-->
+<!--									<td>100</td>-->
+<!--									<td>$2,580</td>-->
+<!--								</tr>-->
+<!--								<tr>-->
+<!--									<td>06 April 2019</td>-->
+<!--									<td>1023568</td>-->
+<!--									<td>Dashboard Components</td>-->
+<!--									<td>Geek Fource</td>-->
+<!--									<td class="text-center"><span class="cus-badge red-badge">Delayed</span></td>-->
+<!--									<td>100</td>-->
+<!--									<td>$2,580</td>-->
+<!--								</tr>-->
+<!--								<tr>-->
+<!--									<td>06 April 2019</td>-->
+<!--									<td>1023568</td>-->
+<!--									<td>Dashboard Components</td>-->
+<!--									<td>Geek Fource</td>-->
+<!--									<td class="text-center"><span class="cus-badge yellow-badge">Pending Invoice</span></td>-->
+<!--									<td>100</td>-->
+<!--									<td>$2,580</td>-->
+<!--								</tr>-->
+							</table>
+								<div id="no-data"></div>
+							</div>
+						</div>
+					</div>
+					{% endif %}
+					<div class="col-lg-12 col-xl-4 mt-xl-0 mt-lg-3 mt-md-3 mt-sm-3 mt-3 chart-blk ">
+						{% if request.user.bus_analytics %}
+						{% if request.user.total_wo %}
+							<div class="block-mode">
+						{% else %}
+							<div class="block-mode permision-ht">
+						{% endif %}
+
+							<div class="head-info">
+								<div>
+									<h2>Bus Analytics</h2>
+									<!-- <p class="mb-0">Lorem Ipsum is simply dummy text of the printing</p> -->
+								</div>
+								<div class="chart-info">
+								<div class="row">
+									<div class="col-lg-6 col-md-6 col-sm-6 col-6 rt-border mob-center">
+										<div class="number-blk">
+											<h3>This Month</h3>
+											<div class="graph-data greengraph-data" id="graph_data1">
+												<span class="green-graph-icon" id="graph_icon1"></span>
+												<i class="green-arow " id="arrow1"></i>
+												<span class="green-txt small-txt" id="text1">{{this_month_percent}}%</span>
+											</div>
+											<span id="current_month_data" data-value="{{this_month_data}}">{{this_month_data}}</span>
+										</div>
+									</div>
+									<div class="col-lg-6 col-md-6 col-sm-6 col-6 mob-center">
+										<div class="number-blk lft-cus-spc">
+											<h3>Last Month</h3>
+											<div class="graph-data" id="graph_data2">
+												<span class="orange-graph-icon" id="graph_icon2"></span>
+												<i class="orange-arow" id="arrow2"></i>
+												<span class="orange-txt small-txt" id="text2">{{sixty_days_percent}}%</span>
+											</div>
+											<span>{{last_sixty_days}}</span>
+										</div>
+									</div>
+								</div>
+								</div>
+								<div class="chart-sec row">
+									<div class="left-chartsec col-xl-5">
+										<div id="chart_container" style="height: 200px; width: 150px;">
+
+									</div>
+									</div>
+									<div class="right-chartsec col-xl-7">
+										<div class="right-bars">
+											<div class="progress-blk">
+												<div class="progres-data">
+													<div class="lft-data">Buses-In Service</div>
+													<div class="right-data">{{in_service}}({{active_percent}}%)</div>
+												</div>
+												<div class="width-bar">
+													<div class="green-blk" style="width:{{active_percent}}%;"></div>
+												</div>
+											</div>
+											<div class="progress-blk">
+												<div class="progres-data">
+													<div class="lft-data">Buses-Out of Service</div>
+													<div class="right-data">{{tot_out_service}}({{out_percent}}%)</div>
+												</div>
+												<div class="width-bar">
+													<div class="blue-blk" style="width:{{out_percent}}%;"></div>
+												</div>
+											</div>
+											<div class="progress-blk">
+												<div class="progres-data">
+													<div class="lft-data">Buses-Short Service</div>
+													<div class="right-data">{{tot_schedule_service}}({{short_service_percent}}%)</div>
+												</div>
+												<div class="width-bar">
+													<div class="darkblue-blk" style="width:{{short_service_percent}}%;"></div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						{% endif %}
+					</div>
+				</div>
+			</div>
+		
+
+<script src='{% static "assets/js/highcharts.js" %}'></script>
+<script src='{% static "assets/js/fullcalendar.4.4.2.main.min.js" %}'></script>
+<script src='{% static "assets/js/fullcalendar-day-grid-4.4.2.main.min.js" %}'></script>
+<script src='{% static "assets/js/tooltip.min.js" %}'></script>
+
+<script src='{% static "assets/js/main.js" %}?v={% now "Y-m-dH:i:s"%}'></script>
+
+
+{% endblock %}

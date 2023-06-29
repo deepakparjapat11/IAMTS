@@ -1,0 +1,182 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+{% if messages %}
+    {% for message in messages %}
+        {% if message is not None %}
+            <div id="success-alert" class="messagelist alert {% if message.tags %} alert-{{ message.tags }} {% endif %}">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a>
+              {{ message }}
+            </div>
+        {% endif %}
+    {% endfor %}
+{% endif %}
+
+            <div class="main-content">
+                <div class="topbar">
+                    <div class="topleft-sec">
+                        <h1>Hi <span class="user-text">{{request.user.first_name}} {{request.user.last_name}},</span> Welcome Back!</h1>
+                        <div class="sub-txt">Welcome to <span class="text-highlight">iamts</span> dashboard</div>
+                    </div>
+                </div>
+                <div class="topbar top-link-sec">
+                    <div class="">
+                            <ul class="menu-link bread-crumbs">
+                                <li><a href="{% url 'manpower_dashboard' %}" title="Manpower Management">Manpower Management</a></li>
+                                <li><a href="{% url 'list_roster' %}" title="Rosters">Rosters</a></li>
+                                <li><a href="javascript:void(0);" class="link-active" title="Edit Roster">Edit Roster</a></li>
+                            </ul>
+                    </div>
+                </div>
+                <div class="">
+                    <div class="head-info head-section">
+                        <div class="botom-border">
+                            <h2>Edit Roster</h2>
+                            
+                        </div>
+                    </div>
+                    <div class="block-mode pt-4">
+                        <div class="form-sec">
+                            <form id="roster_form" method="POST" class="cus-form" enctype="multipart/form-data" autocomplete="off" >
+                            {% csrf_token %}
+                            <div class="row row-botomspc mob-less-spc">
+                                <div class="col-lg-4 col-md-4 col-sm-6 col-12 mb-3 mb-xs-3 mb-sm-3 mb-md-0 mb-lg-0">
+                                    <label>Roster Name <span class="red-astersick">*</span></label>
+                                    <div class="field-blk"><input type="text" placeholder="Roster Name" id="name" name="name" disabled></div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-6 col-12 mb-3 mb-xs-3 mb-sm-3 mb-md-0 mb-lg-0">
+                                    <label>Roster No.<span class="red-astersick">*</span></label>
+                                    <div class="field-blk"><input type="text" placeholder="Roster No" id="roster_no" name="roster_no"></div>
+                                </div>
+                                <div class="col-lg-4 col-md-4">
+                                    <div class="left-field">
+                                        <label>From Date<span class="red-astersick">*</span></label>
+                                        <div class="field-blk cus-datepicker">
+                                           <i class="far fa-calendar calender-picker"></i>
+                                            <input type="text" class="form-control" id="from_date" placeholder="DD/MM/YY" name="from_date">
+                                        </div>
+                                    </div>
+                                    <div class="right-field">
+                                        <label>To Date<span class="red-astersick">*</span></label>
+                                        <div class="field-blk cus-datepicker">
+                                            <i class="far fa-calendar calender-picker"></i>
+                                            <input type="text" class="form-control" id="to_date" placeholder="DD/MM/YY" name="to_date">
+                                            <label id="error2" class="danger-msg"></label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row row-botomspc ">
+                                <div class="col-lg-4 col-md-4 col-sm-6 col-12 mb-3 mb-xs-3 mb-sm-3 mb-md-0 mb-lg-0 mob-less-spc">
+
+                                    <div class="left-field">
+                                        <label>From <span class="red-astersick">*</span></label>
+                                        <div class="field-blk time-picker">
+                                           <input name="from_time" id="from_time">
+
+                                        </div>
+                                    </div>
+                                    <div class="right-field">
+                                        <label>To <span class="red-astersick">*</span></label>
+                                        <div class="field-blk time-picker">
+                                           <input name="to_time" id="to_time">
+                                            <label id="error1" class="danger-msg"></label>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-6 col-12 mb-3 mb-xs-3 mb-sm-3 mb-md-0 mb-lg-0">
+                                    <label>Status</label>
+                                    <div class="field-blk">
+                                        <i class="arrow-down"></i>
+                                        <select name="status" id="status">
+                                          <option value="" selected disabled hidden>Choose Status</option>
+                                          {% for status_choice in status_choices %}
+                                          <option value="{{ status_choice.0 }}">{{ status_choice.1 }}</option>
+                                          {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4">
+                                    <label>Work Days <span class="red-astersick">*</span></label>
+                                    <div class="field-blk">
+                                        <div class="days-grid d-flex align-items-center">
+                                            <span id="mon" name="mon" class="days-blk" onclick="toggle_workday('mon')">Mon</span>
+                                            <span id="tue" name="tue" class="days-blk" onclick="toggle_workday('tue')">Tue</span>
+                                            <span id="wed" name="wed" class="days-blk" onclick="toggle_workday('wed')">Wed</span>
+                                            <span id="thu" name="thu" class="days-blk" onclick="toggle_workday('thu')">Thu</span>
+                                            <span id="fri" name="fri" class="days-blk" onclick="toggle_workday('fri')">Fri</span>
+                                            <span id="sat" name="sat" class="days-blk" onclick="toggle_workday('sat')">Sat</span>
+                                            <span id="sun" name="sun" class="days-blk" onclick="toggle_workday('sun')">Sun</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row row-botomspc mob-less-spc">
+
+                                <div class="col-lg-4 col-md-4 col-sm-6 col-12 mb-3 mb-sm-3 mb-md-0 mb-lg-0">
+                                    <label>Choose Department</label>
+                                     <div class="field-blk">
+                                        <i class="arrow-down"></i>
+                                        <select id="category" name="department">
+                                          <option value="" selected disabled hidden>Choose Department</option>
+                                          {% for category_choice in category_choices %}
+                                          <option value="{{ category_choice.id }}">{{ category_choice.department_name }}</option>
+                                          {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <label>Add Members</label>
+                                     <div class="field-blk multiple-sel">
+                                         <select multiple data-style="bg-white rounded-pill px-4 py-3 shadow-sm " title="Select Members" class="selectpicker w-100" id="member_search_input" name="members">
+                                        </select>
+                                     </div>
+                                    <div class="vertical-scroll">
+                                    <div id="member_search_dropdown"></div>
+                                        <div class="no-data"> No member found.</div>
+                                    </div>
+                                </div>
+                                <div class="multiple-blk">
+                                    <div class="blk-container" id="member_list">
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        </div>
+                    </div>
+                    <div class="form-btn-sec">
+                        <button class="blue-btn mr-3 grey-btn" type="button" onclick="window.history.back()" title="Cancel">Cancel</button><button class="blue-btn" type="button" onclick="update_roster();" title="Save">Save</button>
+                    </div>
+                </div>
+            </div>
+<script>
+    $('#from_date').datepicker({
+    format: 'dd/mm/yyyy',
+    "autoclose": true
+    });
+    $('#to_date').datepicker({
+    format: 'dd/mm/yyyy',
+    "autoclose": true
+    });
+</script>
+<script src='{% static "assets/js/gijgo.min.js" %}' type="text/javascript"></script>
+            <script>
+        $('#from_time').timepicker({
+            uiLibrary: 'bootstrap4'
+        });
+        $('#to_time').timepicker({
+            uiLibrary: 'bootstrap4'
+        });
+    </script>
+<script src='{% static "assets/js/additional-methods.js" %}'></script>
+
+<script src='{% static "assets/js/roster_management.js" %}?v={% now "Y-m-dH:i:s"%}'></script>
+
+
+{% endblock %}

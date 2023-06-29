@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+			<div class="main-content leave-list">
+				<!-- The Modal -->
+				  <div class="modal fade pr-0" id="myModal">
+					<div class="modal-dialog modal-dialog-centered">
+					  <div class="modal-content cus-modal">
+
+						<!-- Modal Header -->
+						<div class="modal-header">
+						  <h1 class="modal-title">Comments for leave cancellation</h1>
+						  <button type="button" class="close" data-dismiss="modal">&times;</button>
+						</div>
+					    <form id="cancel_form" method="POST" class="cus-form"  autocomplete="off">
+							{% csrf_token %}
+							<div class="modal-detail">
+								<div class="row">
+									<div class="col-lg-12">
+										<label>Comments <span class="red-astersick">*</span></label>
+										<div class="field-blk">
+											<textarea  rows="4" placeholder="Enter Your Text Here" id="comment" name="comments"></textarea>
+										</div>
+									</div>
+								</div>
+								<div class="text-center">
+									<button type="button" class="blue-btn modal-btn unique" onclick="cancel_leave(this.id,'rejected')">Submit</button>
+								</div>
+							</div>
+						</form>
+					  </div>
+					</div>
+				  </div>
+				  <!-- The Modal end -->
+				<div class="topbar">
+					<div class="topleft-sec">
+						<h1>Hi <span class="user-text">{{request.user.first_name}} {{request.user.last_name}},</span> Welcome Back!</h1>
+						<div class="sub-txt">Welcome to <span class="text-highlight">iamts</span> dashboard</div>
+					</div>
+					<div class="topright-sec">
+						<button type="button" class="blue-btn" onclick="export_data()">Export Data <i class="export-icon"></i></button>
+					</div>
+				</div>
+				<div class="topbar top-link-sec">
+					<div class="topleft-sec">
+						<ul class="menu-link bread-crumbs">
+							<li><a href="{% url 'manpower_dashboard' %}" title="Manpower Management">Manpower Dashboard</a></li>
+							<li><a href="javascript:void(0);" class="link-active" title="Leaves">Leave</a></li>
+						</ul>
+					</div>
+					<div class="topright-sec">
+						
+					</div>
+				</div>
+				<div class="block-mode space-lg bus-list">
+					<div class="head-info">
+						<div class="left-blk">
+							<h2>Leave</h2>
+							
+						</div>
+						<div class="right-blk type-view">
+							<ul class="rightmenu-link">
+								
+								<li><button type="button" onclick="location.href='{% url 'upload_leave' %}'" class="blue-btn">Import Leaves <i class="fas fa-plus"></i></button></li>
+							</ul>
+						</div>
+						
+					</div>
+					<div class="listview">
+						<div class="block-outer">
+							<div class="left-blk">
+								<ul class="filter">
+									<li><a class="filter-item filter-active" id="pending" href="javascript:void(0);" title="Pending Leaves" >Pending Leaves</a></li>
+									<li><a class="filter-item" href="javascript:void(0);" id="approved" title="Approved Leaves" >Approved Leaves</a></li>
+									<li><a class="filter-item" href="javascript:void(0);" id="rejected" title="Rejected Leaves" >Rejected Leaves</a></li>
+									<li><a class="filter-item" href="javascript:void(0);" id="all" title="All Leaves" >All Leaves</a></li>
+								</ul>
+							</div>
+							<div class="right-blk">
+								<ul class="cus-pagination">
+									<li style=""><a class="previous-icon" href="javascript:void(0);" title=""><i class="arrow left"></i></a></li>
+
+									<li class="next-icon-list"></li>
+									<li ><a class="next-icon" href="javascript:void(0);" title=""><i class="arrow"></i></a></li>
+								</ul>
+
+							</div>
+						</div>
+						<div class="table-spcing">
+						<div class="listing-blk">
+							<table class="info-table list-table">
+								<tr class="botom-border header-row">
+
+									<td>Emp. Name</td>
+									<td>Emp. Id</td>
+									<td>Email</td>
+									<td>Description</td>
+									<td>Date</td>
+									<td>Status</td>
+									<td>Actions</td>
+								</tr>
+							</table>
+							<div class="no-data"><h3 class="record center-txt">No record found</h3></div>
+							</div>
+						</div>
+					</div>
+
+
+				</div>
+			</div>
+<script src='{% static "assets/js/leave_management.js" %}?v={% now "Y-m-dH:i:s"%}'></script>
+{% endblock %}

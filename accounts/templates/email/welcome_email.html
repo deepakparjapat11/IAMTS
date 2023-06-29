@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Welcome</title>
+    <meta charset="utf-8">
+</head>
+  <body style="margin: 0; padding: 0;">
+{% load static %}
+{% autoescape off %}
+        <div style="font-size:14px;max-width:600px; margin: 0 auto; background: #fcfcfc;font-family: arial;">
+            <div style="background:#163756;padding: 25px 20px 20px;text-align: center;">
+                <img src="{{protocol}}://{{domain}}/static/assets/images/header-logo.png" width="126" height="42" alt="IAMTS">
+            </div>
+           <div style="padding: 20px;background:#f4f4f4;">
+                <h1 style="font-size:20px; margin-bottom: 20px;"> Welcome to IAMTS</h1>
+				 <p style="font-size:15px;"> Your account has been created successfully. For login into your account, you need to create a new password. </p>
+                <p style="font-size:15px;"> Your email address is <a href="mailto:{{email}}" title="Email" style="color: #40a3d7; text-decoration: none; font-weight: bold;">{{email}} </a> </p>
+			  	<p style="font-size:15px;"> Please Click <a href="{{ protocol }}://{{ domain }}/change_password/{{uid}}/{{token}}"> Here </a> to set your password and login. </p>
+				<p style="font-size:15px;"> If above link doesn't work, copy and paste the below link into your browser URL: <a href="{{ protocol }}://{{ domain }}/change_password/{{uid}}/{{token}}">{{ protocol }}://{{ domain }}/change_password/{{uid}}/{{token}}</a></p>
+				 <br>
+                <br>
+                <div>Warm Regards,</div>
+                <div>Team <b>IAMTS</b></div>         
+            </div>
+            <div style="font-size: 15px;color:#fff;background:#163756;padding: 30px 20px;text-align: center;">&#169; 2021 IAMTS. All Rights Reserved</div>
+        </div>
+    </div>
+{% endautoescape %}
+</body>
+</html>

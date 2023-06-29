@@ -1,0 +1,25 @@
+	<!DOCTYPE html>
+<html>
+<head>
+	<title>Page Not Found</title>
+	<link rel="stylesheet" type="text/css" href="/static/assets/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="/static/assets/css/style.css">
+	<link href="/static/assets/images/favicon.ico" rel="icon" type="image/png" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0 user-scalable=no ">
+</head>
+<body>
+<div class="error-page">
+	<div class="content-section">
+		<div><img class="img-fluid" src="/static/assets/images/not-found.png" width="397" height="239" alt="Error-image"></div>
+		<h1>PAGE NOT FOUND</h1>
+		<p>Sorry, the page you're looking for doesn't exist</p>
+		{% if request.user.designation %}
+			<div><a href="{% url 'my_accounts' %}" class="blue-btn">Home</a></div>
+		{% else %}
+			<div><a href="{% url 'login' %}" class="blue-btn">Home</a></div>
+		{% endif %}
+	</div>
+</div>
+
+</body>
+</html>

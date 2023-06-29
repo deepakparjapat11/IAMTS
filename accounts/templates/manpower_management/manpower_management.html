@@ -1,0 +1,242 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+			<!-- Toast message start -->
+			<div class="main-content bus-dashboard manpower-mgmt">
+				<div class="topbar">
+					<div class="topleft-sec">
+						<h1>Hi <span class="user-text">{{request.user.first_name}} {{request.user.last_name}},</span> Welcome Back!</h1>
+						<div class="sub-txt">Welcome to <span class="text-highlight">iamts</span> dashboard</div>
+					</div>
+				</div>
+				<div class="topbar top-link-sec">
+					<div class="topleft-sec">
+						<ul class="menu-link">
+							<li><a href="{% url 'manpower_dashboard' %}"  class="link-active" title="Overview">Manpower Management</a></li>
+						</ul>
+					</div>
+					<div class="topright-sec">
+					</div>
+				</div>
+				<div class="cus-row">
+					<div class="cus-col">
+						<div class="violet-bg">
+							<div class="info-sec">
+								<div class="left-info">
+									<div class="blk-head">Total Manpower</div>
+									<div class="blk-info">
+										<span class="stats">{{ user }}</span><span class="violet-txt detail"><i class="violet-graph"></i>{{ user_thirty_days }}%</span><span class="ltblack">(30 days)</span>
+									</div>
+								</div>
+								<div class="right-icon">
+									<i class="userinfo-icon"></i>
+								</div>
+							</div>
+							<div class="violetgraph-sec" style="height: 65px;"></div>
+							<div class="violetgraph-sec-drk" style="height: 65px;"></div>
+						</div>
+					</div>
+					<div class="cus-col">
+						<div class="blue-bg">
+							<div class="info-sec">
+								<div class="left-info">
+									<div class="blk-head">Active Roster</div>
+									<div class="blk-info">
+										<span class="stats">{{active_roster}}</span><span class="blue-txt detail"><i class="blue-graph"></i>{{roster_percent_days}}%</span><span class="ltblack">(30 days)</span>
+									</div>
+								</div>
+								<div class="right-icon">
+									<i class="people-icon"></i>
+								</div>
+							</div>
+							<div class="bluegraph-sec" style="height: 65px;"></div>
+							<div class="bluegraph-sec-drk" style="height: 65px;"></div>
+						</div>
+					</div>
+					<div class="cus-col">
+						<div class="green-bg">
+							<div class="info-sec">
+								<div class="left-info">
+									<div class="blk-head">On leave Today</div>
+									<div class="blk-info">
+										<span class="stats">{{this_month_leaves}}</span><span class="green-txt detail"><i class="green-graph"></i></span><span class="ltblack"></span>
+									</div>
+								</div>
+								<div class="right-icon">
+									<i class="house-icon"></i>
+								</div>
+							</div>
+							<div class="greengraph-sec" style="height: 65px;"></div>
+							<div class="greengraph-sec-drk" style="height: 65px;"></div>
+						</div>
+					</div>
+					<div class="cus-col">
+					</div>
+				</div>
+				<div>
+					<div class="block-header green-header">
+						<div class="bg-img">
+							<img class="img-fliud" src="/static/assets/images/all-buses.png" width="141" height="118" alt="All Buses">
+						</div>
+						<div class="left-blk">
+							<h2 class="font-md">Employees</h2>
+						</div>
+						<div class="right-blk">
+							<div class="number-blk rt-border">
+								<h3>Present</h3>
+								<span>{{present_user}}</span>
+							</div>
+							<div class="number-blk">
+								<h3>On Leave</h3>
+								<span>{{current_day_leaves}}</span>
+							</div>
+						</div>
+					</div>
+					<div class="block-mode">
+							<div class="block-outer full-search">
+
+									<div class="left-blk">
+										<div class="field-blk"><input class="search-filter" type="text" placeholder="Emp. Id, Email, Name" id="member_search_input" onkeyup="employee_search(this)"></div>
+									</div>
+									<div class="right-blk">
+										<ul class="cus-pagination">
+											<li style=""><a class="previous-icon" href="javascript:void(0);" title=""><i class="arrow left"></i></a></li>
+											<li class="next-icon-list"></li>
+											<li ><a class="next-icon" href="javascript:void(0);" title=""><i class="arrow"></i></a></li>
+										</ul>
+									</div>
+								</div>
+							<div class="space-control ad-table cus-height ">
+							<table class="info-table">
+								<tr class="botom-border header-row listdata">
+									<td>Actions</td>
+									<td>Employee Name</td>
+									<td>Employee Id</td>
+									<td>Email</td>
+									<td>Contact Detail</td>
+									<td>Department</td>
+									<td>Designation</td>
+									<td>Joining Date</td>
+								</tr>
+							</table>
+								<div class="no-found"></div>
+							</div>
+						</div>
+				</div>
+				<div class="row stats-sec">
+					<div class="col-lg-12 col-md-12 col-xl-8 no-rt-spc">
+						<div class="block-mode roster-blk">
+							<div class="block-outer">
+								<div class="left-blk">
+									<h2>All Rosters</h2>
+									<div class="no-roaster"></div>
+								</div>
+							</div>
+							<div class="mt-3 rostertb-height mob-width">
+								<table class="sm-list-table all-roaster">
+
+								</table>
+							</div>
+						</div>	
+					</div>
+					<div class="col-lg-12 col-md-12 col-xl-4 mt-xl-0 mt-lg-3 mt-md-3 mt-sm-3 mt-3 chart-blk">
+						<div class="block-mode">
+							<div class="head-info">
+								<div>
+									<h2>Roster Analytics</h2>
+								</div>
+								<div class="chart-info">
+								<div class="row">
+									<div class="col-lg-6 col-md-6 col-sm-6 col-6 rt-border chart-center">
+
+									<div class="number-blk">
+											<h3>This Month</h3>
+											<div class="graph-data greengraph-data" id="graph_data1">
+												<span class="green-graph-icon" id="graph_icon1"></span>
+												<i class="green-arow " id="arrow1"></i>
+												<span class="green-txt small-txt" id="text1">{{this_month_percent}}%</span>
+											</div>
+											<span id="current_month_data" data-value="{{this_month_data}}">{{roster_this_month}}</span>
+										</div>
+									</div>
+
+									<div class="col-lg-6 col-md-6 col-sm-6 col-6">
+										<div class="number-blk lft-cus-spc">
+											<h3>Last Month</h3>
+											<div class="graph-data" id="graph_data2">
+												<span class="orange-graph-icon" id="graph_icon2"></span>
+												<i class="orange-arow" id="arrow2"></i>
+												<span class="orange-txt small-txt" id="text2">{{last_month_percent}}%</span>
+											</div>
+											<span>{{roster_last_month}}</span>
+										</div>
+									</div>
+								</div>
+								</div>
+								<div class="chart-sec row">
+									<div class="left-chartsec col-xl-5">
+										<div id="chart_container" style="height: 200px; width: 150px;">
+										hii
+									</div>
+									</div>
+									<div class="right-chartsec col-xl-7">
+										<div class="right-bars">
+											<div class="progress-blk">
+												<div class="progres-data">
+													<div class="lft-data">Active Roster</div>
+													<div class="right-data">{{active_roster}}({{act_rstr_per}}%)</div>
+												</div>
+												<div class="width-bar">
+													<div class="green-blk" style="width:{{act_rstr_per}}%;"></div>
+												</div>
+											</div>
+											<div class="progress-blk">
+												<div class="progres-data">
+													<div class="lft-data">Inactive Roster</div>
+													<div class="right-data">{{inactive_roster}}({{inact_rstr_per}}%)</div>
+												</div>
+												<div class="width-bar">
+													<div class="blue-blk" style="width:{{inact_rstr_per}}%;"></div>
+												</div>
+											</div>
+
+										</div>
+									</div>
+									</div>
+									
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row emplist-sec">
+						<div class="col-lg-12">
+							<div class="row">
+								<div class="col-lg-6 pr-2">
+									<div class="block-mode">
+										<h2>Inactive Rosters</h2>
+										<div class="vertical-height">
+											<table class="sm-list-table inactive-rosater">
+											</table>
+										</div>
+									</div>
+								</div>
+								<div class="col-lg-6 pl-2 ">
+									<div class="block-mode">
+										<h2>On Leave Today</h2>
+										<div class="no-leave"></div>
+										<div class="vertical-height">
+											<table class="sm-list-table leave">
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			
+<script src='{% static "assets/js/highcharts.js" %}?v={% now "Y-m-dH:i:s"%}'></script>
+<script src='{% static "assets/js/manpower_management.js" %}?v={% now "Y-m-dH:i:s"%}'></script>
+
+{% endblock %}

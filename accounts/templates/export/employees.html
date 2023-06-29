@@ -1,0 +1,76 @@
+{% load static %}
+{% block content %}
+
+<div style="text-align: center;"><img src="{{protocol}}://{{domain}}/static/assets/images/logo-pdf.png" width="330" height="140" alt="Iamts-Logo"></div>
+<div style="display: inline-block;">Employees -</div><div style="display: inline-block;"> {{ today }} </div>
+<table style="text-align: left;width: 1000%;">
+   
+    <tr>
+        <th style="width:35px;text-align: left;width: 70px;border: 1px solid #000;vertical-align: middle;margin-bottom: 0;padding: 4px 2px 0;">
+            S.No.
+        </th>
+        <th style="text-align: left;border: 1px solid #000;vertical-align: middle;padding: 4px 2px 0;">
+            Emp. Name 
+        </th>
+        <th style="width:45px;text-align: left;border: 1px solid #000;vertical-align: middle;margin-bottom: 0;padding: 4px 2px 0;">
+            Emp Id
+        </th>
+        <th style="text-align: left;width: 160px;border: 1px solid #000;vertical-align: middle;margin-bottom: 0;padding: 4px 2px 0;">
+            Email
+        </th>
+        <th style="width:75px;text-align: left;border: 1px solid #000;vertical-align: middle;margin-bottom: 0;padding: 4px 2px 0;">
+            Contact
+        </th>
+        <th style="text-align: left;border: 1px solid #000;vertical-align: middle;margin-bottom: 0;padding: 4px 2px 0;">
+            Joining Date
+        </th>
+        <th style="width:75px;text-align: left;border: 1px solid #000;vertical-align: middle;margin-bottom: 0;padding: 4px 2px 0;">
+            Department
+        </th>
+        <th style="width:75px;text-align: left;border: 1px solid #000;vertical-align: middle;margin-bottom: 0;padding: 4px 2px 0;">
+            Designation
+        </th>
+        <th style="width:60px;text-align: left;border: 1px solid #000;vertical-align: middle;margin-bottom: 0;padding: 4px 2px 0;">
+            Documents         
+        </th>
+    </tr>
+    
+    {% for employee in data %}
+    <tr style="-pdf-word-wrap: CJK;">
+        <td style="width:35px;border: 1px solid #000;vertical-align: middle;padding: 4px 2px 0;">
+            {{forloop.counter}}
+        </td>
+        <td style="border: 1px solid #000;vertical-align: middle;padding: 4px 2px 0;">
+            {{employee.name}}
+        </td>
+        <td style="border: 1px solid #000;vertical-align: middle;padding: 4px 2px 0;">
+            {{employee.employee_id}}
+        </td>
+        <td style="width: 130px;word-break:break-word;border: 1px solid #000;vertical-align: middle;padding: 4px 2px 0;">
+            {{employee.email}}
+        </td>
+        <td style="border: 1px solid #000;vertical-align: middle;padding: 4px 2px 0;">
+            {% if employee.contact %}
+            {{employee.contact}}
+            {% else %}
+            NA
+            {% endif %}
+        </td>
+        <td style="border: 1px solid #000;vertical-align: middle;padding: 4px 2px 0;">
+            {{employee.joining_date}}
+        </td>
+        <td style="border: 1px solid #000;vertical-align: middle;padding: 4px 2px 0;">
+            {{employee.department}}
+        </td>
+        <td style="border: 1px solid #000;vertical-align: middle;padding: 4px 2px 0;">
+            {{employee.designation}}
+        </td>   
+        <td style="border: 1px solid #000;vertical-align: middle;padding: 4px 2px 0;">
+            {{employee.driving_licence}}{% if employee.driving_licence != '' and employee.id_proof != '' %}<span>,</span> {% endif %}{{employee.id_proof}}
+        </td>
+
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}

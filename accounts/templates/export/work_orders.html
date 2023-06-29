@@ -1,0 +1,74 @@
+{% load static %}
+{% block content %}
+
+<div style="text-align: center;"><img src="{{protocol}}://{{domain}}/static/assets/images/logo-pdf.png" width="330" height="140" alt="Iamts-Logo"></div>
+<div style="display: inline-block;">Work Orders -</div><div style="display: inline-block;"> {{ today }} </div>
+<table style="text-align: left;width: 100%;">
+
+    <tr>
+        <th style="width:35px;text-align: left;width: 70px;border: 1px solid #000;vertical-align: middle;margin-bottom: 0;padding: 4px 2px 0;">
+            S.No.
+        </th>
+<th style="text-align: left;border: 1px solid #000;vertical-align: middle;margin-bottom: 0;padding: 4px 2px 0;">
+            Work Order No.
+        </th>
+        <th style="text-align: left;border: 1px solid #000;vertical-align: middle;margin-bottom: 0;padding: 4px 2px 0;">
+            Req. Type
+        </th>
+        <th style="text-align: left;border: 1px solid #000;vertical-align: middle;margin-bottom: 0;padding: 4px 2px 0;">
+            Req. Number
+        </th>
+        <th style="text-align: left;border: 1px solid #000;vertical-align: middle;margin-bottom: 0;padding: 4px 2px 0;">
+            Bus ID
+        </th>
+        <th style="text-align: left;border: 1px solid #000;vertical-align: middle;margin-bottom: 0;padding: 4px 2px 0;">
+            Bus Status
+        </th>
+        <th style="text-align: left;border: 1px solid #000;vertical-align: middle;margin-bottom: 0;padding: 4px 2px 0;">
+            Created By
+        </th>
+
+        <th style="text-align: left;border: 1px solid #000;vertical-align: middle;margin-bottom: 0;padding: 4px 2px 0;">
+            Date
+        </th>
+        <th style="text-align: left;border: 1px solid #000;vertical-align: middle;margin-bottom: 0;padding: 4px 2px 0;">
+            Status
+        </th>
+    </tr>
+
+{% for work_order in data %}
+    <tr style="-pdf-word-wrap: CJK;">
+        <td style="width:35px;border: 1px solid #000;vertical-align: middle;padding: 4px 2px 0;">
+            {{work_order.count}}
+        </td>
+        <td style="border: 1px solid #000;vertical-align: middle;padding: 4px 2px 0;">
+            {{work_order.work_order_no}}
+        </td>
+        <td style="border: 1px solid #000;vertical-align: middle;padding: 4px 2px 0;">
+            {{work_order.req_type}}
+        </td>
+        <td style="text-align:center;border: 1px solid #000;vertical-align: middle;padding: 4px 2px 0;">
+            {{work_order.req_no}}
+        </td>
+        <td style="border: 1px solid #000;vertical-align: middle;padding: 4px 2px 0;">
+            {{work_order.bus_id}}
+        </td>
+        <td style="text-align:center;border: 1px solid #000;vertical-align: middle;padding: 4px 2px 0;">
+            {{work_order.bus_status}}
+        </td>
+        <td style="border: 1px solid #000;vertical-align: middle;padding: 4px 2px 0;">
+            {{work_order.req_by}}
+        </td>
+
+        <td style="border: 1px solid #000;vertical-align: middle;padding: 4px 2px 0;">
+            {{work_order.date}}
+        </td>
+        <td style="border: 1px solid #000;vertical-align: middle;padding: 4px 2px 0;">
+            {{work_order.order_status}}
+        </td>
+
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}

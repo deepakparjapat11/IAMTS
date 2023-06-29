@@ -1,0 +1,149 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+
+            <div class="main-content">
+                <!-- The Modal -->
+				  <div class="modal fade pr-0" id="myModal">
+					<div class="modal-dialog modal-dialog-centered">
+					  <div class="modal-content cus-modal">
+
+						<!-- Modal Header -->
+						<div class="modal-header">
+						  <h1 class="modal-title">Comments for leave cancellation</h1>
+						  <button type="button" class="close" data-dismiss="modal">&times;</button>
+						</div>
+					    <form id="cancel_form" method="POST" class="cus-form"  autocomplete="off">
+							{% csrf_token %}
+							<div class="modal-detail">
+								<div class="row">
+									<div class="col-lg-12">
+										<label>Comments <span class="red-astersick">*</span></label>
+										<div class="field-blk">
+											<textarea  rows="4" placeholder="Enter Your Text Here" id="comment" name="comments"></textarea>
+										</div>
+									</div>
+								</div>
+								<div class="text-center">
+									<button type="button" class="blue-btn modal-btn unique" onclick="cancel_leave(this.id,'rejected')">Submit</button>
+								</div>
+							</div>
+						</form>
+					  </div>
+					</div>
+				  </div>
+				  <!-- The Modal end -->
+                <div class="topbar">
+                    <div class="topleft-sec">
+                        <h1>Hi <span class="user-text">{{request.user.first_name}} {{request.user.last_name}},</span> Welcome Back!</h1>
+                        <div class="sub-txt">Welcome to <span class="text-highlight">iamts</span> dashboard</div>
+                    </div>
+                </div>
+                <div class="topbar top-link-sec">
+                    <div class="">
+                        <ul class="menu-link bread-crumbs">
+                           <li><a href="{% url 'manpower_dashboard' %}" title="Manpower Management">Manpower Dashboard</a></li>
+                            <li><a href="{% url 'leave_listing' %}" title="Leaves">Leaves</a></li>
+                            <li><a href="javascript:void(0);" class="link-active" title="Leave Details">Leave Details</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="">
+                    <div class="head-info head-section">
+                        <div class="botom-border">
+                            <h2>Leave Details</h2>
+                            
+                        </div>
+                    </div>
+                    <div class="block-mode pt-4">
+                        <div class="blocks">
+                        	<div class="row mb-lg-3 mb-md-0 mb-sm-0 mb-0 cus-spacing">
+                                <div class="col-lg-3 col-md-3 col-sm-6 col-12 side-space fixed-ht">
+                                    <img src="/static/assets/images/user-image.png" width="371" height="249" alt="User Image">
+                                </div>
+                                <div class="col-lg-9 col-md-9 col-sm-6 col-12 side-space">
+                                    <div class="row custum-padding">
+                                        <div class="col-lg-4 col-md-6 col-sm-6 col-12 side-space mb-3">
+                                            <div class="grey-blk">
+                                                <h3 class="grey-heading">Emp. Name</h3>
+                                                <div class="bold-detail" id="name">Nathan</div>
+                                            </div>
+                                         </div>
+                                         <div class="col-lg-4 col-md-6 col-sm-6 col-12 side-space mb-3">
+                                            <div class="grey-blk">
+                                                <h3 class="grey-heading">Emp. Id</h3>
+                                                <div class="bold-detail" id="empId">254K</div>
+                                            </div>
+                                         </div>
+                                         <div class="col-lg-4 col-md-6 col-sm-6 col-12 side-space mb-3">
+                                            <div class="grey-blk">
+                                                <h3 class="grey-heading">Email</h3>
+                                                <div class="bold-detail" id="email">abc@gmail.com</div>
+                                            </div>
+                                         </div>
+                                         <div class="col-lg-4 col-md-6 col-sm-6 col-12 side-space">
+                                            <div class="grey-blk">
+                                                <h3 class="grey-heading">Contact</h3>
+                                                <div class="bold-detail" id="contact">254-56896-258</div>
+                                            </div>
+                                         </div>
+                                         <div class="col-lg-4 col-md-6 col-sm-6 col-12 side-space">
+                                            <div class="grey-blk">
+                                                <h3 class="grey-heading">Department</h3>
+                                                <div class="bold-detail" id="department">Mechanic</div>
+                                            </div>
+                                         </div>
+                                         <div class="col-lg-4 col-md-6 col-sm-6 col-12 side-space">
+                                            <div class="grey-blk">
+                                                <h3 class="grey-heading">Designation</h3>
+                                                <div class="bold-detail" id="designation">Lp Lorem</div>
+                                            </div>
+                                         </div>
+                                    </div>
+                                </div>
+                            </div>
+                        	
+                        	
+                        	<div class="row mb-lg-3 mb-md-0 mb-sm-0 mb-0 cus-spacing">
+                        		<div class="col-lg-3 col-md-6 col-sm-6 col-12 side-space">
+									<div class="grey-blk">
+                        				<h3 class="grey-heading">Leave Status</h3>
+                        				<div class="bold-detail" id="leave_status">Pending</div>
+                        			</div>
+                        		</div>
+                        		<div class="col-lg-3 col-md-6 col-sm-6 col-12 side-space">
+									<div class="grey-blk">
+                        				<h3 class="grey-heading">Leave date</h3>
+                        				<div class="bold-detail" id="leave_date">21-Oct-2020 To 25-Oct-2020</div>
+                        			</div>
+                        		</div>
+                        		<div class="col-lg-3 col-md-6 col-sm-6 col-12 side-space">
+									
+                        		</div>
+                        		<div class="col-lg-3 col-md-6 col-sm-6 col-12 side-space">
+
+                        		</div>
+                        	</div>
+                            <div class="row mb-lg-3 mb-md-0 mb-sm-0 mb-0 cus-spacing">
+                                <div class="col-lg-12 side-space">
+                                    <div class="grey-blk no-txtwrap">
+                                        <h3 class="grey-heading">Description</h3>
+                                        <div class="bold-detail" id="description"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-btn-sec">
+                        <a class="blue-btn mr-3 grey-btn" type="button"  data-toggle="modal" data-target="#myModal">Disapprove</a><button class="blue-btn" type="button" id="approve_button" >Approve</button>
+                    </div>
+                    <div class="form-btn-sec cancl-btn" style="display: none;">
+                        <a class="blue-btn mr-3 grey-btn" type="button" data-toggle="modal" data-target="#myModal">Cancel leave</a>
+                    </div>
+                </div>
+            </div>
+
+   <script src='{% static "assets/js/leave_management.js" %}?v={% now "Y-m-dH:i:s"%}'></script>
+
+{% endblock %}

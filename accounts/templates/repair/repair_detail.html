@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+{% if messages %}
+    {% for message in messages %}
+        {% if message is not None %}
+            <div id="success-alert" class="messagelist alert {% if message.tags %} alert-{{ message.tags }} {% endif %}">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a>
+              {{ message }}
+            </div>
+        {% endif %}
+    {% endfor %}
+{% endif %}
+
+
+    <div class="main-content">
+        <div class="topbar">
+            <div class="topleft-sec">
+                <h1>Hi <span class="user-text">{{request.user.first_name}} {{request.user.last_name}},</span> Welcome Back!</h1>
+                <div class="sub-txt">Welcome to <span class="text-highlight">iamts</span> dashboard</div>
+            </div>
+        </div>
+        <div class="topbar top-link-sec">
+            <div class="">
+                <ul class="menu-link bread-crumbs">
+                    <li><a href="{% url 'bus_dashboard' %}" title="Bus Management">Bus Management</a></li>
+                    <li><a href="{% url 'repair_listing' %}" title="Repair Requests">Repair Requests</a></li>
+                    <li><a href="javascript:void(0);" class="link-active" title="Request Details">Request Details</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="">
+            <div class="head-info head-section">
+                <div class="botom-border">
+                    <h2>Request Details</h2>
+                </div>
+            </div>
+            <div class="block-mode pt-4">
+               <div class="row pb-lg-3">
+                   <div class="col-lg-6 col-md-6 col-sm-12">
+                       <div class="row mb-lg-3 mb-md-0 mb-sm-0 mb-0">
+                           <div class="col-lg-6 col-sm-6 col-12 mb-lg-0 mb-md-3 mb-sm-3 mb-3 pr-lg-2 pr-md-2 pr-sm-2 pr-lg-0 ">
+                               <div class="grey-blk">
+                                    <h3 class="grey-heading">Request No.</h3>
+                                    <div class="bold-detail" id="request_id"></div>
+                                </div>
+                           </div>
+                           <div class="col-lg-6 col-sm-6 col-12 mb-lg-0 mb-md-3 mb-sm-3 mb-3 pr-lg-2 pr-md-2 pr-sm-2 pr-lg-0">
+                               <div class="grey-blk">
+                                    <h3 class="grey-heading">Raised Date</h3>
+                                    <div class="bold-detail" id="created_at"></div>
+                                </div>
+                           </div>
+                       </div>
+                       <div class="row mb-lg-3 mb-md-0 mb-sm-0 mb-0">
+                           <div class="col-lg-6 col-sm-6 col-12 mb-lg-0 mb-md-3 mb-sm-3 mb-3 pr-lg-2 pr-md-2 pr-sm-2 pr-lg-0">
+                               <div class="grey-blk">
+                                    <h3 class="grey-heading">Resolution Date</h3>
+                                    <div class="bold-detail" id="resolution_date"></div>
+                                </div>
+                           </div>
+                           <div class="col-lg-6 col-sm-6 col-12 mb-lg-0 mb-md-3 mb-sm-3 mb-3 pr-lg-2 pr-md-2 pr-sm-2 pr-lg-0">
+                               <div class="grey-blk">
+                                    <h3 class="grey-heading">Bus Id</h3>
+                                    <div class="bold-detail" id="bus_id"></div>
+                                </div>
+                           </div>
+                       </div>
+                       <div class="row mb-lg-3 mb-md-0 mb-sm-0 mb-0">
+                           <div class="col-lg-6 col-sm-6 col-12 mb-lg-0 mb-md-3 mb-sm-3 mb-3 pr-lg-2 pr-md-2 pr-sm-2 pr-lg-0">
+                               <div class="grey-blk">
+                                    <h3 class="grey-heading">Request Status</h3>
+                                    <div class="bold-detail" id="request_status"></div>
+                                </div>
+                           </div>
+                           <div class="col-lg-6 col-sm-6 col-12 mb-lg-0 mb-md-3 mb-sm-3 mb-3 pr-lg-2 pr-md-2 pr-sm-2 pr-lg-0">
+                               <div class="grey-blk">
+                                    <h3 class="grey-heading">Bus Status</h3>
+                                    <div class="bold-detail" id="bus_status"></div>
+                                </div>
+                           </div>
+                       </div>
+                       <div class="row mb-lg-3 mb-md-0 mb-sm-0 mb-0">
+                            <div class="col-lg-6 col-sm-6 col-12 mb-lg-0 mb-md-3 mb-sm-3 mb-3 pr-lg-2 pr-md-2 pr-sm-2 pr-lg-0">
+                               <div class="grey-blk">
+                                    <h3 class="grey-heading">Request Assigned By</h3>
+                                    <div class="bold-detail" id="user"></div>
+                                </div>
+                            </div>
+                           <div class="col-lg-6 col-sm-6 col-12 mb-lg-0 mb-md-3 mb-sm-3 mb-3 pr-lg-2 pr-md-2 pr-sm-2 pr-lg-0">
+                               <div class="grey-blk">
+                                    <h3 class="grey-heading">Bus System</h3>
+                                    <div class="bold-detail" id="bus_system"></div>
+                                </div>
+                            </div>
+                       </div>
+                   </div>
+                   <div class="col-lg-6 col-md-6 col-sm-12 mb-sm-3 mb-xs-3 mb-3">
+                       <div class="grey-blk paragraph">
+                            <h3 class="grey-heading">Description</h3>
+                            <div class="bold-detail" id="description"></div>
+                        </div>
+                   </div>
+               </div>
+            </div>
+            <div class="form-btn-sec">
+                <a href="javascript:void(0);" class="blue-btn mr-3 grey-btn" id="edit_button">Edit</a><button class="blue-btn" type="button" onclick="location.href= '/repair/'">Add Request</button>
+            </div>
+        </div>
+    </div>
+
+<script src='{% static "assets/js/repair_request.js" %}?v={% now "Y-m-dH:i:s"%}'></script>
+
+{% endblock %}

@@ -1,0 +1,64 @@
+{% load static %}
+{% block content %}
+
+<div style="text-align: center;"><img src="{{protocol}}://{{domain}}/static/assets/images/logo-pdf.png" width="330" height="140" alt="Iamts-Logo"></div>
+<div style="display: inline-block;">Repair Requests -</div><div style="display: inline-block;"> {{ today }} </div>
+<table style="text-align: left;width: 100%;">
+    <tr>
+        <th style="width:35px;text-align: left;width: 70px;border: 1px solid #000;vertical-align: middle;margin-bottom: 0;padding: 4px 2px 0;">
+            S.No.
+        </th>
+        <th style="width:45px;text-align: left;width: 70px;border: 1px solid #000;vertical-align: middle;margin-bottom: 0;padding: 4px 2px 0;">
+            Request No.
+        </th><th style="text-align: left;width: 70px;border: 1px solid #000;vertical-align: middle;margin-bottom: 0;padding: 4px 2px 0;">
+            Created Date
+        </th>
+        <th style="text-align: left;border: 1px solid #000;vertical-align: middle;margin-bottom: 0;padding: 4px 2px 0;">
+            Resolution Date
+        </th>
+        <th style="text-align: left;border: 1px solid #000;vertical-align: middle;margin-bottom: 0;padding: 4px 2px 0;">
+            Bus Id
+        </th>
+        <th style="text-align: left;border: 1px solid #000;vertical-align: middle;margin-bottom: 0;padding: 4px 2px 0;">
+            Description
+        </th>
+        <th style="text-align: left;border: 1px solid #000;vertical-align: middle;margin-bottom: 0;padding: 4px 2px 0;">
+            Request Status
+        </th>
+        <th style="text-align: left;border: 1px solid #000;vertical-align: middle;margin-bottom: 0;padding: 4px 2px 0;">
+            Bus Status
+        </th>
+    </tr>
+    {% for request in data %}
+    <tr style="-pdf-word-wrap: CJK;">
+        <td style="width:35px;border: 1px solid #000;vertical-align: middle;padding: 4px 2px 0;">
+            {{forloop.counter}}
+        </td>
+        <td style="border: 1px solid #000;vertical-align: middle;padding: 4px 2px 0;">
+            {{request.repair_no}}
+        </td>
+        <td style="border: 1px solid #000;vertical-align: middle;padding: 4px 2px 0;">
+            {{request.created_at}}
+        </td>
+        <td style="border: 1px solid #000;vertical-align: middle;padding: 4px 2px 0;">
+            {{request.resolution_date}}
+        </td>
+        <td style="border: 1px solid #000;vertical-align: middle;padding: 4px 2px 0;">
+            {{request.bus_id}}
+        </td>
+        <td style="border: 1px solid #000;vertical-align: middle;padding: 4px 2px 0;">
+            {{request.description}}
+        </td>
+        <td style="border: 1px solid #000;vertical-align: middle;padding: 4px 2px 0;">
+            {{request.request_status}}
+        </td>
+        <td style="border: 1px solid #000;vertical-align: middle;padding: 4px 2px 0;">
+            {{request.bus_status}}
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}
+
+

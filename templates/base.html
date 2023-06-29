@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>IAMTS Admin Panel</title>
+	{% load static %}
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0 user-scalable=no ">
+	<link href='{% static "assets/images/favicon.ico" %}' rel="icon" type="image/png" />
+	<link rel="stylesheet" type="text/css" href='{% static "assets/css/bootstrap.min.css" %}'>
+	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@fullcalendar/core@4.4.2/main.min.css">
+	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@4.4.2/main.min.css">
+	<!-- <link rel="stylesheet" type="text/css" href='{% static "assets/css/bootstrap-clockpicker.min.css" %}'> -->
+	<link rel="stylesheet" type="text/css" href='{% static "assets/css/style.css" %}?v={% now "Y-m-dH:i:s"%}'>
+	<link rel="stylesheet" type="text/css" href='{% static "assets/css/jquery.custom-scrollbar.css" %}'>
+	<link rel="stylesheet" type="text/css" href='{% static "assets/css/bootstrap-select.min.css" %}'>
+	<link rel="stylesheet" href='{% static "assets/css/bootstrap-datepicker.min.css" %}'>
+	<link rel="stylesheet" type="text/css" href='{% static "assets/css/all.css" %}'>
+	<link rel="apple-touch-icon" sizes="57x57" href='{% static "assets/images/apple-icon-57x57.png" %}'>
+	<link rel="apple-touch-icon" sizes="60x60" href='{% static "assets/images/apple-icon-60x60.png" %}'>
+	<link rel="apple-touch-icon" sizes="72x72" href='{% static "assets/images/apple-icon-72x72.png" %}'>
+	<link rel="apple-touch-icon" sizes="76x76" href='{% static "assets/images/apple-icon-76x76.png" %}'>
+	<link rel="apple-touch-icon" sizes="114x114" href='{% static "assets/images/apple-icon-114x114.png" %}'>
+	<link rel="apple-touch-icon" sizes="120x120" href='{% static "assets/images/apple-icon-120x120.png" %}'>
+	<link rel="apple-touch-icon" sizes="144x144" href='{% static "assets/images/apple-icon-144x114.png" %}'>
+	<link rel="apple-touch-icon" sizes="152x152" href='{% static "assets/images/apple-icon-152x152.png" %}'>
+	<link rel="apple-touch-icon" sizes="180x180" href='{% static "assets/images/apple-icon-180x180.png" %}'>
+	<link rel="icon" type="image/png" sizes="196x196" href='{% static "assets/images/android-icon-196x196.png" %}'>
+	<link rel="icon" type="image/png" sizes="32x32" href='{% static "assets/images/favicon-32x32.png" %}'>
+	<link rel="icon" type="image/png" sizes="16x16" href='{% static "assets/images/favicon-16X16.png" %}'>
+	<link rel="icon" type="image/png" sizes="100x100" href='{% static "assets/images/favicon-100x100.png" %}'>
+
+	<link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css">
+
+<!--	<link rel="stylesheet" type="text/css" href='{% static "assets/js/bootstrap-clockpicker.min.js" %}'>-->
+	<script src='{% static "assets/js/popper.min.js" %}'></script>
+	<script src='{% static "assets/js/jquery.min.js" %}'></script>
+
+	<script src='{% static "assets/js/jquery.custom-scrollbar.js" %}'></script>
+	<script src='{% static "assets/js/jquery.validate.min.js" %}'></script>
+	<script src='{% static "assets/js/bootstrap.min.js" %}'></script>
+	<script src='{% static "assets/js/moment.min.js" %}'></script>
+	<script src='{% static "assets/js/bootstrap-datepicker.min.js" %}'></script>
+	<script src='{% static "assets/js/additional-methods.js" %}'></script>
+	<script src='{% static "assets/js/common.js" %}'></script>
+	<script src='{% static "assets/js/chart.min.js" %}'></script>
+	<script src='{% static "assets/js/bootstrap-select.min.js" %}'></script>
+
+
+
+
+</head>
+<body>
+{% if request.user.dark_mode %}
+<body class="dark-mode">
+{% endif %}
+	  <div class="overlay"></div>
+	<div class="admin-main">
+		<aside class="sidebar">
+			
+				<div class="logo-sec">
+					<a href="/main/dashboard"><img src="/static/assets/images/header-logo.png" width="126" height="42" alt="IAMTS"></a>
+					<a href="javascript:void(0);" class="hamburger" title="Toggle Sidebar"></a>
+				</div>
+				<div id="cus-scroller" class="scroll-block default-skin">
+					<div class="links-sec">
+						{% if request.user.designation.main_dashboard %}
+						<div class="side-content">
+							<div class="link-heading">Main</div>
+							<ul class="side-link " >
+								<li class="  {%if request.path == '/main/dashboard'%}active{% endif %}" ><a href="{% url 'dashboard' %}" title="Dashboard"><i class="hut-icon"></i><span>Dashboard</span></a><i class="arrow"></i></li>
+							</ul>
+						</div>
+						{% endif %}
+						{% if request.user.designation.bus_management or request.user.designation.repair_request %}
+						<div class="side-content">
+							<div class="link-heading ">Bus Management</div>
+							<ul class="side-link " >
+								{% if request.user.designation.bus_management %}
+								<li class="{%if request.path == '/bus/dashboard'%}active{% endif %}" ><a href="{% url 'bus_dashboard' %}"  title="Bus Dashboard"><i class="calender-icon"></i><span class=
+								cus-lineheight>Bus Dashboard</span></a><i class="arrow"></i></li>
+								<li class="{%if request.path == '/list/bus/' or request.path ==  '/add/bus/' or request.resolver_match.url_name == 'edit_bus' or request.resolver_match.url_name == 'bus_details' %}active{% endif %}">
+									<a href="{% url 'view_buses' %}"  title="Buses">
+										<i class="viewbus-icon"></i>
+										<span class=cus-lineheight>Buses</span></a>
+									<i class="arrow"></i></li>
+								{% endif %}
+								{% if request.user.designation.repair_request %}
+								<li class="{%if request.path == '/list/repair' or request.path == '/repair/' or request.resolver_match.url_name == 'repair_edit' or request.resolver_match.url_name == 'detail_repair' %}active{% endif %}">
+									<a href="{% url 'repair_listing' %}"  title="Repair Request"><i class="tools-icon"></i><span>Repair Request</span></a><i class="arrow"></i></li>
+								{% endif %}
+							</ul>
+						</div>
+						{% endif %}
+						{% if request.user.designation.man_management %}
+						<div class="side-content">
+							<div class="link-heading">Manpower Management</div>
+							<ul class="side-link">
+								<li class="{%if request.path == '/manpower/management'%}active{% endif %}"><a href="{% url 'manpower_dashboard' %}" title="Manpower Dashboard"><i class="boy-icon"></i><span>Manpower Dashboard</span></a><i class="arrow"></i></li>
+								<li class="{%if request.path == '/list/employee' or request.path ==  '/list/roster' or request.path ==  '/add/roster'  or request.path ==  '/add/employee' or request.resolver_match.url_name == 'roster_details' or request.resolver_match.url_name == 'edit_roster' or request.resolver_match.url_name == 'edit_employee' or request.resolver_match.url_name == 'detail_employee' %}active{% endif %}"><a href="{% url 'list_roster' %}" title="Rosters"><i class="dice-icon"></i><span>Rosters</span></a><i class="arrow"></i></li>
+								<li class="{%if request.path == '/leave/listing' or request.path == '/upload/leave'  or request.resolver_match.url_name == 'leave_detail'%}active{% endif %}"><a href="{% url 'leave_listing' %}" title="Leaves"><i class="card-icon"></i><span>Leave</span></a><i class="arrow"></i></li>
+							</ul>
+						</div>
+						{% endif %}
+						{% if request.user.designation.work_management or request.user.designation.service_request %}
+						<div class="side-content">
+							<div class="link-heading">Work Order Management</div>
+							<ul class="side-link">
+								{% if request.user.designation.work_management %}
+								<li class="{%if request.path == '/work/order' %}active{% endif %}"><a href="{% url 'Work_order' %}" title="Work Orders"><i class="gridbox-icon"></i><span>Work Order Dashboard</span></a><i class="arrow"></i></li>
+								<li class="{%if request.path == '/list/order' or request.path ==  '/add/order' or request.resolver_match.url_name == 'order_details'  or request.resolver_match.url_name == 'detail_order' or request.resolver_match.url_name == 'edit_order' %}active{% endif %}"><a href="{% url 'list_order' %}" title="Work Orders"><i class="box-icon"></i><span>Work Orders</span></a><i class="arrow"></i></li>
+<!--								<li><a href="javascript:void(0);" title="Reports"><i class="puzzle-icon"></i><span>Reports</span></a><i class="arrow"></i></li>-->
+								{% endif %}
+								{% if request.user.designation.service_request %}
+								<li class="{%if request.path == '/list/service' or request.path ==  '/service/' or request.resolver_match.url_name == 'service_details' or request.resolver_match.url_name == 'service_edit' or request.resolver_match.url_name == 'detail_service' or request.resolver_match.url_name == 'edit_service' %}active{% endif %}"><a href="{% url 'list_service' %}" title="Service Requests"><i class="tools-icon"></i><span>Service Requests</span></a><i class="arrow"></i></li>
+								{% endif %}
+							</ul>
+						</div>
+						{% endif %}
+						{% if request.user.designation.user_admin_management %}
+						<div class="side-content">
+							<div class="link-heading">User Administration</div>
+							<ul class="side-link">
+								<li class="{%if request.path == '/user/roles' %}active{% endif %}"><a href="{% url 'roles' %}" title="Users"><i class="user-icon"></i><span>Users</span></a><i class="arrow"></i></li>
+							</ul>
+						</div>
+						{% endif %}
+<!--						<div class="side-content">-->
+<!--							<div class="link-heading">Analytics</div>-->
+<!--							<ul class="side-link">-->
+<!--								<li><a href="javascript:void(0);" title="Analytics"><i class="chart-icon"></i><span>Analytics</span></a><i class="arrow"></i></li>-->
+<!--							</ul>-->
+<!--						</div>-->
+						<div class="side-content">
+							<ul class="side-link">
+								<li><a href="{% url 'logout' %}" title="Logout"><i class="logout-icon"></i><span>Logout</span></a><i class="arrow"></i></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+		</aside>
+	<div class="right-section">
+		<!-- custum Loader -->
+				  <div class="dynamic-loader">
+					<div class="loader-outer">
+						<div class="loader-img"><img src="/static/assets/images/loader-blue.png" width="30" height="31" alt="IAMTS loader"></div>
+						<div class="loader"></div>
+					</div>
+				</div>
+				<!-- custum Loader -->
+			<div class="alert alert-success alert-dismissible cus-tost">
+		    <button type="button" class="close">&times;</button>
+			<!-- <i class="fas fa-check-circle"></i> --><span class="" id="succ-msg"></span>
+		  	</div>
+		  	<!-- Toast message end -->
+		  	<!-- Toast message error start -->
+			<div id="error-msge" class="alert alert-danger alert-dismissible cus-tost alert-toast" style="top:75px;">
+		    	<button type="button" class="close">&times;</button>
+				<!-- <i class="fas fa-times-circle"></i>--> <span id="error_txt"></span>
+		  	</div>
+		  	<!-- Toast message error end -->
+			<nav class="top-navigation">
+				<div class="logo-sec moblogo-sec">
+					<img src="/static/assets/images/header-logo.png" width="126" height="42" alt="IAMTS">
+					<a href="javascript:void(0);" class="mob-hamburger" title="Toggle Sidebar"></a>
+				</div>
+				<div class="topleft-sec mob-hide">
+					<!-- <div class="search-box">
+						<input type="text" placeholder="Search on IAMTS"><i class="lens-icon"></i>
+					</div> -->
+					<div class="switch-section">
+						<span class="switch-txt">Switch to Dark Mode</span>
+						<label class="switch">
+						  <input type="checkbox" id="dark-mode">
+						  <span class="slider round"></span>
+						</label>
+					</div>
+				</div>
+				<div class="topright-sec mob-hide">
+					<ul class="righttop-links">
+						<li>
+							<div class="dropdown profile">
+								<a href="javascript:void(0);" title="settings" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="seting-icon"></i>
+								</a>
+								<div class="dropdown-menu cus-dropdown dropdown-menu-right" aria-labelledby="dropdownMenuLink">
+								    <a class="dropdown-item" href="{% url 'my_accounts' %}">Profile Settings</a>
+
+								    <!-- <a class="dropdown-item" href="{% url 'settings' %}">User Settings</a> -->
+
+
+							  	</div>
+						  	</div>
+						</li>
+<!--						<li class="notification">-->
+<!--							<span class="red-dot">5</span>-->
+<!--							<div class="dropdown profile">-->
+<!--								<a href="javascript:void(0);" title="Notifications" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="bell-icon"></i></a>-->
+<!--								<div class="dropdown-menu cus-dropdown dropdown-menu-right" aria-labelledby="dropdownMenuLink">-->
+<!--								    <a class="dropdown-item" href="javascript:void(0);">Notification 1</a>-->
+<!--								    <a class="dropdown-item" href="javascript:void(0);">Notification 2</a>-->
+<!--							  	</div>-->
+<!--						  	</div>-->
+<!--						</li>-->
+						<li>
+							<div class="dropdown profile">
+								<a href="javascript:void(0);" title="settings" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									<span class="profile-blk">
+										{% if request.user.profile_picture %}
+											<img src="/media/{{request.user.profile_picture}}" width="45" height="44" alt="User-profile">
+										{% else %}
+											<img src="/static/assets/images/profile-default.png" width="45" height="44" alt="User-profile">
+										{% endif %}
+									</span>
+								</a>
+								<div class="dropdown-menu dropdown-menu-right cus-dropdown" aria-labelledby="dropdownMenuLink">
+								    <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+							  	</div>
+				  			</div>
+						</li>
+					</ul>
+				</div>
+				<div class="mob-head">
+					<!-- <div class="search-box">
+						<input type="text" placeholder="Search on IAMTS"><i class="lens-icon"></i>
+					</div> -->
+					<div class="outer-link">
+					<div class="switch-section">
+						<span class="switch-txt">Dark Mode</span>
+						<label class="switch">
+						  <input type="checkbox" id="dark-mode-mob">
+						  <span class="slider round"></span>
+						</label>
+					</div>
+					<ul class="righttop-links">
+						<li>
+							<div class="dropdown profile">
+								<a href="javascript:void(0);" title="settings" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="seting-icon"></i>
+								</a>
+								<div class="dropdown-menu cus-dropdown dropdown-menu-right" aria-labelledby="dropdownMenuLink">
+								    <a class="dropdown-item" href="{% url 'my_accounts' %}">Profile Settings</a>
+								    <!-- <a class="dropdown-item" href="{% url 'settings' %}">Dashboard Settings</a> -->
+							  	</div>
+						  	</div>
+						</li>
+						<!-- <li class="notification">
+							<span class="red-dot">5</span>
+							<div class="dropdown profile">
+								<a href="javascript:void(0);" title="Notifications" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="bell-icon"></i></a>
+								<div class="dropdown-menu cus-dropdown dropdown-menu-right" aria-labelledby="dropdownMenuLink">
+								    <a class="dropdown-item" href="javascript:void(0);">Notification 1</a>
+								    <a class="dropdown-item" href="javascript:void(0);">Notification 2</a>
+							  	</div>
+						  	</div>
+						</li> -->
+						<li>
+							<div class="dropdown profile">
+								<a href="javascript:void(0);" title="settings" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									<span class="profile-blk">
+										 {% if request.user.profile_picture %}
+											<img src="/media/{{request.user.profile_picture}}" width="45" height="44" alt="User-profile">
+										{% else %}
+											<img src="/static/assets/images/profile-default.png" width="45" height="44" alt="User-profile">
+										{% endif %}
+									</span>
+								</a>
+								<div class="dropdown-menu dropdown-menu-right cus-dropdown" aria-labelledby="dropdownMenuLink">
+								    <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+							  	</div>
+				  			</div>
+						</li>
+					</ul>
+					</div>
+				</div>
+			</nav>
+	{% block content %}
+
+	{% endblock %}
+
+	</div>
+	</div>
+	<script>
+		$(document).ready(function() {
+		  $(".scroll-block").customScrollbar();
+
+		  $(".hamburger").click(function(){
+		    $("body").toggleClass("main-active");
+		  });
+		  $(".moblogo-sec .mob-hamburger").click(function(){
+		    $("body").toggleClass("mob-active");
+		  });
+
+		  if ($('.sidebar ul li').hasClass('active')) {
+			var offset = $('.sidebar').find('ul li.active').offset().top - $(window).scrollTop();
+			if(offset > window.innerHeight){
+				var scrollheight = $('.sidebar').find('ul li.active').offset().top;
+				$(".scroll-block").customScrollbar("scrollToY",scrollheight);
+			}
+		  }
+		});
+		$(".close").on("click", function(){
+			$(".alert").hide()
+		})
+		$("#dark-mode").prop('checked', {{request.user.dark_mode|lower}});
+		$("#dark-mode-mob").prop('checked', {{request.user.dark_mode|lower}});
+		$("#dark-mode").on("change", function(){
+			$.ajax({
+				url : '/api/v1/registration/modules/',
+				type : 'put',
+				data : {'dark_mode': $(this)[0].checked},
+				dataType:'json',
+				success : function(data) {
+					window.location.reload()
+				},
+				error: function(data) {
+					window.location.reload()
+				},
+			});
+		})
+		$("#dark-mode-mob").on("change", function(){
+			$.ajax({
+				url : '/api/v1/registration/modules/',
+				type : 'put',
+				data : {'dark_mode': $(this)[0].checked},
+				dataType:'json',
+				success : function(data) {
+					window.location.reload()
+				},
+				error: function(data) {
+					window.location.reload()
+				},
+			});
+		})
+	</script>
+
+</body>
+</html>

@@ -1,0 +1,49 @@
+{% load static %}
+<html>
+<head>
+	<title>Not Permission</title>
+	<link rel="stylesheet" type="text/css" href="/static/assets/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="/static/assets/css/style.css">
+	<link href="/static/assets/images/favicon.ico" rel="icon" type="image/png" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0 user-scalable=no ">
+    <script src='{% static "assets/js/jquery.min.js" %}'></script>
+    	<script src='{% static "assets/js/popper.min.js" %}'></script>
+    <script src='{% static "assets/js/bootstrap.min.js" %}'></script>
+
+</head>
+<body>
+
+<!--<p>Click the button to display an alert box.</p>-->
+
+<!--<button onclick="myFunction()">Try it</button>-->
+    <div class="modal fade pr-0" id="imageModal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content cus-modal">
+            <!-- Modal Header -->
+            <div class="modal-header">
+              <h1 class="modal-title">Your permissions has been changed now.</h1>
+<!--            <button type="button" class="close" data-dismiss="modal">&times;</button>-->
+            </div>
+                <div class="modal-detail permission-popup">
+                    <div class="text-center">
+                        {% if request.user.designation %}
+                            <div><a href="{% url 'my_accounts' %}" class="blue-btn" title="Okay">Okay</a></div>
+                        {% else %}
+                            <div><a href="{% url 'login' %}" class="blue-btn" title="Okay">Okay</a></div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+      <!-- The Modal end -->
+<script>
+    $('#imageModal').modal({
+      backdrop: 'static',
+      keyboard: false
+    });
+    $("#imageModal").modal('show')
+</script>
+
+</body>
+</html>

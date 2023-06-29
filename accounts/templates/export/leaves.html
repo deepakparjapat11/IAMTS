@@ -1,0 +1,61 @@
+{% load static %}
+{% block content %}
+
+<div style="text-align: center;"><img src="{{protocol}}://{{domain}}/static/assets/images/logo-pdf.png" width="330" height="140" alt="Iamts-Logo"></div>
+<div style="display: inline-block;">Leaves -</div><div style="display: inline-block;"> {{ today }} </div>
+<table style="text-align: left;width: 100%;-pdf-word-wrap: CJK;">
+    
+    <tr>
+        <th style="width:45px;text-align: left;width: 70px;border: 1px solid #000;vertical-align: middle;margin-bottom: 0;padding: 4px 2px 0;">
+            S.No.
+        </th>
+        <th style="width:100px;text-align: left;border: 1px solid #000;vertical-align: middle;margin-bottom: 0;padding: 4px 2px 0;">
+            Emp. Name
+        </th>
+        <th style="width:50px;text-align: left;border: 1px solid #000;vertical-align: middle;margin-bottom: 0;padding: 4px 2px 0;">
+            Emp. Id
+        </th>
+        <th style="text-align: left;border: 1px solid #000;vertical-align: middle;margin-bottom: 0;padding: 4px 2px 0;">
+            Email
+        </th>
+        <th style="text-align: left;border: 1px solid #000;vertical-align: middle;margin-bottom: 0;padding: 4px 2px 0;">
+            Description
+        </th>
+        <th style="text-align: left;border: 1px solid #000;vertical-align: middle;margin-bottom: 0;padding: 4px 2px 0;">
+            Date
+        </th>
+        <th style="text-align: left;border: 1px solid #000;vertical-align: middle;margin-bottom: 0;padding: 4px 2px 0;">
+            Status
+        </th>       
+    </tr>
+    
+    {% for leave in data %}
+    <tr>
+        <td style="border: 1px solid #000;vertical-align: middle;padding: 4px 2px 0;">
+            {{forloop.counter}}
+        </td>
+        <td style="border: 1px solid #000;vertical-align: middle;padding: 4px 2px 0;">
+            {{leave.employee_name}}
+        </td>
+        <td style="border: 1px solid #000;vertical-align: middle;padding: 4px 2px 0;">
+            {{leave.employee_id}}
+        </td>
+
+        <td style="border: 1px solid #000;vertical-align: middle;padding: 4px 2px 0;">
+            {{leave.employee_email}}
+        </td>
+        <td style="border: 1px solid #000;vertical-align: middle;padding: 4px 2px 0;">
+            {{leave.description}}
+        </td>
+        <td style="border: 1px solid #000;vertical-align: middle;padding: 4px 2px 0;">
+            {{leave.date}}
+        </td>
+        <td style="border: 1px solid #000;vertical-align: middle;padding: 4px 2px 0;">
+            {{leave.status}}
+        </td>
+
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}

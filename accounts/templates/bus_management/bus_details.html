@@ -1,0 +1,197 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+{% if messages %}
+    {% for message in messages %}
+        {% if message is not None %}
+
+        {% endif %}
+    {% endfor %}
+{% endif %}
+
+            <div class="main-content">
+				<div class="modal fade pr-0" id="myModal">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content cus-modal">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                  <h1 class="modal-title">Are you sure to delete this bus?</h1>
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-detail">
+
+                    <div class="text-center">
+                        <button type="button" class="blue-btn modal-btn" onclick="remove_bus()">Yes</button>
+                                <button type="button" class="blue-btn modal-btn" data-dismiss="modal">No</button>
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- The Modal end -->
+                <div class="topbar">
+                    <div class="topleft-sec">
+                        <h1>Hi <span class="user-text">{{request.user.first_name}} {{request.user.last_name}},</span> Welcome Back!</h1>
+                        <div class="sub-txt">Welcome to <span class="text-highlight">iamts</span> dashboard</div>
+                    </div>
+                </div>
+                <div class="topbar top-link-sec">
+                    <div class="">
+                        <ul class="menu-link bread-crumbs">
+                            <li><a href="{% url 'bus_dashboard' %}" title="Bus Management">Bus Management</a></li>
+                            <li><a href="{% url 'view_buses' %}" title="Buses">Buses</a></li>
+                            <li><a href="javascript:void(0);" class="link-active" title="Bus Details">Bus Details</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="">
+                    <div class="head-info head-section">
+                        <div class="botom-border">
+                            <h2>Bus Details</h2>
+                        </div>
+                    </div>
+                    <div class="block-mode pt-4">
+                        <div class="slide-section">
+                            <!-- Slider start -->
+								<div id="dummy-img">
+                                        <img class="img-size" src="/static/assets/images/bus-details.jpg" width="1309" height="357" alt="Banner" id="bus-details" style="display: None;">
+                                </div>
+								<div id="demo" class="carousel slide" data-ride="carousel">
+                                <!-- The slideshow -->
+                                <div class="carousel-inner">
+                                    <div class="carousel-item active">
+									</div>
+                                </div>
+                                <!-- Left and right controls -->
+                                <a class="carousel-control-prev" href="#demo" data-slide="prev">
+                                <span class="carousel-control-prev-icon"><i class="fas fa-chevron-left"></i></span>
+                                </a>
+                                <a class="carousel-control-next" href="#demo" data-slide="next">
+                                <span class="carousel-control-next-icon"><i class="fas fa-chevron-right"></i></span>
+                                </a>
+                            </div>
+                                <!-- Slider end -->
+                        </div>
+                        <div class="blocks">
+                        	<div class="row mb-lg-3 mb-md-0 mb-sm-0 mb-0 cus-spacing">
+                        		<div class="col-lg-3 col-md-6 col-sm-6 col-12 side-space">
+                        			<div class="grey-blk">
+                        				<h3 class="grey-heading">Bus Id</h3>
+                        				<div class="bold-detail" id="bus_id"></div>
+                        			</div>
+                        		</div>
+                        		<div class="col-lg-3 col-md-6 col-sm-6 col-12 side-space">
+                        			<div class="grey-blk">
+                        				<h3 class="grey-heading">Manufacturer of Bus</h3>
+                        				<div class="bold-detail" id="manufacturer"></div>
+                        			</div>
+                        		</div>
+                        		<div class="col-lg-3 col-md-6 col-sm-6 col-12 side-space">
+                        			<div class="grey-blk">
+                        				<h3 class="grey-heading">Year of Production</h3>
+                        				<div class="bold-detail" id="production_year"></div>
+                        			</div>
+                        		</div>
+                        		<div class="col-lg-3 col-md-6 col-sm-6 col-12 side-space">
+                        			<div class="grey-blk">
+                        				<h3 class="grey-heading">Chassis</h3>
+                        				<div class="bold-detail" id="chassis"></div>
+                        			</div>
+                        		</div>
+                        	</div>
+                        	<div class="row mb-lg-3 mb-md-0 mb-sm-0 mb-0 cus-spacing">
+                        		<div class="col-lg-3 col-md-6 col-sm-6 col-12 side-space">
+                        			<div class="grey-blk">
+                        				<h3 class="grey-heading">Body Construction</h3>
+                        				<div class="bold-detail" id="body_type"></div>
+                        			</div>
+                        		</div>
+                        		<div class="col-lg-3 col-md-6 col-sm-6 col-12 side-space">
+                        			<div class="grey-blk">
+                        				<h3 class="grey-heading">Odometer Reading</h3>
+                        				<div class="bold-detail"> <span id="odo_km"></span></div>
+                        			</div>
+                        		</div>
+                        		<div class="col-lg-3 col-md-6 col-sm-6 col-12 side-space">
+                        			<div class="grey-blk">
+                        				<h3 class="grey-heading">Fuel Type</h3>
+                        				<div class="bold-detail" id="fuel_in"></div>
+                        			</div>
+                        		</div>
+                        		<div class="col-lg-3 col-md-6 col-sm-6 col-12 side-space">
+                        			<div class="grey-blk">
+                        				<h3 class="grey-heading">Bus Price ($)</h3>
+                        				<div class="bold-detail" id="bus_cost"></div>
+                        			</div>
+                        		</div>
+                        	</div>
+                        	<div class="row mb-lg-3 mb-md-0 mb-sm-0 mb-0 cus-spacing">
+                        		<div class="col-lg-3 col-md-6 col-sm-6 col-12 side-space">
+                        			<div class="grey-blk">
+                        				<h3 class="grey-heading">Avg. Monthly fuel cost ($)</h3>
+                        				<div class="bold-detail" id="avg_fuel_cost"></div>
+                        			</div>
+                        		</div>
+                        		<div class="col-lg-3 col-md-6 col-sm-6 col-12 side-space">
+									<div class="grey-blk">
+                        				<h3 class="grey-heading">Labor Cost ($)</h3>
+                        				<div class="bold-detail" id="labor_cost"></div>
+                        			</div>
+                        		</div>
+                        		<div class="col-lg-3 col-md-6 col-sm-6 col-12 side-space">
+                        			<div class="grey-blk">
+                        				<h3 class="grey-heading">Status</h3>
+                        				<div class="bold-detail" id="bus_status"></div>
+                        			</div>
+                        		</div>
+                        		<div class="col-lg-3 col-md-6 col-sm-6 col-12 side-space">
+									<div class="grey-blk">
+                        				<h3 class="grey-heading">Schedule Service</h3>
+                        				<div class="bold-detail" id="service_date"></div>
+                        			</div>
+                        		</div>
+                        	</div>
+                        	<div class="row mb-lg-3 mb-md-0 mb-sm-0 mb-0 cus-spacing">
+                        		<div class="col-lg-3 col-md-6 col-sm-6 col-12 side-space">
+									<div class="grey-blk">
+                        				<h3 class="grey-heading">Schedule Repair</h3>
+                        				<div class="bold-detail" id="repair_date"></div>
+                        			</div>
+                        		</div>
+                        		<div class="col-lg-3 col-md-6 col-sm-6 col-12 side-space">
+									<div class="grey-blk">
+                        				<h3 class="grey-heading">History</h3>
+                        				<div class="bold-detail" id="bus_history"></div>
+                        			</div>
+                        		</div>
+
+                        		<div class="col-lg-3 col-md-6 col-sm-6 col-12 side-space">
+									<div class="grey-blk">
+                        				<h3 class="grey-heading">Vehicle Licensing</h3>
+                        				<div class="bold-detail" id="vehicle_licensing"></div>
+                        			</div>
+                        		</div>
+                        	</div>
+                        	<div class="row mb-lg-5 mb-md-2 mb-sm-0 mb-0 cus-spacing">
+                        		<div class="col-lg-3 col-md-6 col-sm-6 col-12 side-space">
+
+                        		</div>
+                        		<div class="col-lg-3 col-md-6 col-sm-6 col-12 side-space">
+
+                        		</div>
+                        	</div>
+                        </div>
+                    </div>
+                    <div class="form-btn-sec">
+                        {% if request.user.designation.bus_edit %}
+							<a href="javascript:void(0);" class="blue-btn mr-3 grey-btn" id="edit_button">Edit Bus</a><a href="javascript:void(0);" class="blue-btn mr-3 grey-btn" data-toggle="modal" data-target="#myModal">Delete Bus</a>
+						{% endif%}
+						<div class="btn-control"><button class="blue-btn" type="button" onclick="location.href= '/add/bus'">Add Bus</button></div>
+                    </div>
+                </div>
+            </div>
+
+<script src='{% static "assets/js/bus_management.js" %}?v={% now "Y-m-dH:i:s"%}'></script>
+
+{% endblock %}

@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="main-content">
+    <div class="topbar">
+        <div class="topleft-sec">
+            <h1>Hi <span class="user-text">{{request.user.first_name}} {{request.user.last_name}},</span> Welcome Back!</h1>
+            <div class="sub-txt">Welcome to <span class="text-highlight">iamts</span> dashboard</div>
+        </div>
+    </div>
+        <div class="topbar top-link-sec">
+            <div class="">
+                <ul class="menu-link bread-crumbs">
+                    <li><a href="{% url 'manpower_dashboard' %}" title="Manpower Dashboard">Manpower Dashboard</a></li>
+                    <li><a href="{% url 'leave_listing' %}" title="Leave">Leave</a></li>
+                    <li><a href="javascript:void(0);" class="link-active" title="Import leave">Import leave</a></li>
+                </ul>
+                <div class="topright-sec">
+            </div>
+        </div>
+    </div>
+    <div class="head-info head-section">
+        <div class="botom-border">
+            <h2>Import Leave</h2>
+        </div>
+    </div>
+    <div class="block-mode pt-4">
+        <div class="btn-highlight"><a href="/static/leaves.csv" title="Download Sample File">Download Sample File</a></div>
+        <div class="form-sec">
+            <form id="upload_leave" method="POST" class="cus-form" enctype="multipart/form-data" autocomplete="off" >
+                {% csrf_token %}
+                <div class="row mb-3">
+                    <div class="col-lg-4">
+                        <label>Upload csv file <span class="red-astersick">*</span></label>
+                        <div class="field-blk" id="file_field">
+                        
+                            <div class="upload-outer">
+                                <label class="label-select proof" id="id_proof_label">Select File</label>
+                                <a href="javascript:void(0);" class="upload-btn"><i class="upload-icon"></i>Upload File</a>
+                                <div class="cus-upload"><input class="" type="file" id="file" name="file"></div><span id="bus_photos1"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </form>
+        </div>
+        <div class="leave">
+            <div class="card-row">
+                <div class="card-blk" id="catch" style="display:none;">
+                    <div class="card"><div class="card-header">Errors</div><div class="card-body error"></div></div>
+                </div>
+                <div class="card-blk" id="catch1" style="display:none;">
+                    <div class="card"><div class="card-header">Summaries</div><div class="card-body summaries"></div></div>
+                </div>
+                <div class="card-blk" id="catch3" style="display:none;">
+                    <div class="card"><div class="card-header">Upserts</div><div class="card-body upserts"></div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-btn-sec">
+        <button class="blue-btn mr-3 grey-btn" type="button" onclick="window.history.back()">Cancel</button><button class="blue-btn" type="button" onclick="upload_csv();">Upload leave</button>
+    </div>
+</div>
+<script src='{% static "assets/js/leave_management.js" %}?v={% now "Y-m-dH:i:s"%}'></script>
+{% endblock %}

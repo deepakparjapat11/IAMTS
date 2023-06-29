@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+			<div class="main-content list-request">
+				<div class="topbar">
+					<div class="topleft-sec">
+						<h1>Hi <span class="user-text">{{request.user.first_name}} {{request.user.last_name}},</span> Welcome Back!</h1>
+						<div class="sub-txt">Welcome to <span class="text-highlight">iamts</span> dashboard</div>
+					</div>
+					<div class="topright-sec">
+						<button type="button" class="blue-btn" onclick="export_data()">Export Data <i class="export-icon"></i></button>
+					</div>
+				</div>
+				<div class="topbar top-link-sec">
+					<div class="topleft-sec">
+						<ul class="menu-link bread-crumbs">
+							<li><a href="{% url 'Work_order' %}" title="Work Order Management">Work Order Management</a></li>
+							<li><a href="javascript:void(0);" title="Service Request">Service Request</a></li>
+						</ul>
+					</div>
+					<div class="topright-sec">
+						
+					</div>
+				</div>
+				<div class="block-mode space-lg bus-list">
+					<div class="head-info">
+						<div class="left-blk">
+							<h2>Service Requests</h2>
+
+						</div>
+						<div class="right-blk type-view">
+							<ul class="rightmenu-link">
+
+								<li><button type="button" onclick="location.href='{% url 'add_service' %}'" class="blue-btn">Add New Request <i class="fas fa-plus"></i></button></li>
+							</ul>
+						</div>
+					</div>
+					<div class="listview">
+						<div class="block-outer">
+							<div class="left-blk">
+								<ul class="filter">
+									<li><a class="filter-item filter-active" onclick="get_service_data(1)" href="javascript:void(0);" id="active" title="Active Request">Active Request</a></li>
+									<li><a class="filter-item" onclick="get_service_completed(1)" id="completed" href="javascript:void(0);" title="Complete Request">Complete Request</a></li>
+									<li><a class="filter-item" onclick="get_service_all(1)" id="all" href="javascript:void(0);" title="All Request">All Request</a></li>
+
+								</ul>
+							</div>
+							<div class="right-blk">
+								<ul class="cus-pagination">
+									<li style=""><a class="previous-icon" href="javascript:void(0);" title=""><i class="arrow left"></i></a></li>
+
+									<li class="next-icon-list"></li>
+									<li ><a class="next-icon" href="javascript:void(0);" title=""><i class="arrow"></i></a></li>
+								</ul>
+							</div>
+						</div>
+						<div class="table-spcing">
+						<div class="roster-table-blk">
+							<table id="roster_table" class="info-table list-table">
+								<tr class="botom-border header-row">
+
+									<td>Request No.</td>
+									<td>Raised Date</td>
+									<td>Resolution Date</td>
+									<td>Bus Id</td>
+									<td>Description</td>
+									<td>Request Status</td>
+									<td>Bus Status</td>
+									<td>Actions</td>
+								</tr>
+
+								<!-- Data from js -->
+
+							</table>
+							</div>
+							<div class="empty"></div>
+						</div>
+					</div>
+					<div class="gridview">
+						<div class="table-spcing">
+							<table class="detail-table">
+	
+							</table>
+						</div>
+					</div>
+
+				</div>
+			</div>
+	<script src='{% static "assets/js/service_request.js" %}?v={% now "Y-m-dH:i:s"%}'></script>
+{% endblock %}

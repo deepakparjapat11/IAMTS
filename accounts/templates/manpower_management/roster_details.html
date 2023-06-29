@@ -1,0 +1,183 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+            <div class="main-content roster-detail">
+                <div class="topbar">
+                    <div class="topleft-sec">
+                        <h1>Hi <span class="user-text">{{request.user.first_name}} {{request.user.last_name}},</span> Welcome Back!</h1>
+                        <div class="sub-txt">Welcome to <span class="text-highlight">iamts</span> dashboard</div>
+                    </div>
+                </div>
+                <div class="topbar top-link-sec">
+                    <div class="">
+                        <ul class="menu-link bread-crumbs">
+                            <li><a href="{% url 'manpower_dashboard' %}" title="Manpower Management">Manpower Management</a></li>
+                            <li><a href="{% url 'list_roster' %}" title="Rosters">Rosters</a></li>
+                            <li><a href="javascript:void(0);" class="link-active" title=">Roster Details">Roster Details</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="">
+                    <div class="head-info head-section">
+                        <div class="botom-border">
+                            <h2>Roster Details</h2>
+                        </div>
+                    </div>
+                    <div class="block-mode pt-4">
+                        <div class="blocks">
+                         <div class="row mb-lg-3 mb-md-0 mb-sm-0 mb-0 cus-spacing">
+                                <div class="col-lg-3 col-md-6 col-sm-6 col-12 side-space">
+                                    <div class="grey-blk">
+                                        <h3 class="grey-heading">Roster Name</h3>
+                                        <div class="bold-detail" id="repair_date">{{ roster.name }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-6 col-sm-6 col-12 side-space">
+                                    <div class="grey-blk">
+                                        <h3 class="grey-heading">Roster Number</h3>
+                                        <div class="bold-detail" >{{ roster.roster_no }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-6 col-sm-6 col-12 side-space">
+                                    <div class="grey-blk">
+                                        <h3 class="grey-heading">From Date</h3>
+                                        <div class="bold-detail" id="from_date">{{ roster.from_date|date:"d/m/Y" }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-6 col-sm-6 col-12 side-space">
+                                    <div class="grey-blk">
+                                        <h3 class="grey-heading">To Date</h3>
+                                        <div class="bold-detail" id="to_date">{{ roster.to_date|date:"d/m/Y" }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-lg-3 mb-md-0 mb-sm-0 mb-0 cus-spacing">
+                                <div class="col-lg-3 col-md-6 col-sm-6 col-12 side-space">
+                                    <div class="grey-blk">
+                                        <h3 class="grey-heading">From</h3>
+                                        <div class="bold-detail">{{ roster.from_time|time:" g:i A" }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-6 col-sm-6 col-12 side-space">
+                            		<div class="grey-blk">
+                                        <h3 class="grey-heading">To</h3>
+                                        <div class="bold-detail">{{ roster.to_time|time:" g:i A" }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-6 col-sm-6 col-12 side-space">
+                                    <div class="grey-blk">
+                                        <h3 class="grey-heading">Status</h3>
+                                        {% if roster.status == '1' %}
+                                            <div class="bold-detail" >Active</div>
+                                        {% elif roster.status == '2' %}
+                                            <div class="bold-detail" >Inactive</div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-6 col-sm-6 col-12 side-space">
+                                    <div class="grey-blk">
+                                        <h3 class="grey-heading">No. of Members</h3>
+                                        <div class="bold-detail" >{{ roster.members.count }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-lg-3 mb-md-0 mb-sm-0 mb-0 cus-spacing">
+                                <div class="col-lg-3 col-md-3 col-sm-6 col-12 side-space">
+                                    <div class="grey-blk vertical-height">
+                                        <h3 class="grey-heading">Department</h3>
+                                        <div class="bold-detail">{{ roster.department }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-9 col-md-9 col-sm-6 col-12 side-space">
+                                    <div class="row custum-padding">
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-12 side-space mb-3">
+                                            <div class="grey-blk low-bp">
+                                                <h3 class="grey-heading mb-1">Members</h3>
+                                                <div class="bold-detail" id="memmber">
+                                                	<div class="blk-container">
+				                                    </div>
+                                                </div>
+                                            </div>
+                                         </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-lg-3 mb-md-0 mb-sm-0 mb-0 cus-spacing">
+                                <div class="col-lg-3 col-md-6 col-sm-6 col-12 side-space">
+                                    <div class="grey-blk">
+                                        <h3 class="grey-heading">Work Days</h3>
+                                        <div class="bold-detail w-100" id="bus_history">
+                                        	<div class="days-grid ">
+                                                {% if check1 == True %}
+                                                    <span class="days-blk">NA</span>
+                                                {% else %}
+                                                    {% if roster.monday == 1 %}
+                                                    <span class="days-blk">Mon</span>
+                                                    {% endif %}
+                                                    {% if roster.tuesday == 1 %}
+                                                    <span class="days-blk">Tue</span>
+                                                    {% endif %}
+                                                    {% if roster.wednesday == 1 %}
+                                                    <span class="days-blk">Wed</span>
+                                                    {% endif %}
+                                                    {% if roster.thursday == 1 %}
+                                                    <span class="days-blk">Thu</span>
+                                                    {% endif %}
+                                                    {% if roster.friday == 1 %}
+                                                    <span class="days-blk">Fri</span>
+                                                    {% endif %}
+                                                    {% if roster.saturday == 1 %}
+                                                    <span class="days-blk">Sat</span>
+                                                    {% endif %}
+                                                    {% if roster.sunday == 1 %}
+                                                    <span class="days-blk">Sun</span>
+                                                    {% endif %}
+                                                {% endif %}
+                                                </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-6 col-sm-6 col-12 side-space">
+                            		<div class="grey-blk">
+                                        <h3 class="grey-heading">Work Offs</h3>
+                                        <div class="bold-detail">
+                                            {% if check == True %}
+                                                <span class="days-blk">NA</span>
+                                            {% else %}
+                                                {% if roster.monday == 0 %}
+                                                <span class="days-blk">Mon</span>
+                                                {% endif %}
+                                                {% if roster.tuesday == 0 %}
+                                                <span class="days-blk">Tue</span>
+                                                {% endif %}
+                                                {% if roster.wednesday == 0 %}
+                                                <span class="days-blk">Wed</span>
+                                                {% endif %}
+                                                {% if roster.thursday == 0 %}
+                                                <span class="days-blk">Thu</span>
+                                                {% endif %}
+                                                {% if roster.friday == 0 %}
+                                                <span class="days-blk">Fri</span>
+                                                {% endif %}
+                                                {% if roster.saturday == 0 %}
+                                                <span class="days-blk">Sat</span>
+                                                {% endif %}
+                                                {% if roster.sunday == 0 %}
+                                                <span class="days-blk">Sun</span>
+                                                {% endif %}
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-btn-sec">
+                        <a href="javascript:void(0);" class="blue-btn mr-3 grey-btn" onclick="location.href= '/roster/{{ roster.id }}'"  id="edit_button">Edit Roster</a><button class="blue-btn" type="button" onclick="location.href= '/add/roster'">Add New Roster</button>
+                    </div>
+                </div>
+                </div>
+
+
+<script src='{% static "assets/js/roster_management.js" %}?v={% now "Y-m-dH:i:s"%}'></script>
+{% endblock %}

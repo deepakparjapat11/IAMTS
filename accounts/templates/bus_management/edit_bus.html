@@ -1,0 +1,199 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+{% if messages %}
+    {% for message in messages %}
+        {% if message is not None %}
+            <div id="success-alert" class="messagelist alert {% if message.tags %} alert-{{ message.tags }} {% endif %}">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a>
+              {{ message }}
+            </div>
+        {% endif %}
+    {% endfor %}
+{% endif %}
+
+
+    <div class="main-content">
+        <div class="topbar">
+            <div class="topleft-sec">
+                <h1>Hi <span class="user-text">{{request.user.first_name}} {{request.user.last_name}},</span> Welcome Back!</h1>
+                <div class="sub-txt">Welcome to <span class="text-highlight">iamts</span> dashboard</div>
+            </div>
+        </div>
+        <div class="topbar top-link-sec">
+            <div class="">
+                <ul class="menu-link bread-crumbs">
+                    <li><a href="{% url 'bus_dashboard' %}" title="Bus Management">Bus Management</a></li>
+                    <li><a href="{% url 'view_buses' %}" title="Buses">Buses</a></li>
+                    <li><a href="javascript:void(0);" class="link-active" title="Edit Bus">Edit Bus</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="">
+            <div class="head-info head-section">
+                <div class="botom-border">
+                    <h2>Edit Bus Data</h2>
+                </div>
+            </div>
+            <div class="block-mode pt-4">
+                <div class="form-sec">
+                    <form id="add_bus_form" method="PUT" class="cus-form">
+                    {% csrf_token %}
+                    <div class="row row-botomspc">
+                        <div class="col-lg-4 col-md-4 col-sm-6 col-12 mb-3 mb-xs-3 mb-sm-3 mb-md-0 mb-lg-0">
+                            <label>Bus Id <span class="red-astersick">*</span></label>
+                            <div class="field-blk"><input type="text" placeholder="Eg. 2515AD" name="bus_id"></div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-6 col-12 mb-3 mb-xs-3 mb-sm-3 mb-md-0 mb-lg-0">
+                            <label>Manufactuer of Bus <span class="red-astersick">*</span></label>
+                            <div class="field-blk">
+                                <i class="arrow-down"></i>
+                                <select name="manufacturer"  id='manufacturer_list'>
+
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4">
+                            <label>Year of Production <span class="red-astersick">*</span></label>
+                            <div class="field-blk"><input type="text" placeholder="yyyy" id="date" name="make_year"></div>
+                        </div>
+                    </div>
+                    <div class="row row-botomspc">
+                        <div class="col-lg-4 col-md-4 col-sm-6 col-12 mb-3 mb-xs-3 mb-sm-3 mb-md-0 mb-lg-0">
+                            <label>History</label>
+                            <div class="field-blk"><input type="text" placeholder="" name="history"></div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-6 col-12 mb-3 mb-xs-3 mb-sm-3 mb-md-0 mb-lg-0">
+                            <label>Chassis Number <span class="red-astersick">*</span></label>
+                            <div class="field-blk">
+                                <input type="text" placeholder="Eg. 46854-512AD" name="chassis_number">
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4">
+                            <label>Body Construction</label>
+                            <div class="field-blk"><input type="text" placeholder="Body Construction" name="body_construction"></div>
+                        </div>
+                    </div>
+                    <div class="row row-botomspc">
+                        <div class="col-lg-4 col-md-4 col-sm-6 col-12 mb-3 mb-xs-3 mb-sm-3 mb-md-0 mb-lg-0">
+                            <label>Choose Status <span class="red-astersick">*</span></label>
+                            <div class="field-blk">
+                                <i class="arrow-down"></i>
+                                <select name="status">
+                                  <option value="" selected disabled hidden>Choose status</option>
+                                  <option value="1">In Service</option>
+                                  <option value="2">Out Of Service</option>
+                                  <option value="3">Short Service</option>
+                                  <option value="4">Awaiting Parts</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-6 col-12 mb-3 mb-xs-3 mb-sm-3 mb-md-0 mb-lg-0">
+                            <label>Schedule Service</label>
+                            <div class="field-blk cus-datepicker">
+                                <i class="far fa-calendar calender-picker"></i> 
+                                 <input type="text" class="form-control" id="inputDate" placeholder="DD/MM/YYYY" name="schedule_service">
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4">
+                             <label>Schedule Repair </label>
+                            <div class="field-blk cus-datepicker">
+                                <i class="far fa-calendar calender-picker"></i> 
+                                 <input type="text" class="form-control" id="inputDate-two" placeholder="DD/MM/YYYY"  name="schedule_repair">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row row-botomspc">
+                        <div class="col-lg-4 col-md-4 col-sm-6 col-12 mb-3 mb-xs-3 mb-sm-3 mb-md-0 mb-lg-0">
+                            <label>Fuel Input <span class="red-astersick">*</span></label>
+                            <div class="field-blk">
+                                <i class="arrow-down"></i>
+                                <select name="fuel_input">
+                                    <option value="" selected disabled hidden>Choose Fuel Types</option>
+                                    {% if fuel_type %}
+                                        {% for type in fuel_type %}
+                                            <option value="{{type.id}}">{{type.fuel_type}}</option>
+                                        {% endfor %}
+                                    {% else %}
+                                        <option value="" selected disabled>No Fuel Type</option>
+                                    {% endif %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-6 col-12 mb-3 mb-xs-3 mb-sm-3 mb-md-0 mb-lg-0">
+                            <label>Odometer Reading (Kms) <span class="red-astersick">*</span></label>
+                            <div class="field-blk"><input type="text" placeholder="Eg. 5000Kms" name="odo_reading"></div>
+                        </div>
+                        <div class="col-lg-4 col-md-4">
+                            <label>Bus Price ($) <span class="red-astersick">*</span></label>
+                            <div class="field-blk"><input type="text" placeholder="Eg. $15000" name="bus_price"></div>
+                        </div>
+                    </div>
+                    <div class="row row-botomspc">
+
+                        <div class="col-lg-4 col-md-4 col-sm-6 col-12 mb-3 mb-xs-3 mb-sm-3 mb-md-0 mb-lg-0">
+                            <label>Avg. Monthly Fuel Cost</label>
+                            <div class="field-blk"><input type="text" placeholder="Eg. $15000" name="average_fuel_cost"></div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 mb-3 mb-xs-3 mb-sm-3 mb-md-0 mb-lg-0">
+                            <label>Labor Cost ($)</label>
+                            <div class="field-blk"><input type="text" placeholder="Eg. $15000" name="labor_cost"></div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 ">
+                            <label>Vehicle Licensing</label>
+                            <div class="field-blk cus-datepicker">
+                                <i class="far fa-calendar calender-picker"></i>
+                                 <input type="text" class="form-control" id="vehicle_licensing" placeholder="DD/MM/YYYY" name="vehicle_licensing">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                                <div class="col-lg-12">
+                                    <label>Upload Bus Photos/Chassis</label>
+                                    <div class="field-blk relative-position" id="under">
+                                        <div class="upload-outer">
+                                        <label class="label-select">Accepted: jpg, jpeg, png</label>
+                                        <a href="javascript:void(0);" class="upload-btn"><i class="upload-icon"></i>Upload File</a>
+                                        <div class="cus-upload"><input class="" type="file" accept="image/*" id="bus_photos" name="bus_photos" multiple></div><span id="bus_photos1"></span>
+                                        </div>
+                                        <div class="blk-container select-image">
+
+                                        </div>
+                                    </div>
+                                    <div class="bold-detail usr-detail">
+                                        <div class="blk-container images">
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                </form>
+                </div>
+            </div>
+            <div class="form-btn-sec">
+                <button class="blue-btn mr-3 grey-btn" onclick="window.history.back()" type="button" title="Cancel">Cancel</button><button class="blue-btn" type="button" onclick="edit_form();" title="Save">Save</button>
+            </div>
+        </div>
+    </div>
+<script>
+    $('#inputDate').datepicker({
+        format: 'dd/mm/yyyy',
+    "autoclose": true
+    });
+    $('#inputDate-two').datepicker({
+        format: 'dd/mm/yyyy',
+    "autoclose": true
+
+    });
+    var dateToday = new Date();
+    $('#vehicle_licensing').datepicker({
+        format: 'dd/mm/yyyy',
+        "autoclose": true,
+         startDate: dateToday
+    });
+</script>
+<script src='{% static "assets/js/bus_management.js" %}?v={% now "Y-m-dH:i:s"%}'></script>
+
+{% endblock %}

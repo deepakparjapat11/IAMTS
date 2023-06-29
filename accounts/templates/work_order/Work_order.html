@@ -1,0 +1,171 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+			<!-- Toast message start -->
+
+			<div class="main-content work-dashbord">
+				<div class="topbar">
+					<div class="topleft-sec">
+						<h1>Hi <span class="user-text">{{request.user.first_name}} {{request.user.last_name}},</span> Welcome Back!</h1>
+						<div class="sub-txt">Welcome to <span class="text-highlight">iamts</span> dashboard</div>
+					</div>
+					
+				</div>
+				<div class="topbar top-link-sec">
+					<div class="topleft-sec">
+						<ul class="menu-link">
+							<li><a href="{% url 'Work_order' %}"  class="link-active" title="Work Order Management">Work Order Management</a></li>
+
+						</ul>
+					</div>
+					<div class="topright-sec">
+						
+					</div>
+				</div>
+				<div class="cus-row">
+					<div class="cus-col">
+						<div class="blue-bg">
+							<div class="info-sec">
+								<div class="left-info">
+									<div class="blk-head">Total Work Orders</div>
+									<div class="blk-info">
+										<span class="stats">{{ total_ord }}</span><span class="blue-txt detail"><i class="blue-graph"></i>{{ total_order_percent }}%</span><span class="ltblack">(30 days)</span>
+									</div>
+								</div>
+								<div class="right-icon">
+									<i class="box-blue-icon"></i>
+								</div>
+							</div>
+							<div class="bluegraph-sec" style="height: 65px;"></div>
+							<div class="bluegraph-sec-drk" style="height: 65px;"></div>
+						</div>
+					</div>
+					<div class="cus-col">
+						<div class="violet-bg">
+							<div class="info-sec">
+								<div class="left-info">
+									<div class="blk-head">Active Work Orders</div>
+									<div class="blk-info">
+										<span class="stats">{{ active_ord }}</span><span class="violet-txt detail"><i class="violet-graph"></i>{{ user_thirty_days }}%</span><span class="ltblack">(30 days)</span>
+									</div>
+								</div>
+								<div class="right-icon">
+									<i class="tickbox-icon"></i>
+								</div>
+							</div>
+							<div class="violetgraph-sec" style="height: 65px;"></div>
+							<div class="violetgraph-sec-drk" style="height: 65px;"></div>
+						</div>
+					</div>
+
+					<div class="cus-col">
+						<div class="orange-bg">
+							<div class="info-sec">
+								<div class="left-info">
+									<div class="blk-head">Total Service Requests</div>
+									<div class="blk-info">
+										<span class="stats">{{total_service}}</span><span class="orange-txt detail"><i class="orange-graph"></i>{{percent_service}} %</span><span class="ltblack">(30 days)</span>
+									</div>
+								</div>
+								<div class="right-icon">
+									<i class="request-box-icon"></i>
+								</div>
+							</div>
+							<div class="orangegraph-sec" style="height: 50px;"></div>
+							<div class="orangegraph-sec-drk" style="height: 65px;"></div>
+						</div>
+					</div>
+
+
+					<div class="cus-col">
+						<div class="green-bg">
+							<div class="info-sec">
+								<div class="left-info">
+									<div class="blk-head">Active Service Request</div>
+									<div class="blk-info">
+										<span class="stats">{{active_service}}</span><span class="green-txt detail"><i class="green-graph"></i>{{active_service_percent}}</span><span class="ltblack">(30 days)</span>
+									</div>
+								</div>
+								<div class="right-icon">
+									<i class="tool-icon"></i>
+								</div>
+							</div>
+							<div class="greengraph-sec" style="height: 65px;"></div>
+							<div class="greengraph-sec-drk" style="height: 65px;"></div>
+						</div>
+					</div>
+
+				</div>
+
+				<div class="row stats-sec analytic-grph">
+					<div class="col-lg-12 col-md-12 col-xl-6 no-rt-spc graph-ht">
+						<div class="block-mode roster-blk">
+							<div class="block-outer">
+								<div class="left-blk">
+									<h2>Work Order Graph</h2>
+									
+								</div>
+								<div class="right-blk">
+									
+								</div>
+							</div>
+							<div class="report-graph">
+								<canvas id="order-graph" width="200" height="160"></canvas>
+							</div>
+						</div>	
+					</div>
+					<div class="col-lg-12 col-md-12 col-xl-6 mt-xl-0 mt-lg-3 mt-md-3 mt-sm-3 mt-3 chart-blk report-two graph-ht">
+						<div class="block-mode">
+							<div class="head-info">
+								<div class="left-blk">
+									<h2>Service Request Graph</h2>
+									
+								</div> 
+								<div class="right-blk">
+									
+								</div>
+							</div>
+
+							<canvas id="service-graph" width="200" height="160"></canvas>
+
+							</div>
+						</div>
+					</div>
+					<div class="row emplist-sec">
+						<div class="col-lg-12">
+							<div class="row">
+								<div class="col-lg-6 no-rt-spc active-order">
+									<div class="block-mode">
+										<h2>Active Work Order</h2>
+
+										<div class="vertical-height">
+											<table class="sm-list-table leave" id="order">
+
+											</table>
+										</div>
+									</div>
+								</div>
+								<div class="col-lg-6 request-list">
+									<div class="block-mode">
+										<h2>Pending Service Request</h2>
+										<div class="no-leave"></div>
+										<div class="vertical-height">
+											<table class="sm-list-table leave" id="request">
+
+
+											</table>
+										</div>
+									</div>
+								</div>
+									
+								
+							</div>
+						</div>
+						
+					</div>
+				</div>
+
+<script src='{% static "assets/js/order_dashboard.js" %}?v={% now "Y-m-dH:i:s"%}'></script>
+
+{% endblock %}

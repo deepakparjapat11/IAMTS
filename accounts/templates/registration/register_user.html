@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src='{% static "assets/js/jquery.min.js" %}'></script>
+    <script src='{% static "assets/js/jquery.validate.min.js" %}'></script>
+    <link rel="stylesheet" type="text/css" href='{% static "assets/css/style.css" %}'>
+    <link rel="stylesheet" type="text/css" href='{% static "assets/css/bootstrap.min.css" %}'>
+    <link rel="apple-touch-icon" sizes="57x57" href='{% static "assets/images/apple-icon-57x57.png" %}'>
+    <link rel="apple-touch-icon" sizes="60x60" href='{% static "assets/images/apple-icon-60x60.png" %}'>
+    <link rel="apple-touch-icon" sizes="72x72" href='{% static "assets/images/apple-icon-72x72.png" %}'>
+    <link rel="apple-touch-icon" sizes="76x76" href='{% static "assets/images/apple-icon-76x76.png" %}'>
+    <link rel="apple-touch-icon" sizes="114x114" href='{% static "assets/images/apple-icon-114x114.png" %}'>
+    <link rel="apple-touch-icon" sizes="120x120" href='{% static "assets/images/apple-icon-120x120.png" %}'>
+    <link rel="apple-touch-icon" sizes="144x144" href='{% static "assets/images/apple-icon-144x114.png" %}'>
+    <link rel="apple-touch-icon" sizes="152x152" href='{% static "assets/images/apple-icon-152x152.png" %}'>
+    <link rel="apple-touch-icon" sizes="180x180" href='{% static "assets/images/apple-icon-180x180.png" %}'>
+    <link rel="icon" type="image/png" sizes="196x196" href='{% static "assets/images/android-icon-196x196.png" %}'>
+    <link rel="icon" type="image/png" sizes="32x32" href='{% static "assets/images/favicon-32x32.png" %}'>
+    <link rel="icon" type="image/png" sizes="16x16" href='{% static "assets/images/favicon-16X16.png" %}'>
+    <link rel="icon" type="image/png" sizes="100x100" href='{% static "assets/images/favicon-100x100.png" %}'>
+    <script src='{% static "assets/js/bootstrap.min.js" %}'></script>
+</head>
+<body>
+{% if messages %}
+    {% for message in messages %}
+        {% if message is not None %}
+            <div id="success-alert" class="messagelist alert {% if message.tags %} alert-{{ message.tags }} {% endif %}">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a>
+              {{ message }}
+            </div>
+        {% endif %}
+    {% endfor %}
+{% endif %}
+<div class="formouter">
+<div class="register-blk">
+    <h1>User Registration</h1>
+    <form id="registration_form" method="POST">
+        {% csrf_token %}
+        <div class="row form-group">
+            <div class="col-lg-6"><input type="text" id="first_name" placeholder="First name" name="first_name"></div>
+            <div class="col-lg-6"><input type="text" placeholder="last name" name="last_name"></div>
+        </div>
+         <div class="row form-group">
+            <div class="col-lg-6"><input type="number" placeholder="contact" name="contact"></div>
+            <div class="col-lg-6"> <input type="email" placeholder="email" name="email"></div>
+        </div>
+        <div class="row form-group">
+            <div class="col-lg-6">
+                <select placeholder="department" name="department">
+                {% if department %}
+                    <option selected disabled hidden>select department</option>
+                    {% for item in department %}
+                        <option value="{{ item.id }}">{{ item.department_name }}</option>
+                    {% endfor %}
+                {% else %}
+                        <option>No options</option>
+                {% endif %}
+                </select>
+             </div>
+            <div class="col-lg-6">
+                <select name="designation">
+                {% if designation %}
+                    <option selected disabled hidden>select designation</option>
+                    {% for item in designation %}
+                        <option value="{{ item.id }}">{{ item.designation_name }}</option>
+                    {% endfor %}
+                {% else %}
+                    <option value=" ">No options</option>
+                {% endif %}
+                </select>
+            </div>
+        </div>
+        <div class="row form-group">
+            <div class="col-lg-6">
+                <select name="role">
+                    <option selected disabled hidden>select role</option>
+                    <option value="1">Bus management</option>
+                    <option value="2">Manpower management</option>
+                    <option value="3">Repair Request management</option>
+                    <option value="4">Service Request management</option>
+                    <option value="5">Roster management</option>
+                    <option value="6">Work Order management</option>
+                </select>
+            </div>
+            <div class="col-lg-6">
+                
+            </div>
+        </div>
+        <div class=" form-group">
+            <label for="profile_picture">Select a profile picture:</label>
+                <input type="file" id="profile_picture" placeholder="profile_picture" name="profile_picture">
+        </div>
+        <div class=" form-group">
+            <input type="date" placeholder="joining_date" name="joining_date">
+        </div>
+        <div class=" form-group">
+            <label for="driving_licence">Select a driving licence:</label>
+        <input type="file" id='driving_licence' placeholder="driving_licence" name="driving_licence">
+        </div>
+        <div class=" form-group">
+            <label for="id_proof">Select a id proof:</label>
+            <input type="file" id="id_proof" placeholder="id_proof" name="id_proof">
+        </div>
+        <div class="row form-group">
+            <div class="col-lg-6"><input type="password" placeholder="password" name="password" id="id_password"></div>
+            <div class="col-lg-6"><input type="password" placeholder="confirm password" name="password2"></div>
+        </div>
+        <button class="blue-btn" type="button" onclick="submit_form();">Submit</button>
+    </form>
+    <div class="text-center mt-lg-2">Already have an account?<a href="/login">Login</a></div>
+    </div>
+</div>
+</body>
+<script src='{% static "assets/js/register.js" %}?v={% now "Y-m-dH:i:s"%}'></script>
+
+</html>
